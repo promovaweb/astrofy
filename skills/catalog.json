@@ -1,0 +1,196 @@
+{
+  "schemaVersion": "1.0.0",
+  "version": "0.1.0",
+  "skills": [
+    {
+      "name": "astrofy-init",
+      "title": "Inicializar adoção",
+      "description": "Prepara a adoção do Astrofy em um projeto Astro existente, preservando arquivos personalizados e registrando o estado inicial."
+    },
+    {
+      "name": "astrofy-architecture",
+      "title": "Organizar arquitetura",
+      "description": "Organiza responsabilidades de rotas, layouts e componentes em sites Astro, documentando dependências e adaptações necessárias."
+    },
+    {
+      "name": "astrofy-config",
+      "title": "Separar configuração",
+      "description": "Agrupa configurações públicas por assunto em projetos Astro e atualiza consumidores sem duplicar valores ou expor credenciais."
+    },
+    {
+      "name": "astrofy-components",
+      "title": "Compor componentes",
+      "description": "Cria componentes Astro reutilizáveis com propriedades, slots e variantes limitadas, conservando os contratos dos consumidores."
+    },
+    {
+      "name": "astrofy-component-docs",
+      "title": "Documentar componentes",
+      "description": "Documenta a API e os usos reais dos componentes Astro em Markdown, mantendo propriedades e exemplos alinhados à implementação."
+    },
+    {
+      "name": "astrofy-react",
+      "title": "Configurar ilhas React",
+      "description": "Integra React apenas nas interações necessárias de um site Astro, escolhendo hidratação e verificando o comportamento no navegador."
+    },
+    {
+      "name": "astrofy-code-quality",
+      "title": "Revisar código",
+      "description": "Revisa tipos, imports e duplicações no código de projetos Astro, aplicando correções delimitadas e verificadas pelos testes do site."
+    },
+    {
+      "name": "astrofy-branding",
+      "title": "Registrar identidade",
+      "description": "Registra a identidade visual de um site a partir de marca fornecida, exportação real ou referência, identificando inferências e autoria."
+    },
+    {
+      "name": "astrofy-design-system",
+      "title": "Gerar design system",
+      "description": "Valida tokens hierárquicos e gera o CSS do design system em sites Astro, preservando aliases tipados e os modos claro e escuro."
+    },
+    {
+      "name": "astrofy-tailwind",
+      "title": "Integrar Tailwind",
+      "description": "Integra utilitários Tailwind ao design system de um projeto Astro, verificando versão, entrada CSS e classes emitidas pelo build."
+    },
+    {
+      "name": "astrofy-themes",
+      "title": "Implementar temas",
+      "description": "Implementa light, dark e system com preferência persistente em sites Astro, conferindo a primeira pintura e estados dos componentes."
+    },
+    {
+      "name": "astrofy-page-design",
+      "title": "Compor página",
+      "description": "Compõe páginas Astro a partir de conteúdo e identidade fornecidos, conferindo hierarquia, leitura e comportamento responsivo."
+    },
+    {
+      "name": "astrofy-sections",
+      "title": "Criar seções",
+      "description": "Cria seções reutilizáveis para páginas Astro com conteúdo explícito, composição por slots e comportamento responsivo documentado."
+    },
+    {
+      "name": "astrofy-header",
+      "title": "Compor cabeçalho",
+      "description": "Configura cabeçalhos Astro com marca, ações e comportamento sticky, verificando a relação com navegação, foco e conteúdo da página."
+    },
+    {
+      "name": "astrofy-footer",
+      "title": "Configurar rodapé",
+      "description": "Organiza rodapés Astro configuráveis com links e informações fornecidas, conferindo responsividade e destinos publicados."
+    },
+    {
+      "name": "astrofy-navigation",
+      "title": "Implementar navegação",
+      "description": "Implementa menus e submenus de sites Astro operáveis por teclado e toque, com foco, estado atual e destinos verificados."
+    },
+    {
+      "name": "astrofy-homepage",
+      "title": "Montar página inicial",
+      "description": "Monta páginas iniciais Astro com conteúdo fornecido e seções reutilizáveis, alinhando navegação, hierarquia e ação principal."
+    },
+    {
+      "name": "astrofy-landing-pages",
+      "title": "Montar landing page",
+      "description": "Monta landing pages Astro com oferta e ação fornecidas, compondo seções reutilizáveis e verificando destinos e estados do fluxo."
+    },
+    {
+      "name": "astrofy-blog",
+      "title": "Organizar blog",
+      "description": "Organiza o blog de um site Astro com coleções MDX e templates de leitura e arquivo, definindo taxonomias e regras de publicação."
+    },
+    {
+      "name": "astrofy-mdx",
+      "title": "Configurar conteúdo MDX",
+      "description": "Configura integração MDX e schemas de conteúdo em sites Astro, documentando componentes permitidos e a origem confiável dos arquivos."
+    },
+    {
+      "name": "astrofy-blog-post",
+      "title": "Compor post individual",
+      "description": "Compõe templates de post Astro com corpo MDX, autoria e metadados derivados da coleção, verificando leitura e mídia responsiva."
+    },
+    {
+      "name": "astrofy-blog-archives",
+      "title": "Paginar arquivos do blog",
+      "description": "Implementa arquivos paginados de blog Astro com ordenação determinística e taxonomias, verificando URLs e estados vazios."
+    },
+    {
+      "name": "astrofy-editorial-review",
+      "title": "Revisar texto visível",
+      "description": "Revisa ortografia e nomenclatura em textos visíveis de sites Astro, preservando fatos, código e a direção editorial fornecida."
+    },
+    {
+      "name": "astrofy-seo",
+      "title": "Verificar SEO",
+      "description": "Verifica SEO no HTML renderizado de projetos Astro, relacionando metadados, canônicas e indexação às rotas e ao ambiente."
+    },
+    {
+      "name": "astrofy-open-graph",
+      "title": "Configurar Open Graph",
+      "description": "Configura metadados Open Graph em páginas Astro com URLs absolutas e fallback por tipo de conteúdo, conferindo as imagens publicadas."
+    },
+    {
+      "name": "astrofy-geo",
+      "title": "Revisar descoberta por IA",
+      "description": "Revisa clareza, autoria e acesso ao conteúdo de sites Astro para descoberta por IA, distinguindo orientações oficiais de hipóteses."
+    },
+    {
+      "name": "astrofy-internal-links",
+      "title": "Revisar ligações internas",
+      "description": "Analisa links internos em sites Astro e sugere destinos contextualizados, preservando a sintaxe MDX e evitando alterações repetidas."
+    },
+    {
+      "name": "astrofy-documentation",
+      "title": "Manter documentação",
+      "description": "Mantém arquitetura, mapa de arquivos e operação de projetos Astro em Markdown, conferindo comandos e componentes na implementação."
+    },
+    {
+      "name": "astrofy-checkup",
+      "title": "Executar check-up",
+      "description": "Executa verificações do Astrofy e organiza revisões manuais por escopo, mantendo checklist, relatórios e validade dos resultados."
+    },
+    {
+      "name": "astrofy-accessibility",
+      "title": "Revisar acessibilidade",
+      "description": "Revisa semântica, foco e operação por teclado em sites Astro, combinando verificações automáticas com revisão manual de estados."
+    },
+    {
+      "name": "astrofy-images",
+      "title": "Configurar imagens",
+      "description": "Configura imagens em sites Astro conforme origem e uso, verificando dimensões, responsividade e carregamento no layout publicado."
+    },
+    {
+      "name": "astrofy-routing",
+      "title": "Organizar rotas",
+      "description": "Organiza rotas e redirects em sites Astro, preservando URLs existentes e verificando colisões, parâmetros e comportamento de 404."
+    },
+    {
+      "name": "astrofy-structured-data",
+      "title": "Verificar JSON-LD",
+      "description": "Configura e valida JSON-LD em sites Astro, relacionando entidades e propriedades às informações presentes no conteúdo visível."
+    },
+    {
+      "name": "astrofy-i18n",
+      "title": "Configurar idiomas",
+      "description": "Configura idiomas e relações entre páginas em sites Astro, verificando rotas, fallback e metadados das traduções disponíveis."
+    },
+    {
+      "name": "astrofy-forms",
+      "title": "Integrar formulários",
+      "description": "Integra formulários em páginas Astro com validação e mensagens acessíveis, verificando o destino de envio em ambiente autorizado."
+    },
+    {
+      "name": "astrofy-testing",
+      "title": "Validar fluxos",
+      "description": "Organiza testes de contratos e fluxos de sites Astro conforme o impacto da mudança, registrando ambiente e limites da cobertura."
+    },
+    {
+      "name": "astrofy-build-deploy",
+      "title": "Preparar build e publicação",
+      "description": "Prepara build e operação de publicação em projetos Astro, respeitando o adaptador e o provedor existentes e validando o ambiente."
+    },
+    {
+      "name": "astrofy-security",
+      "title": "Revisar fronteiras de execução",
+      "description": "Revisa entradas, segredos e execução de HTML ou MDX em projetos Astro, aplicando correções delimitadas e documentando o alcance."
+    }
+  ]
+}

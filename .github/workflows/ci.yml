@@ -1,0 +1,36 @@
+name: Validar Astrofy
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  framework:
+    name: Node ${{ matrix.node }} em ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node: ['22.12.0', '24', '26']
+    steps:
+      - name: Obter código
+        uses: actions/checkout@v4
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - name: Instalar versões do lockfile
+        run: npm ci
+      - name: Instalar Chromium e dependências do navegador
+        run: npx playwright install --with-deps chromium
+      - name: Compilar e testar contratos, processos e TUI
+        run: npm test
+      - name: Conferir distribuição npm
+        run: npm pack --dry-run

@@ -1,0 +1,158 @@
+/** Verifica o executável como processo, inclusive JSON, escopo parcial e modo sem TTY. */
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtemp,mkdir,writeFile,readFile,rm} from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+const cli=fileURLToPath(new URL('../dist/cli/index.js',import.meta.url));
+async function fixture(t){
+ const root=await mkdtemp(path.join(os.tmpdir(),'astrofy cli '));t.after(()=>rm(root,{recursive:true,force:true}));
+ await writeFile(path.join(root,'package.json'),JSON.stringify({dependencies:{astro:'5.13.0'}}));
+ await writeFile(path.join(root,'package-lock.json'),JSON.stringify({packages:{'node_modules/astro':{version:'5.13.0'}}}));
+ await mkdir(path.join(root,'dist/blog'),{recursive:true});
+ await writeFile(path.join(root,'dist/index.html'),'<html lang="pt-BR"><head><title>Home</title><meta property="og:title" content="Home"><meta property="og:type" content="website"><meta property="og:url" content="https://site.test/"><meta property="og:image" content="https://site.test/image.svg"></head><body><main><h1>Home</h1><a href="/blog/">Blog</a></main></body></html>');
+ await writeFile(path.join(root,'dist/blog/index.html'),'<html><head><title>Blog</title></head><body><main><h1 id="posts">Posts</h1><a href="/missing">Ausente</a></main></body></html>');
+ return root;
+}
+function run(root,...args){const result=spawnSync(process.execPath,[cli,...args,'--root',root,'--json'],{encoding:'utf8',timeout:10000});assert.equal(result.error,undefined);return {...result,json:JSON.parse(result.stdout)};}
+test('CLI init, inspect, tokens desconhecido e ajuda possuem saída limpa',async t=>{
+ const root=await fixture(t);
+ assert.equal(run(root,'init').status,0);
+ assert.equal(run(root,'inspect').json.data.versions.astro,'5.13.0');
+ assert.equal(run(root,'tokens','invalid').status,2);
+ assert.ok(run(root,'--help').json.data.commands.includes('tokens build'));
+ assert.equal(run(root,'check','--page','/','--component','Header.astro').status,2);
+});
+test('check parcial preserva outra rota, status não grava e sem TTY termina',async t=>{
+ const root=await fixture(t);run(root,'init');
+ const first=run(root,'check','--rule','links.broken');assert.equal(first.status,1);
+ const checklistPath=path.join(root,'astrofy.checklist.json');
+ const before=JSON.parse(await readFile(checklistPath,'utf8'));
+ const oldBlog=before.items.find(item=>item.ruleId==='links.broken'&&item.scope.target==='/blog/');
+ const partial=run(root,'check','--rule','links.broken','--page','/');assert.equal(partial.status,0);
+ const after=JSON.parse(await readFile(checklistPath,'utf8'));
+ assert.deepEqual(after.items.find(item=>item.id===oldBlog.id),oldBlog);
+ const bytes=await readFile(checklistPath,'utf8');
+ assert.equal(run(root,'status').status,0);assert.equal(run(root,'tui').status,0);
+ assert.equal(await readFile(checklistPath,'utf8'),bytes);
+});
+test('links scan encontra destino quebrado; híbrida não recebe aprovação automática',async t=>{
+ const root=await fixture(t);run(root,'init');
+ const links=run(root,'links','scan');assert.equal(links.status,1);assert.deepEqual(links.json.data.find(row=>row.route==='/blog/').broken,['/missing']);
+ const hybrid=run(root,'check','--rule','seo.title','--page','/');
+ assert.equal(hybrid.json.findings[0].status,'pending');
+ assert.equal(hybrid.json.summary.passed,0);
+ const automatic=run(root,'check','--rule','og.required','--page','/');
+ assert.equal(automatic.json.findings[0].status,'passed');
+});
+test('reavaliação após alteração arquiva cada execução anterior uma única vez',async t=>{
+ const root=await fixture(t);run(root,'init');
+ const check=()=>run(root,'check','--rule','links.broken','--page','/');
+ const item=async()=>JSON.parse(await readFile(path.join(root,'astrofy.checklist.json'),'utf8')).items.find(row=>row.ruleId==='links.broken'&&row.scope.target==='/');
+ assert.equal(check().status,0);
+ const first=await item();
+ const file=path.join(root,'dist/index.html');
+ await writeFile(file,(await readFile(file,'utf8')).replace('href="/blog/"','href="/inexistente/"'));
+ assert.equal(check().status,1);
+ const second=await item();
+ assert.equal(second.history.length,1);
+ assert.deepEqual(second.history[0].evidence,first.evidence);
+ assert.equal(check().status,1);
+ const third=await item();
+ assert.equal(third.history.length,2);
+ assert.deepEqual(third.history[1].evidence,second.evidence);
+ assert.equal(new Set(third.history.map(entry=>entry.evidence[0].runId)).size,2);
+});
+test('página 404 noindex dispensa links de entrada sem dispensar conteúdo órfão',async t=>{
+ const root=await fixture(t);
+ const html='<html><head><meta name="robots" content="noindex, follow"></head><body><main><h1>Página ausente</h1></main></body></html>';
+ await writeFile(path.join(root,'dist/404.html'),html);
+ await mkdir(path.join(root,'dist/isolada'));
+ await writeFile(path.join(root,'dist/isolada/index.html'),html);
+ run(root,'init');
+ const result=run(root,'check','--rule','links.orphans');
+ assert.equal(result.json.findings.find(row=>row.scope.target==='/404').status,'not_applicable');
+ assert.equal(result.json.findings.find(row=>row.scope.target==='/isolada/').status,'failed');
+});
+test('variações da barra final compartilham instância e histórico da rota',async t=>{
+ const root=await fixture(t);run(root,'init');
+ const first=run(root,'check','--rule','links.broken','--page','/blog/');
+ assert.equal(first.json.findings.length,1);
+ const second=run(root,'check','--rule','links.broken','--page','/blog');
+ assert.equal(second.json.findings.length,1);
+ const third=run(root,'check','--rule','links.broken','--page','/blog/index.html');
+ assert.equal(third.json.findings.length,1);
+ const checklist=JSON.parse(await readFile(path.join(root,'astrofy.checklist.json'),'utf8'));
+ const items=checklist.items.filter(item=>item.ruleId==='links.broken'&&item.scope.target.startsWith('/blog'));
+ assert.equal(items.length,1);assert.equal(items[0].history.length,2);
+ assert.equal(run(root,'check','--rule','links.broken','--page','https://outro.test/blog').status,2);
+});
+test('execuções auxiliares persistem relatório consultável e exportação mantém o comando correto',async t=>{
+ const root=await fixture(t);
+ const initialized=run(root,'init');
+ const initFile=`.astrofy/reports/${initialized.json.runId}.json`;
+ assert.ok(initialized.json.artifacts.includes(initFile));
+ assert.ok(initialized.json.artifacts.includes('astrofy.checklist.json'));
+ assert.deepEqual(JSON.parse(await readFile(path.join(root,initFile),'utf8')),initialized.json);
+ const scan=run(root,'links','scan');
+ assert.deepEqual(run(root,'report','--run',scan.json.runId).json,scan.json);
+ assert.ok(scan.json.coveredScope.some(scope=>scope.target==='/blog/'));
+ const exported=run(root,'report','--output','consulta.json');
+ assert.equal(exported.json.command,'report');
+ assert.equal(JSON.parse(await readFile(path.join(root,'consulta.json'),'utf8')).command,'report');
+ const dry=run(root,'init','--dry-run');
+ await assert.rejects(readFile(path.join(root,`.astrofy/reports/${dry.json.runId}.json`)),{code:'ENOENT'});
+});
+test('datas futuras publicadas falham e schema MDX exige validação do projeto',async t=>{
+ const root=await fixture(t);
+ await mkdir(path.join(root,'src/content/blog'),{recursive:true});
+ await writeFile(path.join(root,'src/content/blog/futuro.mdx'),'---\ntitle: Futuro\ndescription: Post programado\nslug: futuro\npublishedAt: 2999-01-01\ndraft: false\n---\nTexto.\n');
+ await mkdir(path.join(root,'dist/blog/futuro'),{recursive:true});
+ await writeFile(path.join(root,'dist/blog/futuro/index.html'),'<html><body><main><h1>Futuro</h1></main></body></html>');
+ run(root,'init');
+ const dates=run(root,'check','--rule','blog.dates');
+ assert.equal(dates.json.findings[0].status,'failed');assert.match(dates.json.findings[0].message,/data futura publicado/);
+ const schema=run(root,'check','--rule','mdx.schema');
+ assert.equal(schema.json.findings[0].status,'blocked');
+ assert.match(schema.json.findings[0].message,/trustedExecution/);
+});
+test('status descobre páginas e componentes sem consolidar ou executar scripts',async t=>{
+ const root=await fixture(t);run(root,'init');
+ const checklistPath=path.join(root,'astrofy.checklist.json');
+ const before=await readFile(checklistPath,'utf8');
+ await mkdir(path.join(root,'src/components'),{recursive:true});
+ await writeFile(path.join(root,'src/components/Card.astro'),'<article><slot /></article>');
+ await mkdir(path.join(root,'dist/nova'),{recursive:true});
+ await writeFile(path.join(root,'dist/nova/index.html'),'<html><body><h1>Nova</h1></body></html>');
+ await writeFile(path.join(root,'package.json'),JSON.stringify({dependencies:{astro:'5.13.0'},scripts:{build:'node -e "process.exit(99)"'}}));
+ const result=run(root,'status');
+ assert.equal(result.status,0);
+ const items=result.json.data.items;
+ assert.ok(items.some(item=>item.scope.type==='page'&&item.scope.target==='/nova/'&&!item.retired&&item.status==='pending'));
+ assert.ok(items.some(item=>item.scope.type==='component'&&item.scope.target==='src/components/Card.astro'&&!item.retired&&item.status==='pending'));
+ assert.ok(items.filter(item=>item.scope.type==='page'&&item.scope.target==='.').every(item=>item.retired));
+ assert.equal(await readFile(checklistPath,'utf8'),before);
+ assert.deepEqual(run(root,'status').json.data.items,items);
+});
+test('códigos distinguem argumento inválido e falha operacional de escrita',async t=>{
+ const root=await fixture(t);run(root,'init');
+ const invalid=run(root,'status','--opcao-inexistente=valor-privado');
+ assert.equal(invalid.status,2);assert.equal(invalid.json.status,'failed');
+ assert.ok(!invalid.stdout.includes('valor-privado'));assert.ok(!invalid.stderr.includes('valor-privado'));
+ const operational=run(root,'report','--output','dist');
+ assert.equal(operational.status,3);assert.equal(operational.json.status,'blocked');
+ assert.match(operational.json.data.error,/operação/);
+ const config=path.join(root,'.astrofy/config/features.json');await writeFile(config,'{invalid');
+ assert.equal(run(root,'status').status,2);
+});
+test('índice de links inclui metadados, headings e taxonomias do HTML publicado',async t=>{
+ const root=await fixture(t);run(root,'init');
+ await writeFile(path.join(root,'dist/index.html'),'<html><head><title>Guia do site</title><meta name="description" content="Descrição do guia"><meta property="article:tag" content="astro"><meta property="article:section" content="guias"></head><body><main><h1>Guia</h1><h2 id="exemplo">Um <em>exemplo</em></h2><a href="/blog/#posts" rel="tag">astro</a><a href="/blog/" rel="tag">mdx</a></main></body></html>');
+ const result=run(root,'links','scan');const row=result.json.data.find(row=>row.route==='/');
+ assert.equal(row.title,'Guia do site');assert.equal(row.description,'Descrição do guia');
+ assert.deepEqual(row.headings,[{level:1,text:'Guia',id:null},{level:2,text:'Um exemplo',id:'exemplo'}]);
+ assert.deepEqual(row.taxonomies,{tags:['astro','mdx'],categories:['guias']});
+ assert.deepEqual(row.broken,[]);
+});

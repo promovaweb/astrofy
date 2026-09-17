@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astrofy.promovaweb.com/schemas/1.0.0/features",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "blog": {
+      "type": "boolean"
+    },
+    "react": {
+      "type": "boolean"
+    },
+    "i18n": {
+      "type": "boolean"
+    },
+    "forms": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "blog",
+    "react",
+    "i18n",
+    "forms"
+  ]
+}

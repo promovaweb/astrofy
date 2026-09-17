@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astrofy.promovaweb.com/schemas/1.0.0/policies",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "failOn": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "critical",
+          "error",
+          "warning",
+          "info"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "requireManual": {
+      "type": "boolean"
+    },
+    "severities": {
+      "type": "object",
+      "additionalProperties": {
+        "enum": [
+          "critical",
+          "error",
+          "warning",
+          "info"
+        ]
+      }
+    },
+    "strictCategories": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "tokenUsage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "allowedValues": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "allowedFiles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "allowedValues",
+        "allowedFiles"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "failOn",
+    "requireManual",
+    "severities",
+    "strictCategories",
+    "tokenUsage"
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astrofy.promovaweb.com/schemas/1.0.0/rule-catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "catalogVersion",
+    "rules"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "catalogVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "category",
+          "skill",
+          "summary",
+          "method",
+          "severity",
+          "scope",
+          "version"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]*\\.[a-z][a-z0-9_.-]*$"
+          },
+          "category": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "skill": {
+            "type": "string",
+            "pattern": "^astrofy-[a-z0-9-]+$"
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "method": {
+            "enum": [
+              "automatic",
+              "manual",
+              "hybrid"
+            ]
+          },
+          "severity": {
+            "enum": [
+              "critical",
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "scope": {
+            "enum": [
+              "project",
+              "page",
+              "component",
+              "collection"
+            ]
+          },
+          "feature": {
+            "enum": [
+              "blog",
+              "react",
+              "forms",
+              "i18n"
+            ]
+          },
+          "version": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$"
+          }
+        }
+      }
+    }
+  }
+}

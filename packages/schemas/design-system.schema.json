@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astrofy.promovaweb.com/schemas/1.0.0/design-system",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tokenFormat": {
+      "const": "DTCG-2025.10"
+    },
+    "defaultMode": {
+      "enum": [
+        "light",
+        "dark"
+      ]
+    },
+    "assets": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    },
+    "tokens": {
+      "$ref": "#/$defs/group"
+    },
+    "modes": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "light": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "overrides": {
+              "type": "object",
+              "additionalProperties": {}
+            }
+          },
+          "required": [
+            "overrides"
+          ]
+        },
+        "dark": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "overrides": {
+              "type": "object",
+              "additionalProperties": {}
+            }
+          },
+          "required": [
+            "overrides"
+          ]
+        }
+      },
+      "required": [
+        "light",
+        "dark"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "name",
+    "tokenFormat",
+    "defaultMode",
+    "assets",
+    "tokens",
+    "modes"
+  ],
+  "$defs": {
+    "group": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[^{}.]+$"
+      },
+      "properties": {
+        "$type": {
+          "enum": [
+            "color",
+            "dimension",
+            "fontFamily",
+            "fontWeight",
+            "duration",
+            "cubicBezier",
+            "number",
+            "strokeStyle",
+            "border",
+            "transition",
+            "shadow",
+            "gradient",
+            "typography"
+          ]
+        },
+        "$description": {
+          "type": "string"
+        },
+        "$extensions": {
+          "type": "object",
+          "additionalProperties": {}
+        }
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/token"
+          },
+          {
+            "$ref": "#/$defs/group"
+          }
+        ]
+      }
+    },
+    "token": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$type": {
+          "enum": [
+            "color",
+            "dimension",
+            "fontFamily",
+            "fontWeight",
+            "duration",
+            "cubicBezier",
+            "number",
+            "strokeStyle",
+            "border",
+            "transition",
+            "shadow",
+            "gradient",
+            "typography"
+          ]
+        },
+        "$value": {},
+        "$description": {
+          "type": "string"
+        },
+        "$extensions": {
+          "type": "object",
+          "additionalProperties": {}
+        }
+      },
+      "required": [
+        "$value"
+      ]
+    }
+  }
+}
