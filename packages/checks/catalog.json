@@ -1,0 +1,921 @@
+{
+  "schemaVersion": "1.0.0",
+  "catalogVersion": "1.0.0",
+  "rules": [
+    {
+      "id": "project.detected",
+      "category": "project",
+      "skill": "astrofy-init",
+      "summary": "Raiz, Astro, manifesto e lockfile identificados.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "project.compatibility",
+      "category": "project",
+      "skill": "astrofy-init",
+      "summary": "Versões dentro da matriz suportada ou limitação declarada.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "project.contract",
+      "category": "project",
+      "skill": "astrofy-init",
+      "summary": "Contrato Astrofy válido.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "project.paths",
+      "category": "project",
+      "skill": "astrofy-init",
+      "summary": "Caminhos configurados existem e estão no escopo permitido.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "project.features",
+      "category": "project",
+      "skill": "astrofy-init",
+      "summary": "Recursos habilitados correspondem ao site.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "config.schema",
+      "category": "config",
+      "skill": "astrofy-config",
+      "summary": "Arquivos JSON válidos contra schemas.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "config.categories",
+      "category": "config",
+      "skill": "astrofy-config",
+      "summary": "Configurações organizadas por assunto.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "config.duplicates",
+      "category": "config",
+      "skill": "astrofy-config",
+      "summary": "Sem duplicação conflitante de configuração.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "config.secrets",
+      "category": "config",
+      "skill": "astrofy-config",
+      "summary": "Sem segredo conhecido em configuração pública ou bundle.",
+      "method": "hybrid",
+      "severity": "critical",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "architecture.map",
+      "category": "architecture",
+      "skill": "astrofy-architecture",
+      "summary": "Arquitetura e responsabilidades documentadas.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "architecture.imports",
+      "category": "architecture",
+      "skill": "astrofy-architecture",
+      "summary": "Imports e aliases resolvem.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "architecture.boundaries",
+      "category": "architecture",
+      "skill": "astrofy-architecture",
+      "summary": "Dependências respeitam limites estabelecidos.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "components.contracts",
+      "category": "components",
+      "skill": "astrofy-components",
+      "summary": "Propriedades e slots relevantes documentados.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "component",
+      "version": "1.0.0"
+    },
+    {
+      "id": "components.types",
+      "category": "components",
+      "skill": "astrofy-components",
+      "summary": "Contratos tipados sem erros detectados.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "component",
+      "version": "1.0.0"
+    },
+    {
+      "id": "components.reuse",
+      "category": "components",
+      "skill": "astrofy-components",
+      "summary": "Duplicações relevantes avaliadas para reutilização.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "component",
+      "version": "1.0.0"
+    },
+    {
+      "id": "components.examples",
+      "category": "components",
+      "skill": "astrofy-components",
+      "summary": "Exemplos refletem a implementação.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "component",
+      "version": "1.0.0"
+    },
+    {
+      "id": "react.integration",
+      "category": "react",
+      "skill": "astrofy-react",
+      "summary": "Integração React válida quando utilizada.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "component",
+      "version": "1.0.0",
+      "feature": "react"
+    },
+    {
+      "id": "react.hydration",
+      "category": "react",
+      "skill": "astrofy-react",
+      "summary": "Ilhas funcionam sem erro de hidratação observado.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "component",
+      "version": "1.0.0",
+      "feature": "react"
+    },
+    {
+      "id": "react.delivery",
+      "category": "react",
+      "skill": "astrofy-react",
+      "summary": "JavaScript de cliente tem justificativa por componente.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "component",
+      "version": "1.0.0",
+      "feature": "react"
+    },
+    {
+      "id": "brand.provenance",
+      "category": "brand",
+      "skill": "astrofy-branding",
+      "summary": "Origem e inferências da identidade registradas.",
+      "method": "manual",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "brand.assets",
+      "category": "brand",
+      "skill": "astrofy-branding",
+      "summary": "Ativos referenciados existem e correspondem à marca.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "brand.fonts",
+      "category": "brand",
+      "skill": "astrofy-branding",
+      "summary": "Fontes e fallbacks definidos.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "design.schema",
+      "category": "design-system",
+      "skill": "astrofy-design-system",
+      "summary": "Design system válido.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "design.references",
+      "category": "design-system",
+      "skill": "astrofy-design-system",
+      "summary": "Aliases resolvem sem ciclos ou tipos incompatíveis.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "design.css-sync",
+      "category": "design-system",
+      "skill": "astrofy-design-system",
+      "summary": "CSS corresponde ao JSON e gerador atuais.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "design.global-import",
+      "category": "design-system",
+      "skill": "astrofy-design-system",
+      "summary": "CSS global está integrado ao build.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "design.token-usage",
+      "category": "design-system",
+      "skill": "astrofy-design-system",
+      "summary": "Desvios de tokens identificados e tratados.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "design.states",
+      "category": "design-system",
+      "skill": "astrofy-design-system",
+      "summary": "Estados visuais dos componentes definidos.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "theme.light",
+      "category": "theme",
+      "skill": "astrofy-themes",
+      "summary": "Páginas representativas revisadas em light.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "theme.dark",
+      "category": "theme",
+      "skill": "astrofy-themes",
+      "summary": "Páginas representativas revisadas em dark.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "theme.system",
+      "category": "theme",
+      "skill": "astrofy-themes",
+      "summary": "Preferência do sistema respeitada.",
+      "method": "automatic",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "theme.persistence",
+      "category": "theme",
+      "skill": "astrofy-themes",
+      "summary": "Escolha do visitante persiste quando disponível.",
+      "method": "automatic",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "theme.initial-paint",
+      "category": "theme",
+      "skill": "astrofy-themes",
+      "summary": "Inicialização evita tema incorreto perceptível.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "theme.logos",
+      "category": "theme",
+      "skill": "astrofy-themes",
+      "summary": "Logo legível e correto por tema.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "layout.responsive",
+      "category": "layout",
+      "skill": "astrofy-page-design",
+      "summary": "Sem perda de conteúdo nas larguras verificadas.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "layout.overflow",
+      "category": "layout",
+      "skill": "astrofy-page-design",
+      "summary": "Sem overflow horizontal indevido.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "layout.hierarchy",
+      "category": "layout",
+      "skill": "astrofy-page-design",
+      "summary": "Hierarquia visual e leitura coerentes.",
+      "method": "manual",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "header.behavior",
+      "category": "header",
+      "skill": "astrofy-header",
+      "summary": "Header e sticky não encobrem conteúdo ou foco.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "footer.content",
+      "category": "footer",
+      "skill": "astrofy-footer",
+      "summary": "Links e informações institucionais corretos.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "navigation.links",
+      "category": "navigation",
+      "skill": "astrofy-navigation",
+      "summary": "Destinos internos existentes.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "navigation.mobile",
+      "category": "navigation",
+      "skill": "astrofy-navigation",
+      "summary": "Menu opera por toque nas larguras móveis.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "navigation.keyboard",
+      "category": "navigation",
+      "skill": "astrofy-navigation",
+      "summary": "Menu e submenus operam por teclado.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "navigation.current",
+      "category": "navigation",
+      "skill": "astrofy-navigation",
+      "summary": "Página atual identificada corretamente.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "mdx.schema",
+      "category": "mdx",
+      "skill": "astrofy-mdx",
+      "summary": "Frontmatter atende ao schema editorial.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0",
+      "feature": "blog"
+    },
+    {
+      "id": "mdx.components",
+      "category": "mdx",
+      "skill": "astrofy-mdx",
+      "summary": "Componentes referenciados existem e compilam.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0",
+      "feature": "blog"
+    },
+    {
+      "id": "mdx.trust",
+      "category": "mdx",
+      "skill": "astrofy-mdx",
+      "summary": "Origem do MDX e fronteira de confiança documentadas.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0",
+      "feature": "blog"
+    },
+    {
+      "id": "blog.slugs",
+      "category": "blog",
+      "skill": "astrofy-blog",
+      "summary": "Slugs únicos e normalizados.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0",
+      "feature": "blog"
+    },
+    {
+      "id": "blog.drafts",
+      "category": "blog",
+      "skill": "astrofy-blog",
+      "summary": "Rascunhos não aparecem na produção.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0",
+      "feature": "blog"
+    },
+    {
+      "id": "blog.dates",
+      "category": "blog",
+      "skill": "astrofy-blog",
+      "summary": "Datas válidas e política de publicação aplicada.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0",
+      "feature": "blog"
+    },
+    {
+      "id": "blog.post",
+      "category": "blog",
+      "skill": "astrofy-blog",
+      "summary": "Corpo, código, mídia e tabelas legíveis.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0",
+      "feature": "blog"
+    },
+    {
+      "id": "blog.archives",
+      "category": "blog",
+      "skill": "astrofy-blog",
+      "summary": "Arquivos e paginação completos e sem duplicação.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0",
+      "feature": "blog"
+    },
+    {
+      "id": "blog.empty",
+      "category": "blog",
+      "skill": "astrofy-blog",
+      "summary": "Estado vazio utilizável.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0",
+      "feature": "blog"
+    },
+    {
+      "id": "editorial.spelling",
+      "category": "editorial",
+      "skill": "astrofy-editorial-review",
+      "summary": "Ortografia revisada no idioma configurado.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "editorial.terms",
+      "category": "editorial",
+      "skill": "astrofy-editorial-review",
+      "summary": "Glossário e nomes próprios preservados.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "editorial.placeholders",
+      "category": "editorial",
+      "skill": "astrofy-editorial-review",
+      "summary": "Conteúdo provisório removido das páginas publicadas.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "seo.title",
+      "category": "seo",
+      "skill": "astrofy-seo",
+      "summary": "Título presente e adequado por página.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "seo.description",
+      "category": "seo",
+      "skill": "astrofy-seo",
+      "summary": "Descrição presente conforme política.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "seo.canonical",
+      "category": "seo",
+      "skill": "astrofy-seo",
+      "summary": "Canônica absoluta e correta.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "seo.indexing",
+      "category": "seo",
+      "skill": "astrofy-seo",
+      "summary": "Robots e indexação coerentes com ambiente e rota.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "seo.sitemap",
+      "category": "seo",
+      "skill": "astrofy-seo",
+      "summary": "Sitemap contém as rotas elegíveis.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "seo.language",
+      "category": "seo",
+      "skill": "astrofy-seo",
+      "summary": "Idioma declarado e consistente.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "og.required",
+      "category": "og",
+      "skill": "astrofy-open-graph",
+      "summary": "Metadados obrigatórios e fallback válidos.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "og.image",
+      "category": "og",
+      "skill": "astrofy-open-graph",
+      "summary": "Imagem pública acessível e pertinente.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "structured.valid",
+      "category": "structured",
+      "skill": "astrofy-structured-data",
+      "summary": "Dados estruturados sintaticamente válidos.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "structured.truth",
+      "category": "structured",
+      "skill": "astrofy-structured-data",
+      "summary": "Marcação corresponde ao conteúdo visível.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "geo.authorship",
+      "category": "geo",
+      "skill": "astrofy-geo",
+      "summary": "Autoria e responsabilidade identificáveis quando pertinentes.",
+      "method": "manual",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "geo.sources",
+      "category": "geo",
+      "skill": "astrofy-geo",
+      "summary": "Fontes e afirmações relevantes revisadas.",
+      "method": "manual",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "geo.access",
+      "category": "geo",
+      "skill": "astrofy-geo",
+      "summary": "Conteúdo principal acessível no modo de renderização adotado.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "links.broken",
+      "category": "links",
+      "skill": "astrofy-internal-links",
+      "summary": "Links internos e âncoras verificáveis válidos.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "links.orphans",
+      "category": "links",
+      "skill": "astrofy-internal-links",
+      "summary": "Páginas órfãs identificadas e avaliadas.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "links.context",
+      "category": "links",
+      "skill": "astrofy-internal-links",
+      "summary": "Âncoras e sugestões fazem sentido no contexto.",
+      "method": "manual",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "accessibility.landmarks",
+      "category": "accessibility",
+      "skill": "astrofy-accessibility",
+      "summary": "Regiões e headings semanticamente adequados.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "accessibility.focus",
+      "category": "accessibility",
+      "skill": "astrofy-accessibility",
+      "summary": "Foco visível, ordenado e não encoberto.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "accessibility.contrast",
+      "category": "accessibility",
+      "skill": "astrofy-accessibility",
+      "summary": "Contraste revisado nos estados e temas pertinentes.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "accessibility.alternatives",
+      "category": "accessibility",
+      "skill": "astrofy-accessibility",
+      "summary": "Alternativas textuais adequadas ao significado.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "accessibility.motion",
+      "category": "accessibility",
+      "skill": "astrofy-accessibility",
+      "summary": "Preferência de redução de movimento respeitada.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "images.dimensions",
+      "category": "images",
+      "skill": "astrofy-images",
+      "summary": "Dimensões ou proporção previstas.",
+      "method": "automatic",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "images.delivery",
+      "category": "images",
+      "skill": "astrofy-images",
+      "summary": "Imagens responsivas e carregamento adequados ao uso.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "routing.collisions",
+      "category": "routing",
+      "skill": "astrofy-routing",
+      "summary": "Sem colisões entre rotas publicadas.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "routing.redirects",
+      "category": "routing",
+      "skill": "astrofy-routing",
+      "summary": "Redirecionamentos sem ciclos conhecidos.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "routing.not-found",
+      "category": "routing",
+      "skill": "astrofy-routing",
+      "summary": "Página de erro e status corretos.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "page",
+      "version": "1.0.0"
+    },
+    {
+      "id": "forms.labels",
+      "category": "forms",
+      "skill": "astrofy-forms",
+      "summary": "Campos possuem rótulos e instruções adequadas.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0",
+      "feature": "forms"
+    },
+    {
+      "id": "forms.validation",
+      "category": "forms",
+      "skill": "astrofy-forms",
+      "summary": "Erros e sucesso comunicados corretamente.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0",
+      "feature": "forms"
+    },
+    {
+      "id": "forms.delivery",
+      "category": "forms",
+      "skill": "astrofy-forms",
+      "summary": "Submissão chega ao destino esperado em teste controlado.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0",
+      "feature": "forms"
+    },
+    {
+      "id": "quality.types",
+      "category": "quality",
+      "skill": "astrofy-testing",
+      "summary": "Verificação de tipos concluída sem erros.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "quality.build",
+      "category": "quality",
+      "skill": "astrofy-testing",
+      "summary": "Build concluído no ambiente documentado.",
+      "method": "automatic",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "quality.flows",
+      "category": "quality",
+      "skill": "astrofy-testing",
+      "summary": "Fluxos principais verificados.",
+      "method": "hybrid",
+      "severity": "error",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "docs.index",
+      "category": "docs",
+      "skill": "astrofy-documentation",
+      "summary": "Índice de documentação atualizado.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "docs.files",
+      "category": "docs",
+      "skill": "astrofy-documentation",
+      "summary": "Mapa de arquivos corresponde à arquitetura atual.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "docs.operations",
+      "category": "docs",
+      "skill": "astrofy-documentation",
+      "summary": "Desenvolvimento e publicação reproduzíveis pela documentação.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    }
+  ]
+}

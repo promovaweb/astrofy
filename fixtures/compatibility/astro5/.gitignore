@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.astrofy/cache/
+.astrofy/reports/
+astrofy.checklist.json
+.astrofy/config/
+.astrofy/docs/
+.astrofy/.gitignore

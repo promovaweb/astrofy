@@ -1,0 +1,64 @@
+{
+  "name": "@promovaweb/astrofy",
+  "version": "0.1.0",
+  "description": "Skills e ferramentas para projetos Astro",
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "bin": {
+    "astrofy": "dist/cli/index.js"
+  },
+  "exports": {
+    ".": "./dist/core/index.js",
+    "./tokens": "./dist/design-system/index.js",
+    "./schemas/*": "./packages/schemas/*.json"
+  },
+  "files": [
+    "dist",
+    "packages/schemas",
+    "skills",
+    "templates",
+    "docs",
+    "fixtures/compatibility/README.md",
+    "VERSION",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test",
+    "check": "tsc --noEmit -p tsconfig.json",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "github-slugger": "2.0.0",
+    "gray-matter": "^4.0.3",
+    "neo-blessed": "^0.2.0",
+    "parse5": "^7.3.0",
+    "playwright": "^1.63.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-mdx": "^3.1.0",
+    "remark-parse": "^11.0.0",
+    "semver": "^7.7.2",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.0.0",
+    "yaml": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/blessed": "^0.1.25",
+    "@types/node": "^22.18.0",
+    "@types/semver": "^7.7.1",
+    "typescript": "^5.9.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/promovaweb/astrofy.git"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astrofy.promovaweb.com/schemas/1.0.0/paths",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "siteConfig": {
+      "type": "string",
+      "minLength": 1
+    },
+    "components": {
+      "type": "string",
+      "minLength": 1
+    },
+    "layouts": {
+      "type": "string",
+      "minLength": 1
+    },
+    "content": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pages": {
+      "type": "string",
+      "minLength": 1
+    },
+    "globalStyles": {
+      "type": "string",
+      "minLength": 1
+    },
+    "designSystem": {
+      "type": "string",
+      "minLength": 1
+    },
+    "designSystemCss": {
+      "type": "string",
+      "minLength": 1
+    },
+    "checklist": {
+      "type": "string",
+      "minLength": 1
+    },
+    "output": {
+      "type": "string",
+      "minLength": 1
+    },
+    "public": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "siteConfig",
+    "components",
+    "layouts",
+    "content",
+    "pages",
+    "globalStyles",
+    "designSystem",
+    "designSystemCss",
+    "checklist"
+  ]
+}

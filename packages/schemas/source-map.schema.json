@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astrofy.promovaweb.com/schemas/1.0.0/source-map",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "provided",
+              "imported",
+              "existing",
+              "inferred"
+            ]
+          },
+          "value": {},
+          "localOverride": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "path",
+          "source",
+          "kind",
+          "value"
+        ]
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "sources"
+  ]
+}

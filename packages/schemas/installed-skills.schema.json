@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astrofy.promovaweb.com/schemas/1.0.0/installed-skills",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "version", "agent", "files"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "agent": { "enum": ["codex", "claude"] },
+    "files": {
+      "type": "object",
+      "propertyNames": { "pattern": "^\\.(?:agents|claude)/skills/astrofy-[a-z0-9-]+/(?:[a-zA-Z0-9_-]+/)*[a-zA-Z0-9_.-]+$" },
+      "additionalProperties": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+    }
+  }
+}

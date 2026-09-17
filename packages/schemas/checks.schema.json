@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astrofy.promovaweb.com/schemas/1.0.0/checks",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "exclude": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "baseUrl": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https?://"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "timeoutMs": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 120000
+    },
+    "maxPages": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000
+    },
+    "retention": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "trustedExecution": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "exclude",
+    "baseUrl",
+    "timeoutMs",
+    "maxPages",
+    "retention",
+    "trustedExecution"
+  ]
+}

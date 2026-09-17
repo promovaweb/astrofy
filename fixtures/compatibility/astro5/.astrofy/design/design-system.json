@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "1.0.0",
+  "name": "Meu site",
+  "tokenFormat": "DTCG-2025.10",
+  "defaultMode": "light",
+  "assets": {
+    "logo": {
+      "light": "/brand/logo-light.svg",
+      "dark": "/brand/logo-dark.svg",
+      "alt": "Meu site"
+    }
+  },
+  "tokens": {
+    "primitive": {
+      "color": {
+        "white": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1
+            ],
+            "alpha": 1
+          }
+        },
+        "ink": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.06,
+              0.09,
+              0.16
+            ],
+            "alpha": 1
+          }
+        }
+      },
+      "spacing": {
+        "4": {
+          "$type": "dimension",
+          "$value": {
+            "value": 1,
+            "unit": "rem"
+          }
+        }
+      }
+    },
+    "semantic": {
+      "color": {
+        "surface": {
+          "$type": "color",
+          "$value": "{primitive.color.white}"
+        },
+        "content": {
+          "$type": "color",
+          "$value": "{primitive.color.ink}"
+        }
+      }
+    }
+  },
+  "modes": {
+    "light": {
+      "overrides": {}
+    },
+    "dark": {
+      "overrides": {
+        "semantic.color.surface": "{primitive.color.ink}",
+        "semantic.color.content": "{primitive.color.white}"
+      }
+    }
+  }
+}

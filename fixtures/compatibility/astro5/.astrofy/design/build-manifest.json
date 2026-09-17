@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatorVersion": "0.1.0",
+  "adapter": "tailwind4",
+  "inputHash": "0dbe777d4d2bc86fefbf8c78d24cc45a0c97e3ad01b6b2ddb4195d0b09499d4b",
+  "outputs": [
+    {
+      "path": "designsystem.css",
+      "hash": "29be9e43b77dfe044fb432f5f491c6050b535899857369278ec1974a71e228d9"
+    }
+  ]
+}
