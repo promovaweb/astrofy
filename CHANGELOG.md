@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.1.1] - 2026-09-17
+
+### Corrigido
+
+- O comando global `astrofy` passa a executar ao reconhecer o link criado
+  pelo npm. Importar o módulo continua sem iniciar comandos.
+- Os testes usam caminhos reais no Windows e macOS e conferem documentação
+  com finais de linha LF e CRLF.
+
+### Alterado
+
+- A configuração de publicação e o guia de instalação passam a indicar
+  acesso público no npm, conforme a autorização de distribuição.
+- A CI confere a instalação global, a ajuda e a versão do executável.
+
+### Validação
+
+- Suíte de 73 testes, incluindo regressão da execução por caminho simbólico.
+- Matriz de CI com Linux, Windows e macOS em Node 22.12.0, 24 e 26.
+- Instalação do pacote e abertura da TUI pelo comando global.
+- Não há alteração no contrato do projeto nem migração necessária.
+
 ## [0.1.0] - 2026-09-17
 
 ### Adicionado

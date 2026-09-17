@@ -36,22 +36,26 @@ espaços e detecção de escapes por links simbólicos. A suíte local foi execu
 em Linux. Validação nativa de Windows e macOS deve ser feita nos jobs de CI
 correspondentes, sem transformar testes Linux em comprovação desses sistemas.
 
-Os 71 testes do framework passaram localmente em Linux com Node
-22.12.0, incluindo os checks de Chromium. A mesma versão compilou o
-TypeScript distribuído. O script
-`npm test` usa a descoberta de testes do Node, sem depender da expansão de
-globs pelo shell.
+## Conferência por versão
 
-O tarball npm também foi instalado em um diretório temporário fora do
-repositório, com Node 26.8.1. Nessa instalação, `init` criou os contratos,
-`check --rule project.detected` passou e `skills install` instalou
-`astrofy-init` no diretório local do Codex. O pacote incluiu os schemas e o
-catálogo das 90 regras. Essa conferência não representa publicação no npm.
+A versão 0.1.0 passou na CI em Linux com Node 22.12.0, 24 e 26. Nos jobs de
+macOS, um teste comparava o caminho temporário com sua forma canônica. No
+Windows, essa comparação e a leitura de Markdown com CRLF falhavam.
 
-O workflow `.github/workflows/ci.yml` prepara nove combinações: Linux,
-Windows e macOS com Node 22.12.0, 24 e 26. Cada job instala o lockfile,
-compila, executa a suíte e confere o conteúdo do pacote npm. Esses jobs ainda
-não foram executados remotamente; o arquivo do workflow não comprova a matriz.
+A versão 0.1.1 compara os caminhos reais e confere a documentação com LF e
+CRLF. Ela também testa o CLI chamado por link de diretório ou junction, com
+espaços no caminho, e confirma que importar o módulo não executa comandos.
+A suíte tem 73 testes. O workflow instala o CLI globalmente e executa a ajuda
+e a consulta de versão para conferir o atalho criado pelo npm.
+
+O [workflow de validação](https://github.com/promovaweb/astrofy/actions/workflows/ci.yml)
+executa nove combinações: Linux, Windows e macOS com Node 22.12.0, 24 e 26.
+Consulte a execução correspondente ao commit ou à tag usada; configurar uma
+combinação no workflow não comprova que ela passou.
+
+O pacote `@promovaweb/astrofy` é público no npm. A licença continua
+`UNLICENSED`, e o repositório GitHub permanece privado. As notas das releases
+registram a versão publicada e as validações da distribuição.
 
 ## Navegador
 

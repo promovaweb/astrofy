@@ -1,6 +1,6 @@
 {
   "name": "@promovaweb/astrofy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Skills e ferramentas para projetos Astro",
   "type": "module",
   "license": "UNLICENSED",
@@ -58,7 +58,7 @@
     "url": "git+https://github.com/promovaweb/astrofy.git"
   },
   "publishConfig": {
-    "access": "restricted",
+    "access": "public",
     "registry": "https://registry.npmjs.org/"
   }
 }

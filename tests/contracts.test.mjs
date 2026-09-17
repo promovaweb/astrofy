@@ -1,7 +1,7 @@
 /** Testa adoção, contratos e contenção de arquivos com projetos temporários independentes. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, readFile, writeFile, symlink, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, writeFile, symlink, rm, realpath } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { initialize, discoverRoot, inspect, loadConfig, summarize, reconcile, invalidate, policyCode, CATALOG } from '../dist/core/index.js';
@@ -31,7 +31,7 @@ test('init dry-run não grava; adoção preserva o site e reexecução mantém p
   assert.deepEqual(second.created,[]);
   assert.equal(await readFile(path.join(root,'.astrofy/docs/architecture.md'),'utf8'),custom);
   assert.equal(await readFile(path.join(root,'src/pages/index.astro'),'utf8'),original);
-  assert.equal(await discoverRoot(path.join(root,'src/pages')),root);
+  assert.equal(await discoverRoot(path.join(root,'src/pages')),await realpath(root));
   assert.equal((await inspect(root)).versions.astro,'5.13.0');
 });
 test('configuração inválida existente não é sobrescrita',async t=>{
