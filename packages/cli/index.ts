@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /** Entrada do CLI: argumentos estritos, saída JSON limpa e códigos de término estáveis. */
 import { parseArgs } from 'node:util';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
+import { realpathSync } from 'node:fs';
 import { discoverRoot, inspect } from '../core/discovery.js';
 import { initialize } from '../core/init.js';
 import { loadConfig } from '../core/config.js';
@@ -107,7 +108,13 @@ export function renderText(report:Report):string {
   for(const finding of report.findings)lines.push(`${finding.status} ${finding.ruleId} ${finding.scope.target}: ${finding.message}`);
   return lines.join('\n')+'\n';
 }
-if(import.meta.url===pathToFileURL(process.argv[1]??'').href) {
+/** Reconhece a entrada direta e os links do npm sem executar o CLI quando importado. */
+function isCliEntry():boolean {
+  if(!process.argv[1])return false;
+  try {return realpathSync(process.argv[1])===realpathSync(fileURLToPath(import.meta.url));}
+  catch {return false;}
+}
+if(isCliEntry()) {
   const controller=new AbortController();
   process.once('SIGINT',()=>controller.abort());
   process.once('SIGTERM',()=>controller.abort());

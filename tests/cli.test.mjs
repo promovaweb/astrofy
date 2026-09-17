@@ -1,12 +1,23 @@
 /** Verifica o executável como processo, inclusive JSON, escopo parcial e modo sem TTY. */
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtemp,mkdir,writeFile,readFile,rm} from 'node:fs/promises';
+import {mkdtemp,mkdir,writeFile,readFile,rm,symlink} from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 const cli=fileURLToPath(new URL('../dist/cli/index.js',import.meta.url));
+test('CLI executa por caminho simbólico com espaços e mantém imports sem efeitos',async t=>{
+ const root=await mkdtemp(path.join(os.tmpdir(),'astrofy executável '));
+ t.after(()=>rm(root,{recursive:true,force:true}));
+ const linked=path.join(root,'atalho npm');
+ await symlink(path.dirname(cli),linked,process.platform==='win32'?'junction':'dir');
+ const result=spawnSync(process.execPath,[path.join(linked,'index.js'),'--help','--json'],{encoding:'utf8',timeout:10000});
+ assert.equal(result.error,undefined);assert.equal(result.status,0,result.stderr);
+ assert.ok(JSON.parse(result.stdout).data.commands.includes('tui'));
+ const imported=spawnSync(process.execPath,['--input-type=module','-e',`await import(${JSON.stringify(new URL('../dist/cli/index.js',import.meta.url).href)});process.stdout.write('importado');`],{encoding:'utf8',timeout:10000});
+ assert.equal(imported.status,0,imported.stderr);assert.equal(imported.stdout,'importado');
+});
 async function fixture(t){
  const root=await mkdtemp(path.join(os.tmpdir(),'astrofy cli '));t.after(()=>rm(root,{recursive:true,force:true}));
  await writeFile(path.join(root,'package.json'),JSON.stringify({dependencies:{astro:'5.13.0'}}));

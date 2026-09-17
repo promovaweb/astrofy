@@ -18,13 +18,17 @@ npm run build
 node dist/cli/index.js --help
 ```
 
-A distribuição npm usa acesso restrito à organização Promovaweb. Com uma
-conta autorizada no registry, instale a versão com:
+O pacote está disponível publicamente no npm. Instale ou atualize com:
 
 ```bash
-npm install --global @promovaweb/astrofy@0.1.0
+npm install --global @promovaweb/astrofy@0.1.1
 astrofy --help
+astrofy --version
 ```
+
+Depois da instalação, execute `astrofy tui --root /caminho/do/site` para
+abrir o painel em um projeto já inicializado com `astrofy init`.
+A versão 0.1.1 corrige a execução pelo atalho global criado pelo npm.
 
 O pacote conserva `UNLICENSED`, sem concessão de licença aberta. Para uma
 instalação a partir do checkout autorizado, `npm pack` gera o arquivo `.tgz`.

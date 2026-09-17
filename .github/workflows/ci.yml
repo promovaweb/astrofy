@@ -34,3 +34,8 @@ jobs:
         run: npm test
       - name: Conferir distribuição npm
         run: npm pack --dry-run
+      - name: Conferir o comando instalado globalmente
+        run: |
+          npm install --global .
+          astrofy --help
+          astrofy --version --json

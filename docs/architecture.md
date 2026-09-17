@@ -18,6 +18,14 @@ do projeto e os documentos usados durante o trabalho.
 Os componentes Astro e o conteúdo do template permanecem no projeto
 `astrofy-template`. O pacote do framework não importa componentes desse site.
 
+## Entrada do executável
+
+O CLI compara os caminhos reais do módulo e do executável informado pelo Node.
+Isso permite executar o atalho global do npm, inclusive por links simbólicos,
+sem iniciar comandos quando outro módulo apenas importa as funções do CLI.
+O teste usa um caminho com espaços e um link de diretório, ou junction no
+Windows, e confere que a ajuda produz saída.
+
 ## Raiz e caminhos
 
 A descoberta sobe a partir do diretório atual até encontrar um manifesto que
@@ -111,6 +119,6 @@ Timeout e cancelamento encerram a árvore iniciada pelo gerenciador. Em Linux
 e macOS, o processo usa um grupo próprio: recebe SIGTERM e, após 500 ms,
 SIGKILL para os descendentes restantes. Em Windows, o encerramento usa
 `taskkill.exe` com argumentos separados e sem shell. A operação aguarda esse
-encerramento antes de retornar e liberar o lock. Os testes locais confirmam
-o comportamento em Linux com um descendente que ignora SIGTERM; a execução
-em Windows e macOS ainda precisa ser conferida nesses sistemas.
+encerramento antes de retornar e liberar o lock. Os testes usam um descendente que ignora SIGTERM e verificam que ele deixou
+de escrever antes de liberar o lock. A mesma suíte faz parte dos jobs de
+Linux, Windows e macOS; consulte os resultados da CI da versão utilizada.
