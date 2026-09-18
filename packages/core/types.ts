@@ -1,5 +1,5 @@
 /** Contratos compartilhados entre configuração, verificadores e interfaces. */
-export const VERSION = '0.5.2';
+export const VERSION = '0.5.3';
 export const CONTRACT_VERSION = '1.0.0';
 export const CATALOG_VERSION = '1.0.0';
 export type Status = 'pending' | 'passed' | 'failed' | 'blocked' | 'not_applicable';
