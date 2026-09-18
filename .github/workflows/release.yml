@@ -27,6 +27,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libxml2-utils poppler-utils unzip
       - name: Instalar dependências
         run: npm ci
+      - name: Instalar Chromium
+        run: npx playwright install --with-deps chromium
       - name: Validar implementação, documentação, ebook e tag
         run: |
           npm test

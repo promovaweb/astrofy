@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.5.1] - 2026-09-18
+
+### Corrigido
+
+- O workflow de release instala o Chromium antes da suíte completa.
+- O teste de Markdown usa o executável instalado no próprio repositório.
+- `markdownlint-cli` passa a ser dependência de desenvolvimento explícita,
+  removendo a dependência acidental do diretório pai.
+
+### Validação
+
+- Suíte completa em checkout isolado pelo GitHub Actions.
+- Pipeline automatizado de pacote, npm, ebook e GitHub Release.
+
 ## [0.5.0] - 2026-09-18
 
 ### Adicionado
