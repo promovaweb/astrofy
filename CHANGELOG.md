@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.5.4] - 2026-09-18
+
+### Corrigido
+
+- O teste do formatador executa o arquivo JavaScript do `markdownlint-cli`
+  com o Node.js, funcionando da mesma forma em Linux, macOS e Windows.
+
+### Validação
+
+- Matriz completa de Node.js 22.12, 24 e 26 nos três sistemas operacionais.
+
 ## [0.5.3] - 2026-09-18
 
 ### Corrigido

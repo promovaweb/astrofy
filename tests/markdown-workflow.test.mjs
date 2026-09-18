@@ -9,7 +9,8 @@ import path from 'node:path';
 import os from 'node:os';
 
 const execute=promisify(execFile);
-const markdownlint=fileURLToPath(new URL('../node_modules/.bin/markdownlint',import.meta.url));
+const markdownlint=fileURLToPath(new URL('../node_modules/markdownlint-cli/markdownlint.js',import.meta.url));
+const runMarkdownlint=(args,options)=>execute(process.execPath,[markdownlint,...args],options);
 
 test('markdownlint herdado preserva conteúdo e a segunda correção não altera o arquivo',async t=>{
   const workspace=await mkdtemp(path.join(os.tmpdir(),'astrofy-markdown-'));
@@ -22,14 +23,14 @@ test('markdownlint herdado preserva conteúdo e a segunda correção não altera
   await writeFile(markdown,'---\ntitle: Guia\nurl: https://example.com/docs#inicio\n---\n# Guia\n##Uso\n```ts\nconst valor = "literal";\n```\n');
   await writeFile(mdx,'export const valor = <Componente />;\n\n# MDX\n');
 
-  await assert.rejects(execute(markdownlint,['--config',config,'docs/**/*.md'],{cwd:project}),error=>/MD022|MD018/.test(`${error.stdout??''}${error.stderr??''}${error.message??''}`));
-  await execute(markdownlint,['--config',config,'--fix','docs/**/*.md'],{cwd:project});
+  await assert.rejects(runMarkdownlint(['--config',config,'docs/**/*.md'],{cwd:project}),error=>/MD022|MD018/.test(`${error.stdout??''}${error.stderr??''}${error.message??''}`));
+  await runMarkdownlint(['--config',config,'--fix','docs/**/*.md'],{cwd:project});
   const corrected=await readFile(markdown,'utf8');
   assert.match(corrected,/title: Guia/);
   assert.match(corrected,/https:\/\/example\.com\/docs#inicio/);
   assert.match(corrected,/const valor = "literal";/);
   assert.equal(await readFile(mdx,'utf8'),'export const valor = <Componente />;\n\n# MDX\n');
-  await execute(markdownlint,['--config',config,'docs/**/*.md'],{cwd:project});
-  await execute(markdownlint,['--config',config,'--fix','docs/**/*.md'],{cwd:project});
+  await runMarkdownlint(['--config',config,'docs/**/*.md'],{cwd:project});
+  await runMarkdownlint(['--config',config,'--fix','docs/**/*.md'],{cwd:project});
   assert.equal(await readFile(markdown,'utf8'),corrected);
 });
