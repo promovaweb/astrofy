@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 620" role="img" aria-labelledby="title desc">
+  <title id="title">Relação entre artefatos e skills</title>
+  <desc id="desc">As orquestradoras criam a especificação e o plano, consumidos pelas skills técnicas e pelo checkup.</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#737373"/></marker></defs>
+  <rect width="1100" height="620" rx="24" fill="#f5f5f5"/>
+  <g font-family="Inter,Arial,sans-serif" fill="#171717">
+    <g fill="#fff" stroke="#171717" stroke-width="3">
+      <rect x="65" y="70" width="310" height="100" rx="14"/><rect x="65" y="260" width="310" height="100" rx="14"/><rect x="65" y="450" width="310" height="100" rx="14"/>
+      <rect x="710" y="70" width="325" height="100" rx="14"/><rect x="710" y="260" width="325" height="100" rx="14"/><rect x="710" y="450" width="325" height="100" rx="14"/>
+    </g>
+    <g font-size="24" font-weight="700" text-anchor="middle"><text x="220" y="115">page-planner</text><text x="220" y="305">implementation-planner</text><text x="220" y="495">skills técnicas</text><text x="872" y="115">page-spec.json</text><text x="872" y="305">implementation-plan.json</text><text x="872" y="495">checklist e relatórios</text></g>
+    <g font-size="18" text-anchor="middle" fill="#737373"><text x="220" y="145">coordena a entrevista</text><text x="220" y="335">mapeia o projeto real</text><text x="220" y="525">alteram e conferem o site</text><text x="872" y="145">conteúdo aprovado</text><text x="872" y="335">fases e tarefas</text><text x="872" y="525">estado verificável</text></g>
+  </g>
+  <g stroke="#737373" stroke-width="4" fill="none" marker-end="url(#arrow)"><path d="M375 120h325"/><path d="M710 170 385 285"/><path d="M375 310h325"/><path d="M710 360 385 475"/><path d="M375 500h325"/></g>
+</svg>

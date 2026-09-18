@@ -80,3 +80,31 @@ jobs:
           npm run test:compatibility
           npm run test:skill-procedures
           npm run test:skill-domains
+
+  documentation:
+    name: Manual, ebook e pacote
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Obter código
+        uses: actions/checkout@v4
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Instalar verificadores do ebook
+        run: sudo apt-get update && sudo apt-get install -y libxml2-utils poppler-utils unzip
+      - name: Instalar dependências
+        run: npm ci
+      - name: Conferir documentação, ebook e release
+        run: |
+          npm run docs:verify
+          npm run ebook:verify
+          npm run release:check
+      - name: Conferir pacote instalado
+        run: |
+          mkdir -p artifacts
+          npm pack --pack-destination artifacts
+          version="$(node -p "require('./package.json').version")"
+          npm run package:verify -- "artifacts/promovaweb-astrofy-${version}.tgz"

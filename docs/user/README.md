@@ -12,9 +12,10 @@ técnico e acompanhar a implementação.
 4. [Responda à entrevista de conteúdo](03-entrevista-e-conteudo.md).
 5. [Gere o plano de implementação](04-plano-de-implementacao.md).
 6. [Implemente e valide](05-execucao-e-validacao.md).
-7. [Acompanhe um exemplo de página de produto](06-exemplo-pagina-de-produto.md).
-8. [Retome ou altere um trabalho](07-retomada-e-manutencao.md).
-9. [Consulte as soluções para falhas comuns](08-solucao-de-problemas.md).
+7. [Compare exemplos dos sete tipos de página](06-exemplos-por-tipo-de-pagina.md).
+8. [Acompanhe os estados de uma tarefa](07-execucao-retomavel.md).
+9. [Retome ou altere um trabalho](08-retomada-e-manutencao.md).
+10. [Consulte as soluções para falhas comuns](09-solucao-de-problemas.md).
 
 ## Formatos
 

@@ -4,6 +4,8 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { copyFile, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { dirname, join, relative, resolve } from "node:path";
+import { posix } from "node:path";
+import { createRequire } from "node:module";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
@@ -21,6 +23,13 @@ const TEMPLATE = join(SCRIPT_DIR, "template.html");
 const METADATA = join(SCRIPT_DIR, "metadata.yaml");
 const LOGO = join(SCRIPT_DIR, "assets", "logo.svg");
 const SCRIPT = fileURLToPath(import.meta.url);
+const REQUIRE = createRequire(import.meta.url);
+const FONT_FILES = [
+  REQUIRE.resolve("@fontsource/inter/files/inter-latin-400-normal.woff2"),
+  REQUIRE.resolve("@fontsource/inter/files/inter-latin-700-normal.woff2"),
+  REQUIRE.resolve("@fontsource/manrope/files/manrope-latin-600-normal.woff2"),
+  REQUIRE.resolve("@fontsource/manrope/files/manrope-latin-800-normal.woff2"),
+];
 
 function fail(message) { throw new Error(message); }
 function rel(path) { return relative(ROOT, path).split("\\").join("/"); }
@@ -81,6 +90,16 @@ async function preparedPages(paths) {
   const directory = join(BUILD_ROOT, "pages");
   await mkdir(directory, { recursive: true });
   const inputs = [];
+  const assets = join(DOCS_ROOT, "assets");
+  const preparedAssets = join(directory, "assets");
+  const htmlAssets = join(BUILD_ROOT, "assets");
+  await mkdir(preparedAssets, { recursive: true });
+  await mkdir(htmlAssets, { recursive: true });
+  for (const path of await filesIn(assets)) {
+    const name = path.split(/[\\/]/).pop();
+    await copyFile(path, join(preparedAssets, name));
+    await copyFile(path, join(htmlAssets, name));
+  }
   for (const path of paths) {
     const name = path.split(/[\\/]/).pop();
     let text = await readFile(path, "utf8");
@@ -90,6 +109,42 @@ async function preparedPages(paths) {
     inputs.push(name);
   }
   return { directory, inputs };
+}
+function zipEntries(epub) {
+  return run("unzip", ["-Z1", epub]).split(/\r?\n/).filter(Boolean);
+}
+function isExternal(target) { return /^[a-z][a-z\d+.-]*:/i.test(target) || target.startsWith("//"); }
+function epubLinkFailures(epub) {
+  const names = new Set(zipEntries(epub));
+  const documents = new Map();
+  for (const name of [...names].filter((entry) => /\.x?html$/.test(entry))) {
+    const text = run("unzip", ["-p", epub, name]);
+    documents.set(name, { text, ids: new Set([...text.matchAll(/\bid=["']([^"']+)["']/gi)].map((match) => match[1])) });
+  }
+  const failures = [];
+  for (const [name, document] of documents) {
+    for (const match of document.text.matchAll(/\b(?:href|src)=["']([^"']+)["']/gi)) {
+      const target = decodeURIComponent(match[1]);
+      if (isExternal(target) || target.startsWith("data:")) continue;
+      const [pathPart, fragment = ""] = target.split("#");
+      const resolved = pathPart ? posix.normalize(posix.join(posix.dirname(name), pathPart)) : name;
+      if (!names.has(resolved)) { failures.push(`${name} -> ${target}`); continue; }
+      if (fragment && documents.has(resolved) && !documents.get(resolved).ids.has(fragment)) failures.push(`${name} -> #${fragment}`);
+    }
+  }
+  return failures;
+}
+function pdfLinkFailures(pdf) {
+  const xml = run("pdftohtml", ["-xml", "-hidden", "-i", pdf, "-stdout"]);
+  const pages = new Set([...xml.matchAll(/<page\b[^>]*\bnumber=["']([^"']+)["']/gi)].map((match) => match[1]));
+  const failures = [];
+  for (const match of xml.matchAll(/\bhref=["']([^"']+)["']/gi)) {
+    const target = match[1];
+    if (isExternal(target)) continue;
+    const fragment = target.includes("#") ? target.slice(target.indexOf("#") + 1) : "";
+    if (fragment && !pages.has(fragment)) failures.push(target);
+  }
+  return failures;
 }
 function datePtBr() {
   return new Intl.DateTimeFormat("pt-BR", { day: "numeric", month: "long", year: "numeric" }).format(new Date());
@@ -107,10 +162,18 @@ async function check(value, sources) {
     if (manifest.artifacts[kind].sha256 !== await sha256(path)) fail(`hash de ${kind} diverge do manifesto.`);
   }
   run("unzip", ["-tqq", paths.epub]);
+  for (const entry of zipEntries(paths.epub).filter((name) => /\.(xhtml|opf|ncx|xml)$/.test(name))) {
+    const xml = run("unzip", ["-p", paths.epub, entry]);
+    run("xmllint", [entry.endsWith(".xhtml") ? "--html" : "--noout", ...(entry.endsWith(".xhtml") ? ["--noout"] : []), "-"], { input: xml });
+  }
+  const linkFailures = [...pdfLinkFailures(paths.pdf), ...epubLinkFailures(paths.epub)];
+  if (linkFailures.length) fail(`links internos inválidos:\n${linkFailures.join("\n")}`);
   const text = run("pdftotext", [paths.pdf, "-"]);
-  for (const title of ["Astrofy", "Visão geral", "Instalação e setup", "Solução de problemas"]) {
+  for (const title of ["Astrofy", "Visão geral", "Instalação e setup", "Exemplos por tipo de página", "Execução retomável", "Solução de problemas"]) {
     if (!text.includes(title)) fail(`PDF não contém a seção: ${title}`);
   }
+  const fonts = run("pdffonts", [paths.pdf]);
+  for (const font of ["Inter", "Manrope"]) if (!fonts.includes(font)) fail(`PDF não incorporou a fonte ${font}.`);
   console.log(`OK: ebook v${value} sincronizado com docs/user/.`);
 }
 async function build(value, sources, pagePaths) {
@@ -123,8 +186,10 @@ async function build(value, sources, pagePaths) {
   run("magick", [LOGO, "-background", "white", "-gravity", "center", "-extent", "1600x2560", cover]);
   const common = ["--from=markdown", "--standalone", "--file-scope", "--toc", "--toc-depth=2", `--metadata-file=${METADATA}`, "--metadata", `version=${value}`];
   run("pandoc", [...prepared.inputs, "--to=html5", ...common, `--template=${TEMPLATE}`, "--metadata", `date=${datePtBr()}`, "--output", html], { cwd: prepared.directory });
+  const htmlSource = (await readFile(html, "utf8")).replaceAll('src="assets/fluxo-', 'src="../docs/user/assets/fluxo-').replaceAll('src="assets/artefatos-', 'src="../docs/user/assets/artefatos-');
+  await writeFile(html, htmlSource);
   run("weasyprint", [html, paths.pdf, "--base-url", SCRIPT_DIR, "--stylesheet", PDF_STYLE]);
-  run("pandoc", [...prepared.inputs, "--to=epub3", ...common, `--css=${EPUB_STYLE}`, `--epub-cover-image=${cover}`, "--output", paths.epub], { cwd: prepared.directory });
+  run("pandoc", [...prepared.inputs, "--to=epub3", ...common, `--css=${EPUB_STYLE}`, `--epub-cover-image=${cover}`, ...FONT_FILES.flatMap((font) => [`--epub-embed-font=${font}`]), "--output", paths.epub], { cwd: prepared.directory });
   const manifest = {
     schema_version: 1,
     version: value,
@@ -147,7 +212,7 @@ async function main() {
   if (process.argv.length > (onlyCheck ? 3 : 2)) fail("uso: node .ebook/build-ebook.mjs [--check]");
   const value = version();
   const pagePaths = await pages();
-  const sources = [...pagePaths, ORDER_FILE, VERSION_FILE, PDF_STYLE, EPUB_STYLE, TEMPLATE, METADATA, LOGO, SCRIPT].sort();
+  const sources = [...await filesIn(DOCS_ROOT), VERSION_FILE, PDF_STYLE, EPUB_STYLE, TEMPLATE, METADATA, LOGO, SCRIPT, join(ROOT, "package.json")].sort();
   if (onlyCheck) await check(value, sources);
   else await build(value, sources, pagePaths);
 }

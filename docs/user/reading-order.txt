@@ -5,6 +5,7 @@ docs/user/02-planejamento-de-pagina.md
 docs/user/03-entrevista-e-conteudo.md
 docs/user/04-plano-de-implementacao.md
 docs/user/05-execucao-e-validacao.md
-docs/user/06-exemplo-pagina-de-produto.md
-docs/user/07-retomada-e-manutencao.md
-docs/user/08-solucao-de-problemas.md
+docs/user/06-exemplos-por-tipo-de-pagina.md
+docs/user/07-execucao-retomavel.md
+docs/user/08-retomada-e-manutencao.md
+docs/user/09-solucao-de-problemas.md
