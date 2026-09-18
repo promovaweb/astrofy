@@ -20,6 +20,15 @@ npm install --save-dev @promovaweb/astrofy
 npx astrofy --version
 ```
 
+O Chromium é opcional e fica no cache do Playwright, fora do pacote npm:
+
+```bash
+astrofy browser status
+astrofy browser install
+```
+
+Instale-o quando o projeto usar as verificações reais de renderização.
+
 ## Primeira execução
 
 Comece pela skill `astrofy-setup`. Ela lê `package.json`, a configuração do

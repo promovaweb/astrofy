@@ -71,6 +71,11 @@ formulários nem publicar o site.
 
 ## Fluxos de uso
 
+A [matriz operacional](skill-matrix.md) relaciona todas as skills com suas
+dependências, entradas, saídas e comandos de validação. O arquivo é gerado a
+partir de `astrofy-setup/references/workflow.json` e conferido por
+`npm run skills:matrix:check`.
+
 Escolha as skills conforme a mudança. As sequências abaixo são percursos
 sugeridos para organizar o trabalho; não existe execução automática de todas as
 skills nem obrigação de seguir uma fila fixa. Em um site existente, comece pela

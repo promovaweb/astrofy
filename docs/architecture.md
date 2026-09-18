@@ -122,3 +122,30 @@ SIGKILL para os descendentes restantes. Em Windows, o encerramento usa
 encerramento antes de retornar e liberar o lock. Os testes usam um descendente que ignora SIGTERM e verificam que ele deixou
 de escrever antes de liberar o lock. A mesma suíte faz parte dos jobs de
 Linux, Windows e macOS; consulte os resultados da CI da versão utilizada.
+
+## Métricas locais
+
+Cada relatório inclui `metrics.startedAt`, `metrics.completedAt`,
+`metrics.durationMs` e contadores em `metrics.stages`. O setup mantém as últimas
+50 execuções em `setup-state.json`, com duração, retomada e arquivos alterados.
+Esses dados ajudam a localizar etapas lentas e permanecem no projeto.
+
+## Planejamento retomável de páginas
+
+`page create` inicia uma entrevista própria para vendas, produto, serviço,
+Home, Sobre, Contato ou Preços. O estado fica em
+`.astrofy/pages/<slug>/interview.json`. Até três perguntas pendentes são
+retornadas por vez, e respostas anteriores permanecem disponíveis na retomada.
+
+Quando a entrevista fica pronta, `page-spec.json` registra conteúdo, ações,
+mídia, comportamentos, SEO, integrações, acessibilidade e testes. `plan`
+transforma esse contrato em `.astrofy/plans/<slug>/implementation-plan.json`.
+`apply` atualiza a tarefa atual e libera dependentes concluídas, sem substituir
+a execução técnica da skill associada.
+
+## Migração de contratos
+
+`astrofy migrate --check` retorna código 1 quando o contrato precisa de
+atualização e não grava arquivos. O modo padrão apresenta o plano; `--apply`
+continua sendo a única forma de aplicar a migração. Versões sem percurso
+registrado são recusadas antes da escrita.

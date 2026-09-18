@@ -16,7 +16,12 @@ import { AstrofyError, VERSION, type ChecklistItem, type Configuration, type Rep
 export const environment = () => ({ node:process.versions.node,platform:platform(),arch:process.arch });
 /** Constrói a saída comum sem misturar mensagens operacionais no JSON. */
 export function createReport(command:string,options:RunOptions={},items:ChecklistItem[]=[]):Report {
-  return {schemaVersion:'1.0.0',command,runId:randomUUID(),status:'completed',createdAt:new Date().toISOString(),version:VERSION,environment:environment(),requestedScope:{category:options.category??null,rule:options.rule??null,page:options.page??null,component:options.component??null,changed:options.changed??false,offline:options.offline??false},coveredScope:[],summary:summarize(items),findings:[],artifacts:[]};
+  const startedAt=new Date().toISOString();
+  return {schemaVersion:'1.0.0',command,runId:randomUUID(),status:'completed',createdAt:startedAt,version:VERSION,environment:environment(),requestedScope:{category:options.category??null,rule:options.rule??null,page:options.page??null,component:options.component??null,changed:options.changed??false,offline:options.offline??false,browser:options.browser??false},coveredScope:[],summary:summarize(items),findings:[],artifacts:[],metrics:{startedAt,completedAt:startedAt,durationMs:0,stages:{}}};
+}
+/** Fecha as métricas antes de validar ou persistir o relatório. */
+export function finishReport(report:Report,stages:Record<string,number>={}):Report{
+  report.metrics.completedAt=new Date().toISOString();report.metrics.durationMs=Math.max(0,Date.parse(report.metrics.completedAt)-Date.parse(report.metrics.startedAt));report.metrics.stages={...report.metrics.stages,...stages};return report;
 }
 /** Compartilhados entram no hash de cada consumidor; outras rotas conservam seu estado em check parcial. */
 export function inputsFor(item:ChecklistItem,files:string[],config:Configuration):string[] {
@@ -32,6 +37,7 @@ export function inputsFor(item:ChecklistItem,files:string[],config:Configuration
 }
 /** Progresso transitório do runner; não integra o relatório nem a configuração do projeto. */
 export interface CheckProgress { phase:'script'|'checking'|'checked'|'saving'; completed:number; total:number; label:string }
+const browserRules=new Set(['theme.system','theme.persistence','theme.initial-paint','layout.overflow','layout.responsive','react.hydration']);
 /** Reavalia o filtro; o observador opcional recebe etapas síncronas sem alterar a saída JSON. */
 export async function checkProject(root:string,options:RunOptions={},onProgress?:(progress:CheckProgress)=>void):Promise<{report:Report;code:number}> {
   const run=async()=>{
@@ -46,9 +52,9 @@ export async function checkProject(root:string,options:RunOptions={},onProgress?
     const reportPath=`.astrofy/reports/${report.runId}.json`;
     report.data={versions:info.versions,packageManager:info.packageManager};
     const context:CheckContext={root,config,info,pages,signal:options.signal,offline:options.offline,dryRun:options.dryRun,scripts:new Map()};
-    const select=()=>checklist.items.filter(item=>!item.retired&&(!options.category||item.category===options.category)&&(!options.rule||item.ruleId===options.rule)&&(!options.page||sameScope(item.scope,{type:'page',target:options.page}))&&(!options.component||sameScope(item.scope,{type:'component',target:options.component}))&&!config.checks.exclude.includes(item.ruleId));
+    const select=()=>checklist.items.filter(item=>!item.retired&&(!options.category||item.category===options.category)&&(!options.rule||item.ruleId===options.rule)&&(!options.page||sameScope(item.scope,{type:'page',target:options.page}))&&(!options.component||sameScope(item.scope,{type:'component',target:options.component}))&&!config.checks.exclude.includes(item.ruleId)&&(options.browser||!browserRules.has(item.ruleId)));
     let selected=select();
-    if(!selected.length)throw new AstrofyError('Nenhuma regra corresponde aos filtros informados.');
+    if(!selected.length)throw new AstrofyError('Nenhuma regra corresponde aos filtros informados. Use --browser para incluir verificações de navegador.');
     let allFiles=[...info.files,...pages.map(page=>page.file),...await walk(root,'.astrofy/docs',true)];
     const hashes=new Map<string,string>();
     for(const item of selected)hashes.set(item.id,await fingerprint(root,inputsFor(item,allFiles,config),config,CATALOG.find(rule=>rule.id===item.ruleId)!.version));
@@ -104,7 +110,7 @@ export async function checkProject(root:string,options:RunOptions={},onProgress?
     report.coveredScope=[...new Map(report.coveredScope.map(scope=>[JSON.stringify(scope),scope])).values()];
     report.summary=summarize(selected);
     const code=policyCode(selected,config);report.status=code===1?'failed':code===3?'blocked':'completed';
-    report.artifacts=options.dryRun?[]:[reportPath,config.paths.checklist];
+    report.artifacts=options.dryRun?[]:[reportPath,config.paths.checklist];finishReport(report,{rules:report.findings.length});
     redactReport(report);validate('report',report);validate('checklist',checklist);
     if(!options.dryRun) {
       onProgress?.({phase:'saving',completed:selected.length,total:selected.length,label:'Gravando relatório e checklist'});
@@ -129,7 +135,7 @@ export async function projectStatus(root:string):Promise<{report:Report;items:Ch
     const version=CATALOG.find(rule=>rule.id===item.ruleId)?.version??'retired';
     invalidate(item,await fingerprint(root,inputsFor(item,files,config),config,version));
   }
-  const report=createReport('status',{},checklist.items);report.data={projectId:config.project.projectId,items:checklist.items};
+  const report=createReport('status',{},checklist.items);report.data={projectId:config.project.projectId,items:checklist.items};finishReport(report,{items:checklist.items.length});
   redactReport(report);
   return {report,items:checklist.items};
 }
@@ -152,7 +158,7 @@ export async function recordReview(root:string,id:string,status:'passed'|'failed
     item.status=status;item.reason=reason;item.checkedAt=report.createdAt;
     item.inputFingerprint=await fingerprint(root,inputsFor(item,files,config),config,rule.version);
     item.evidence=[{verifier:'manual',version:VERSION,runId:report.runId,checkedAt:report.createdAt,inputs:inputsFor(item,files,config),result:reason,environment:environment(),report:reportPath,reviewer}];
-    report.summary=summarize([item]);report.coveredScope=[item.scope];report.artifacts=[reportPath,config.paths.checklist];
+    report.summary=summarize([item]);report.coveredScope=[item.scope];report.artifacts=[reportPath,config.paths.checklist];finishReport(report,{reviews:1});
     report.findings=[{ruleId:item.ruleId,scope:item.scope,status,severity:item.severity,message:reason,files:item.evidence[0]!.inputs,suggestion:''}];
     redactReport(report);validate('report',report);validate('checklist',checklist);
     await atomicWrite(root,reportPath,jsonText(report));await atomicWrite(root,config.paths.checklist,jsonText(checklist));return report;

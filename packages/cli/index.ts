@@ -7,7 +7,7 @@ import { discoverRoot, inspect } from '../core/discovery.js';
 import { initialize } from '../core/init.js';
 import { setupProject } from '../core/setup.js';
 import { loadConfig } from '../core/config.js';
-import { createReport, checkProject, projectStatus } from '../core/runner.js';
+import { createReport, finishReport, checkProject, projectStatus } from '../core/runner.js';
 import { tokensCommand } from '../design-system/index.js';
 import { checkDocs } from '../checks/markdown.js';
 import { readPages, brokenLinks, meta } from '../checks/html.js';
@@ -15,15 +15,20 @@ import { migrate } from '../core/migrate.js';
 import { installSkills, skillCatalog } from '../core/skills.js';
 import { exportReport, readReport, persistReport } from '../core/reports.js';
 import { importBrandfyFile } from '../core/branding.js';
+import {PAGE_TYPES,applyPlanState,answerPageInterview,createPageInterview,planPage,readPageInterview,type PageType} from '../core/page-workflow.js';
+import {browserStatus,installBrowser,removeBrowser} from '../core/browser-manager.js';
 import { redactReport, redactText } from '../core/redaction.js';
 import { AstrofyError, VERSION, type Report, type RunOptions } from '../core/types.js';
-export const COMMANDS=['setup','init','inspect','check','status','tui','tokens validate','tokens build','tokens check','tokens import-brandfy','docs check','links scan','report','migrate','skills list','skills install'] as const;
-export const FLAGS={root:'string',json:'boolean',ci:'boolean',offline:'boolean','no-color':'boolean','dry-run':'boolean',category:'string',rule:'string',page:'string',component:'string',changed:'boolean',help:'boolean',version:'boolean',apply:'boolean',agent:'string',skill:'string',run:'string',output:'string',markdown:'boolean',source:'string'} as const;
+export const COMMANDS=['setup','init','inspect','check','status','tui','page create','page answer','page status','plan','apply','browser status','browser install','browser remove','tokens validate','tokens build','tokens check','tokens import-brandfy','docs check','links scan','report','migrate','skills list','skills install'] as const;
+export const FLAGS={root:'string',json:'boolean',ci:'boolean',offline:'boolean','no-color':'boolean','dry-run':'boolean',category:'string',rule:'string',page:'string',component:'string',changed:'boolean',help:'boolean',version:'boolean',apply:'boolean',agent:'string',skill:'string',run:'string',output:'string',markdown:'boolean',source:'string',slug:'string',type:'string',field:'string',value:'string',task:'string',status:'string',browser:'boolean',check:'boolean'} as const;
 export const COMMAND_OPTIONS:Record<string,string[]>={
-  setup:['dry-run'],init:['dry-run'],inspect:[],check:['dry-run','category','rule','page','component','changed'],status:[],tui:[],
+  setup:['dry-run'],init:['dry-run'],inspect:[],check:['dry-run','category','rule','page','component','changed','browser'],status:[],tui:[],
   'tokens validate':[],'tokens build':['dry-run'],'tokens check':[],'tokens import-brandfy':['source','dry-run'],
-  'docs check':[],'links scan':[],report:['run','output','markdown','dry-run'],migrate:['apply','dry-run'],
+  'docs check':[],'links scan':[],report:['run','output','markdown','dry-run'],migrate:['apply','dry-run','check'],
   'skills list':[],'skills install':['agent','skill','dry-run'],
+  'page create':['slug','type','dry-run'],'page answer':['slug','field','value','dry-run'],'page status':['slug'],
+  plan:['slug','dry-run'],apply:['slug','task','status','dry-run'],
+  'browser status':[],'browser install':[],'browser remove':[],
 };
 /** Retorna objeto e código, permitindo que testes invoquem o CLI sem interceptar process.exit. */
 export async function run(argv:string[],signal?:AbortSignal):Promise<{report:Report;code:number}> {
@@ -37,11 +42,16 @@ export async function run(argv:string[],signal?:AbortSignal):Promise<{report:Rep
   const common=['root','json','ci','offline','no-color','help','version'];
   for(const key of Object.keys(values))if(!common.includes(key)&&!COMMAND_OPTIONS[command]?.includes(key))throw new AstrofyError(`--${key} não se aplica a ${command}.`);
   if(values.markdown&&!values.output)throw new AstrofyError('--markdown exige --output com um arquivo Markdown.');
-  const options:RunOptions={root:values.root as string|undefined,json:!!values.json,ci:!!values.ci,offline:!!values.offline,noColor:!!values['no-color'],dryRun:!!values['dry-run'],category:values.category as string|undefined,rule:values.rule as string|undefined,page:values.page as string|undefined,component:values.component as string|undefined,changed:!!values.changed,signal};
+  const options:RunOptions={root:values.root as string|undefined,json:!!values.json,ci:!!values.ci,offline:!!values.offline,noColor:!!values['no-color'],dryRun:!!values['dry-run'],category:values.category as string|undefined,rule:values.rule as string|undefined,page:values.page as string|undefined,component:values.component as string|undefined,changed:!!values.changed,browser:!!values.browser,signal};
   if(options.page&&options.component)throw new AstrofyError('--page e --component não podem ser combinados.');
   if(values.apply&&command!=='migrate')throw new AstrofyError('--apply só se aplica a migrate.');
   if(values.apply&&options.dryRun)throw new AstrofyError('--apply e --dry-run não podem ser combinados.');
   if(command==='skills list'){const report=createReport(command);report.data=await skillCatalog();return {report,code:0};}
+  if(command.startsWith('browser ')){
+    const report=createReport(command);
+    report.data=command==='browser install'?await installBrowser():command==='browser remove'?await removeBrowser():await browserStatus();
+    return {report,code:0};
+  }
   const root=await discoverRoot(options.root,!!options.root);
   if(command==='check')return checkProject(root,options);
   if(command==='status'||command==='report'){
@@ -55,6 +65,23 @@ export async function run(argv:string[],signal?:AbortSignal):Promise<{report:Rep
   if(command==='setup'){
     const state=await setupProject(root,options);report.data=state;
     if(!options.dryRun)report.artifacts=['.astrofy/setup-state.json'];
+  }
+  else if(command==='page create'){
+    if(typeof values.slug!=='string'||typeof values.type!=='string'||!PAGE_TYPES.includes(values.type as PageType))throw new AstrofyError('Informe --slug e --type com um dos sete tipos de página.');
+    report.data=await createPageInterview(root,values.slug,values.type as PageType,!!options.dryRun);if(!options.dryRun)report.artifacts=[`.astrofy/pages/${values.slug}/interview.json`];
+  }
+  else if(command==='page answer'){
+    if(typeof values.slug!=='string'||typeof values.field!=='string'||typeof values.value!=='string')throw new AstrofyError('Informe --slug, --field e --value.');
+    report.data=await answerPageInterview(root,values.slug,values.field,values.value,!!options.dryRun);if(!options.dryRun)report.artifacts=[`.astrofy/pages/${values.slug}/interview.json`];
+  }
+  else if(command==='page status'){
+    if(typeof values.slug!=='string')throw new AstrofyError('Informe --slug.');report.data=await readPageInterview(root,values.slug);
+  }
+  else if(command==='plan'){
+    if(typeof values.slug!=='string')throw new AstrofyError('Informe --slug.');report.data=await planPage(root,values.slug,!!options.dryRun);if(!options.dryRun)report.artifacts=[`.astrofy/plans/${values.slug}/implementation-plan.json`,`.astrofy/plans/${values.slug}/implementation-plan.md`];
+  }
+  else if(command==='apply'){
+    if(typeof values.slug!=='string')throw new AstrofyError('Informe --slug.');report.data=await applyPlanState(root,values.slug,values.task as string|undefined,values.status as any,!!options.dryRun);if(!options.dryRun)report.artifacts=[`.astrofy/plans/${values.slug}/implementation-plan.json`];
   }
   else if(command==='init'){
     const state=await initialize(root,options);report.data=state;
@@ -71,7 +98,10 @@ export async function run(argv:string[],signal?:AbortSignal):Promise<{report:Rep
     report.data=await importBrandfyFile(root,values.source,!!options.dryRun);
     if(!options.dryRun)report.artifacts=[(await loadConfig(root)).paths.designSystem,'.astrofy/design/source-map.json'];
   }
-  else if(command==='migrate')report.data=await migrate(root,!values.apply);
+  else if(command==='migrate'){
+    report.data=await migrate(root,!values.apply);
+    if(values.check&&(report.data as {status:string}).status==='planned')code=1;
+  }
   else if(command==='tui') {
     if(!process.stdin.isTTY||!process.stdout.isTTY||options.json||options.ci){const result=await projectStatus(root);result.report.command='tui';return {report:result.report,code:0};}
     const {startTui}=await import('./tui.js');await startTui(root,options);report.data={closed:true};
@@ -97,7 +127,8 @@ export async function run(argv:string[],signal?:AbortSignal):Promise<{report:Rep
     report.data=rows;code=rows.some(row=>row.broken.length)?1:0;
   }
   report.status=code===1?'failed':'completed';
-  const persistent=['setup','init','skills install','tokens build','tokens import-brandfy','docs check','links scan'].includes(command)||command==='migrate'&&!!values.apply;
+  finishReport(report);
+  const persistent=['setup','init','page create','page answer','plan','apply','skills install','tokens build','tokens import-brandfy','docs check','links scan'].includes(command)||command==='migrate'&&!!values.apply;
   if(persistent&&!options.dryRun){
     report.coveredScope=command==='links scan'?(report.data as {route:string}[]).map(row=>({type:'page',target:row.route})):[{type:'project',target:'.'}];
     await persistReport(root,report);
@@ -130,7 +161,7 @@ if(isCliEntry()) {
   } catch(error) {
     const code=controller.signal.aborted?130:error instanceof AstrofyError?error.exitCode:3;
     const message=redactText(controller.signal.aborted?'Execução cancelada.':error instanceof AstrofyError?error.message:'Não foi possível concluir a operação. Confira os caminhos e as permissões de acesso.');
-    const report=createReport(process.argv.slice(2).find(arg=>!arg.startsWith('-'))??'unknown');report.status=code===130?'cancelled':code===3?'blocked':'failed';report.data={error:message};
+    const report=createReport(process.argv.slice(2).find(arg=>!arg.startsWith('-'))??'unknown');report.status=code===130?'cancelled':code===3?'blocked':'failed';report.data={error:message};finishReport(report);
     redactReport(report);
     if(process.argv.includes('--json'))process.stdout.write(JSON.stringify(report)+'\n');
     process.stderr.write(message+'\n');process.exitCode=code;

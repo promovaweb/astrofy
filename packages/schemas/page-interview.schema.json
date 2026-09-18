@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astrofy.promovaweb.com/schemas/1.0.0/page-interview",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "slug", "type", "status", "createdAt", "updatedAt", "answers", "rejected", "missing", "nextQuestions"],
+  "properties": {
+    "schemaVersion": {"const": "1.0.0"},
+    "slug": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "type": {"enum": ["sales", "product", "service", "homepage", "about", "contact", "pricing"]},
+    "status": {"enum": ["collecting", "ready"]},
+    "createdAt": {"type": "string", "format": "date-time"},
+    "updatedAt": {"type": "string", "format": "date-time"},
+    "answers": {"type": "object", "minProperties": 1, "additionalProperties": {"type": ["string", "null"]}},
+    "rejected": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "missing": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "nextQuestions": {"type": "array", "maxItems": 3, "items": {"type": "object", "additionalProperties": false, "required": ["field", "prompt"], "properties": {"field": {"type": "string", "minLength": 1}, "prompt": {"type": "string", "minLength": 1}}}}
+  }
+}

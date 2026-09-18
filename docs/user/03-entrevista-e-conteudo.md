@@ -24,6 +24,27 @@ o tom desejado.
 Áreas opcionais podem ficar pendentes. A aprovação final registra seu estado e
 impede que uma lacuna seja preenchida silenciosamente durante a implementação.
 
+## Estado retomável no CLI
+
+Inicie a entrevista informando o tipo da página:
+
+```bash
+astrofy page create --slug atlas --type product
+astrofy page status --slug atlas
+```
+
+A saída apresenta até três itens em `nextQuestions`. Registre cada resposta
+com o identificador recebido:
+
+```bash
+astrofy page answer --slug atlas --field title --value "Atlas"
+astrofy page answer --slug atlas --field route --value /atlas/
+```
+
+O arquivo `interview.json` conserva respostas e lacunas. Quando todas as
+entradas obrigatórias existem, o CLI gera `page-spec.json` com conteúdo, SEO,
+integrações, acessibilidade e testes.
+
 ## Exemplo curto
 
 ```text

@@ -24,7 +24,7 @@ comportamento e revisão integral. Cada etapa dependente de preferência oferece
 três opções materialmente diferentes, com uma recomendação fundamentada.
 
 A saída segue `packages/schemas/page-spec.schema.json`. A implementação ainda
-não começa: primeiro a pessoa revisa `brief.md` e aprova a especificação.
+não começa: primeiro a pessoa revisa `page.md` e aprova a especificação.
 
 ## Classificação
 

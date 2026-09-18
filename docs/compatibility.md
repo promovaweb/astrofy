@@ -70,3 +70,11 @@ npx playwright install chromium
 O template possui testes próprios de temas, navegação e hidratação. Eles usam
 um servidor efêmero sobre seu build, evitando que outra aplicação já aberta
 na máquina seja confundida com o site em teste.
+
+As fixtures adicionais em `fixtures/projects/manifest.json` cobrem projeto
+mínimo, Tailwind, React, Content Layer com MDX, projeto vindo do Astro 6 e
+estrutura personalizada. `npm run test:project-fixtures` cria cada cenário em
+diretório temporário e confere detecção, adoção e caminhos locais.
+
+A matriz principal executa somente `test:unit`. Chromium fica nos jobs
+`browser` e `compatibility`, com cache pela versão do lockfile.

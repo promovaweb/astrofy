@@ -18,6 +18,15 @@ O plano registra:
 O JSON segue `packages/schemas/implementation-plan.schema.json`. O Markdown
 equivalente permite revisar o plano sem ferramentas adicionais.
 
+Gere o plano estruturado depois que a entrevista estiver pronta:
+
+```bash
+astrofy plan --slug atlas
+```
+
+As tarefas começam como `pending` ou `ready`. Dependências concluídas liberam
+a próxima tarefa sem apagar o histórico do plano.
+
 ## Aprovação
 
 Confira se cada tarefa aponta para um resultado observável e uma forma de
