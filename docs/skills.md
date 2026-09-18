@@ -94,6 +94,10 @@ público vêm das instruções editoriais do site.
 
 ## Planejamento modular de páginas
 
+O percurso completo, com instalação, entrevista, arquivos gerados, execução e
+solução de problemas, está no [guia do usuário](user/README.md). A mesma fonte
+gera o [ebook oficial](../ebook/README.md) em PDF e EPUB.
+
 `astrofy-page-planner` recebe o pedido em linguagem natural, inspeciona o site
 e seleciona uma entrevistadora pelo tipo de página. A conversa define
 finalidade, público, áreas, textos, mídia, comportamento e ações. O resultado

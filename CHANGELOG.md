@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.4.0] - 2026-09-18
+
+### Adicionado
+
+- Manual técnico em dez capítulos para instalação, setup, planejamento de
+  páginas, entrevista, plano de implementação, execução, retomada e solução de
+  problemas.
+- Exemplo completo do percurso de uma página de produto, desde o pedido até o
+  checkup da implementação.
+- Pipeline reproduzível que compila a documentação canônica em PDF e EPUB e
+  registra fontes e hashes em um manifesto.
+- Ebook versionado e aliases estáveis incluídos no pacote npm.
+
+### Alterado
+
+- O índice principal e a referência das skills passam a encaminhar para o
+  manual completo.
+- A versão do manual acompanha a versão do CLI e da biblioteca de skills.
+
+### Validação
+
+- `npm run ebook:verify` confere versão, fontes, hashes, aliases, EPUB e texto
+  esperado no PDF.
+- O pipeline segue o design system de documentos A4 do Hub.
+
 ## [0.3.0] - 2026-09-18
 
 ### Adicionado

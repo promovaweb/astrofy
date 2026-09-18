@@ -1,0 +1,15 @@
+---
+title: "Astrofy: guia do usuário"
+subtitle: "Do pedido da página à implementação validada"
+author:
+  - "Astrofy"
+publisher: "Promovaweb"
+lang: "pt-BR"
+rights: "Documentação oficial do projeto Astrofy"
+description: "Manual técnico para planejar, implementar e validar sites Astro com o Astrofy."
+subject:
+  - "Astro"
+  - "sites"
+  - "documentação"
+identifier: "https://github.com/promovaweb/astrofy"
+---

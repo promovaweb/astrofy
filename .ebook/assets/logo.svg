@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Astrofy</title>
+  <rect width="128" height="128" rx="24" fill="#171717"/>
+  <path d="M28 92 58 26h13l29 66H83l-6-15H51l-6 15Zm29-30h14l-7-18Z" fill="#fff"/>
+  <circle cx="98" cy="30" r="9" fill="#ff5d01"/>
+</svg>
