@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.3] - 2026-09-18
+
+### Corrigido
+
+- O `prepack` permanece portátil em Linux, Windows e macOS e deixa a validação
+  de PDF e EPUB no job documental que instala as ferramentas necessárias.
+
+### Validação
+
+- Matriz de Node.js e sistemas operacionais, job documental e workflow de
+  release executados separadamente.
+
 ## [0.5.2] - 2026-09-18
 
 ### Corrigido
