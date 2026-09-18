@@ -51,7 +51,9 @@ jobs:
       - name: Publicar pacote no npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish release-assets/*.tgz --access public
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          npm publish "./release-assets/promovaweb-astrofy-${version}.tgz" --access public
       - name: Criar release e anexar artefatos
         env:
           GH_TOKEN: ${{ github.token }}
