@@ -40,6 +40,12 @@ quando a etapa seguinte depender da escolha atual.
 6. **Revisão:** apresente a página inteira na ordem de leitura, com pendências
    explícitas, antes de marcar a especificação como aprovada.
 
+Quando o CLI estiver disponível, use `astrofy page create` para iniciar o
+estado, `astrofy page answer` para registrar cada resposta e
+`astrofy page status` antes de formular a pergunta seguinte. O campo
+`nextQuestions` limita cada rodada a três assuntos e impede a repetição de
+entradas já preenchidas.
+
 Leia o [contrato da especificação](references/technical.md) durante a coleta e
 os [casos de entrevista](examples/cases.md) para tratar página existente,
 conteúdo incompleto e mudança de escopo.
@@ -53,6 +59,10 @@ Grave `.astrofy/pages/<slug>/page.md` e
 O Markdown apresenta a leitura completa; o JSON conserva os campos usados pela
 próxima orquestradora. Use os estados `proposed`, `content_pending`, `approved`
 e `ready` conforme o contrato.
+
+O contrato pronto também registra `seo`, `integrations`, `accessibility` e
+`tests`. Não marque uma resposta ausente como texto vazio para encerrar a
+entrevista; mantenha o campo em `missing` até receber conteúdo.
 
 Não marque a página como `approved` enquanto objetivo, público, rota,
 arquitetura e ação principal estiverem abertos. Ela pode seguir com áreas

@@ -1,5 +1,33 @@
 # Changelog
 
+## [0.6.0] - 2026-09-18
+
+### Adicionado
+
+- Comandos retomáveis `page create`, `page answer`, `page status`, `plan` e
+  `apply` para conduzir páginas desde a entrevista até as tarefas técnicas.
+- Contratos de página com SEO, integrações, acessibilidade e testes.
+- Comandos `browser status`, `browser install` e `browser remove` para manter
+  Chromium sob demanda.
+- Métricas locais nos relatórios e histórico das execuções do setup.
+- Matriz gerada de skills, entradas, saídas, dependências e validações.
+- Fixtures permanentes para projeto mínimo, Tailwind, React, MDX, migração do
+  Astro 6 e estrutura personalizada.
+- Opção `migrate --check` para automação sem escrita.
+
+### Alterado
+
+- A suíte separa testes unitários e de browser; somente dois jobs da CI usam
+  Chromium e ambos restauram seu cache.
+- A release aguarda a validação do commit e deixa de disparar outra matriz ao
+  criar a tag.
+- O pacote npm conserva apenas o ebook atual e aplica limite de tamanho.
+
+### Validação
+
+- Suítes unitária e Chromium, fixtures de projeto, schemas, manual, ebook,
+  tarball isolado e matriz completa da CI.
+
 ## [0.5.4] - 2026-09-18
 
 ### Corrigido

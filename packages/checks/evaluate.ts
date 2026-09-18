@@ -73,7 +73,7 @@ export async function evaluate(item:ChecklistItem, context:CheckContext):Promise
     const source=astroConfig?await read(astroConfig):'';
     return assessed(!!info.versions['@astrojs/react']&&source.includes('@astrojs/react'),'Dependência e referência à integração React verificadas estaticamente.');
   }
-  if(['theme.system','theme.persistence','layout.overflow','layout.responsive','theme.initial-paint'].includes(rule)) {
+  if(['theme.system','theme.persistence','layout.overflow','layout.responsive','theme.initial-paint','react.hydration'].includes(rule)) {
     const check=await browserCheck(config,item.scope.target,rule,context.offline,context.signal);
     return item.method==='automatic'?assessed(check.ok,check.reason):hybrid(check.ok?[]:[check.reason],check.reason);
   }

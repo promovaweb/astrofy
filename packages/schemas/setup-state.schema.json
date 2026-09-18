@@ -30,6 +30,7 @@
           "updatedAt": {"type": ["string", "null"], "format": "date-time"}
         }
       }
-    }
+    },
+    "runs": {"type": "array", "maxItems": 50, "items": {"type": "object", "additionalProperties": false, "required": ["startedAt", "completedAt", "durationMs", "resumed", "changedFiles"], "properties": {"startedAt": {"type": "string", "format": "date-time"}, "completedAt": {"type": "string", "format": "date-time"}, "durationMs": {"type": "integer", "minimum": 0}, "resumed": {"type": "boolean"}, "changedFiles": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}}}}
   }
 }

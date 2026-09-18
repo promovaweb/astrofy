@@ -1,5 +1,5 @@
 /** Contratos compartilhados entre configuração, verificadores e interfaces. */
-export const VERSION = '0.5.4';
+export const VERSION = '0.6.0';
 export const CONTRACT_VERSION = '1.0.0';
 export const CATALOG_VERSION = '1.0.0';
 export type Status = 'pending' | 'passed' | 'failed' | 'blocked' | 'not_applicable';
@@ -70,12 +70,13 @@ export interface Report {
   createdAt: string; version: string; environment: Record<string, string>;
   requestedScope: Record<string, unknown>; coveredScope: Scope[];
   summary: Summary; findings: Finding[]; artifacts: string[];
+  metrics: {startedAt:string;completedAt:string;durationMs:number;stages:Record<string,number>};
   data?: unknown;
 }
 export interface RunOptions {
   root?: string; json?: boolean; ci?: boolean; offline?: boolean; noColor?: boolean;
   dryRun?: boolean; category?: string; rule?: string; page?: string; component?: string;
-  changed?: boolean; signal?: AbortSignal;
+  changed?: boolean; browser?: boolean; signal?: AbortSignal;
 }
 /** Erro público com código estável; mensagens não incluem conteúdo de arquivos. */
 export class AstrofyError extends Error {

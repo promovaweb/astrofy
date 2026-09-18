@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "1.0.0",
+  "projects": [
+    {"id": "minimal", "astro": "7.3.3", "dependencies": {}, "files": ["src/pages/index.astro"], "features": {"react": false, "blog": false}},
+    {"id": "tailwind", "astro": "7.3.3", "dependencies": {"tailwindcss": "4.3.3", "@tailwindcss/vite": "4.3.3"}, "files": ["src/pages/index.astro", "src/styles/global.css"], "features": {"react": false, "blog": false}},
+    {"id": "react", "astro": "7.3.3", "dependencies": {"react": "19.0.0", "@astrojs/react": "6.0.6"}, "files": ["src/pages/index.astro", "src/components/App.tsx"], "features": {"react": true, "blog": false}},
+    {"id": "content-mdx", "astro": "7.3.3", "dependencies": {"@astrojs/mdx": "8.0.1"}, "files": ["src/pages/index.astro", "src/content/blog/exemplo.mdx"], "features": {"react": false, "blog": true}},
+    {"id": "migrated-astro6", "astro": "7.3.3", "dependencies": {"@astrojs/mdx": "8.0.1"}, "files": ["src/pages/index.astro", "src/content/blog/migrado.mdx", "MIGRATED_FROM_ASTRO_6"], "features": {"react": false, "blog": true}},
+    {"id": "custom-structure", "astro": "7.3.3", "dependencies": {}, "files": ["src/routes/index.astro", "src/interface/Card.astro"], "features": {"react": false, "blog": false}, "customPaths": {"pages": "src/routes", "components": "src/interface"}}
+  ]
+}

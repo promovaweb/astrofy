@@ -41,7 +41,7 @@ Para cada tarefa, registre:
 - passos técnicos delimitados;
 - comandos e verificações manuais;
 - condição objetiva para concluir;
-- estado `pending`, `ready`, `in_progress`, `completed` ou `not_applicable`.
+- estado `pending`, `ready`, `in_progress`, `completed`, `failed` ou `skipped`.
 
 Não crie tarefa genérica como "fazer responsivo". Nomeie a rota, a região, o
 estado e a conferência. Não transforme cada item da checklist em tarefa isolada
@@ -59,13 +59,20 @@ duplique a mesma alteração em fases diferentes.
 
 ## Saída e retomada
 
-Grave `.astrofy/plans/<slug>/implementation.md` e `implementation-plan.json`.
+Grave `.astrofy/plans/<slug>/implementation-plan.md` e
+`implementation-plan.json`.
 O JSON é a fonte do estado; o Markdown apresenta a ordem, as dependências, os
 comandos e as pendências para leitura humana.
 
 Ao retomar, compare hash ou data da especificação, Git e arquivos listados. Se
 a origem mudou, reabra tarefas consumidoras. Preserve tarefas concluídas sem
 relação com a mudança. Consulte os [casos de decomposição](examples/cases.md).
+
+Use `astrofy plan --slug <slug>` para gerar o JSON validado. Durante a
+execução, `astrofy apply --slug <slug>` inicia a próxima tarefa pronta;
+`--task` e `--status` registram conclusão, falha ou retirada consciente. Uma
+dependente passa a `ready` somente depois que todas as predecessoras terminam
+como `completed` ou `skipped`.
 
 Apresente o plano antes de executar. A aprovação do plano autoriza somente o
 trabalho pedido; push, publicação, compra e alteração externa continuam

@@ -33,6 +33,10 @@ Ao iniciar, a skill relê a rota, registra os arquivos observados e muda o
 status para `in_progress`. Após editar, executa todas as validações listadas e
 faz a revisão manual indicada pelo plano. Somente então registra:
 
+```bash
+astrofy apply --slug atlas --task product-route --status in_progress
+```
+
 ```json
 {
   "id": "product-route",
@@ -49,14 +53,24 @@ Se um comando falhar, o status passa para `failed` e recebe a mensagem útil
 para a correção. A tarefa dependente continua pendente. Uma nova execução volta
 à tarefa com falha antes de avançar.
 
+```bash
+astrofy apply --slug atlas --task product-route --status failed
+astrofy apply --slug atlas --task product-route --status completed
+```
+
+Ao concluir uma tarefa, o CLI muda para `ready` as dependências que ficaram
+livres. Sem `--task`, `astrofy apply --slug atlas` devolve a próxima tarefa que
+pode começar.
+
 ## Retomada em outra sessão
 
 1. Confira `git status` e os arquivos alterados.
-2. Leia `page-spec.json` e `implementation-plan.json`.
-3. Localize tarefas `in_progress` ou `failed`.
-4. Confirme se os arquivos ainda correspondem ao registro.
-5. Continue a tarefa e repita suas validações.
-6. Atualize o plano e libere as dependências concluídas.
+2. Execute `astrofy page status --slug atlas` e leia `page-spec.json`.
+3. Execute `astrofy apply --slug atlas --dry-run` para localizar a próxima tarefa.
+4. Localize tarefas `in_progress` ou `failed`.
+5. Confirme se os arquivos ainda correspondem ao registro.
+6. Continue a tarefa e repita suas validações.
+7. Atualize o estado pelo CLI e libere as dependências concluídas.
 
 ## Classificação
 

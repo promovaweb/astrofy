@@ -13,7 +13,9 @@ const specification={
   audience:{status:'approved',value:'Equipes de atendimento'},
   primaryAction:{status:'approved',label:'Solicitar demonstração',href:'/contato/'},
   sections:[{id:'hero',type:'hero',status:'approved',purpose:'Apresentar o produto',content:{heading:'Produto Exemplo'},actions:[{label:'Solicitar demonstração',href:'/contato/',kind:'link',status:'approved'}],media:[],sourceNotes:['Texto fornecido pela pessoa.']}],
-  assets:[],behaviors:[],openItems:[],sources:['brief fornecido'],approvedAt:'2026-09-18T12:00:00.000Z'
+  assets:[],behaviors:[],openItems:[],sources:['brief fornecido'],approvedAt:'2026-09-18T12:00:00.000Z',
+  seo:{title:'Produto Exemplo',description:null,canonical:'/produtos/exemplo/',indexable:true},integrations:[],
+  accessibility:{landmarks:true,keyboard:true,mediaAlternatives:true},tests:['renderização da rota']
 };
 
 test('especificação e plano aceitam o percurso completo e recusam estados desconhecidos',()=>{

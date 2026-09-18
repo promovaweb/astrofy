@@ -25,8 +25,32 @@ implementação. Mudanças editoriais precisam voltar à etapa de conteúdo.
 
 ## O plano ficou desatualizado
 
-Execute novamente `astrofy-implementation-planner` após reler o projeto. Peça
-uma atualização das tarefas afetadas e preserve o histórico das concluídas.
+Execute `astrofy plan --slug <slug>` após reler o projeto. O comando recria as
+tarefas a partir do contrato atual da página. Preserve no Git o plano anterior
+quando precisar consultar o histórico das tarefas concluídas.
+
+## O Chromium não está disponível
+
+Consulte a instalação controlada pelo Astrofy:
+
+```bash
+astrofy browser status
+astrofy browser install
+```
+
+Depois execute `astrofy check --browser`. No CI, mantenha o cache indicado no
+workflow distribuído para evitar baixar o Chromium a cada execução.
+
+## A migração pendente deve falhar no CI
+
+Use o modo de conferência:
+
+```bash
+astrofy migrate --check
+```
+
+O comando retorna código 1 quando o contrato precisa de migração e código 0
+quando a configuração já usa a versão atual.
 
 ## O ebook não confere
 

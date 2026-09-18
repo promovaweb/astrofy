@@ -23,10 +23,10 @@ alternativas quando uma escolha editorial depende do usuário.
 | --- | --- |
 | `.astrofy/config/project.json` | Configuração reconhecida pelo setup |
 | `.astrofy/pages/<slug>/page-spec.json` | Especificação estruturada da página |
-| `.astrofy/pages/<slug>/brief.md` | Leitura humana do conteúdo aprovado |
+| `.astrofy/pages/<slug>/page.md` | Leitura humana do conteúdo coletado |
 | `.astrofy/plans/<slug>/implementation-plan.json` | Fases e tarefas |
 | `.astrofy/plans/<slug>/implementation-plan.md` | Plano técnico para revisão |
-| `.astrofy/checklist.json` | Estado das verificações do site |
+| `astrofy.checklist.json` | Estado das verificações do site |
 
 ![Relação entre orquestradoras, artefatos e skills](assets/artefatos-skills.svg)
 

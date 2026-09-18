@@ -31,7 +31,7 @@
   "$defs": {
     "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
     "idList": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
-    "taskStatus": {"enum": ["pending", "ready", "in_progress", "completed", "not_applicable"]},
+    "taskStatus": {"enum": ["pending", "ready", "in_progress", "completed", "failed", "skipped"]},
     "task": {
       "type": "object",
       "additionalProperties": false,

@@ -9,8 +9,9 @@ do campo sem reproduzir seu valor.
 
 `astrofy setup` cria `.astrofy/setup-state.json` depois da adoção incremental.
 O arquivo registra a versão do workflow, hashes dos arquivos observados,
-`changedFiles` e as 49 etapas com `dependsOn`, `inputs`, `outputs`, `status` e
-`updatedAt`. O grafo canônico fica em
+`changedFiles`, o histórico recente em `runs` e as 49 etapas com `dependsOn`,
+`inputs`, `outputs`, `status` e `updatedAt`. Cada execução conserva início,
+fim, duração, retomada e arquivos alterados. O grafo canônico fica em
 `skills/astrofy-setup/references/workflow.json`.
 O contrato fechado fica em `packages/schemas/setup-state.schema.json`; campo,
 status, hash ou data inválidos interrompem a retomada antes da escrita.
@@ -19,10 +20,13 @@ Uma segunda execução conserva os marcos já registrados e compara os hashes.
 O agente relaciona `changedFiles` aos consumidores do grafo antes de repetir
 uma etapa. `--dry-run` calcula o mesmo estado sem criar arquivos.
 
-As definições conversacionais de páginas ficam em `.astrofy/pages/<slug>/`.
-Os planos técnicos correspondentes ficam em `.astrofy/plans/<slug>/`. Esses
-arquivos pertencem ao agente e ao fluxo das skills; o comando `setup` apenas
-registra suas etapas no grafo e não cria uma página ou aprova conteúdo.
+As entrevistas e definições de páginas ficam em `.astrofy/pages/<slug>/`.
+`astrofy page create` inicia a entrevista, `page answer` registra cada resposta
+e `page status` mostra as próximas perguntas. Quando todos os campos
+obrigatórios estão preenchidos, o CLI cria `page-spec.json` e `page.md`. Os
+planos técnicos ficam em `.astrofy/plans/<slug>/` e são criados por
+`astrofy plan`. O comando `setup` registra as etapas gerais no grafo, mas não
+cria uma página nem aprova conteúdo.
 
 ## Arquivos editáveis
 
@@ -39,7 +43,8 @@ registra suas etapas no grafo e não cria uma página ou aprova conteúdo.
 
 Os schemas distribuídos ficam em `packages/schemas/`. Consulte o arquivo
 correspondente para os tipos e limites completos. A validação funciona offline.
-`page-spec.schema.json` valida a definição conversacional de uma página;
+`page-interview.schema.json` valida perguntas, respostas, pendências e estado
+da entrevista; `page-spec.schema.json` valida a definição de uma página;
 `implementation-plan.schema.json` valida fases, tarefas, dependências,
 estimativas e conferências da implementação.
 
@@ -137,9 +142,10 @@ null no JSON e em “sem avaliações” na interface.
 ## Relatórios e retenção
 
 Relatórios ficam em `.astrofy/reports/<UUID>.json`. Eles registram o comando,
-o ambiente, os escopos solicitados e os efetivamente cobertos. Uma execução
-parcial atualiza apenas seus itens. `status` verifica a validade em memória e
-não grava o resultado da consulta.
+o ambiente, os escopos solicitados, os efetivamente cobertos e `metrics` com
+início, fim, duração e etapas observadas. Uma execução parcial atualiza apenas
+seus itens. `status` verifica a validade em memória e não grava o resultado da
+consulta.
 
 O CLI também conserva relatórios de inicialização, instalação de skills,
 geração de tokens, importação Brandfy, migração aplicada e verificações de
@@ -160,7 +166,8 @@ e a consulta informa a divergência em vez de exibir outra execução.
 
 A primeira migração implementada aceita contrato `0.1.0` e preenche os campos
 novos do contrato `1.0.0`. O modo padrão mostra as alterações propostas.
-`migrate --apply` aplica os arquivos validados e registra a operação em
+`migrate --check` retorna código 1 quando existe uma migração pendente e pode
+ser usado no CI. `migrate --apply` aplica os arquivos validados e registra a operação em
 `.astrofy/migrations/`. Versões desconhecidas são recusadas.
 
 Antes da primeira escrita, o lote inteiro passa pelos schemas e pelas mesmas

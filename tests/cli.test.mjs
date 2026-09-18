@@ -36,6 +36,18 @@ test('CLI init, inspect, tokens desconhecido e ajuda possuem saída limpa',async
  assert.ok(run(root,'--help').json.data.commands.includes('tokens build'));
  assert.equal(run(root,'check','--page','/','--component','Header.astro').status,2);
 });
+test('migrate --check sinaliza contrato antigo e libera contrato atual',async t=>{
+ const root=await fixture(t);run(root,'init');
+ assert.equal(run(root,'migrate','--check').status,0);
+ const file=path.join(root,'.astrofy/config/project.json');
+ const project=JSON.parse(await readFile(file,'utf8'));project.contractVersion='0.1.0';
+ await writeFile(file,JSON.stringify(project));
+ const pending=run(root,'migrate','--check');
+ assert.equal(pending.status,1);assert.equal(pending.json.data.status,'planned');
+ assert.equal(JSON.parse(await readFile(file,'utf8')).contractVersion,'0.1.0');
+ assert.equal(run(root,'migrate','--apply').status,0);
+ assert.equal(run(root,'migrate','--check').status,0);
+});
 test('check parcial preserva outra rota, status não grava e sem TTY termina',async t=>{
  const root=await fixture(t);run(root,'init');
  const first=run(root,'check','--rule','links.broken');assert.equal(first.status,1);

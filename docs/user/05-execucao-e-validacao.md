@@ -15,13 +15,25 @@ Execute somente as skills relacionadas ao escopo. Cada uma deve ler o plano,
 conferir a implementação atual, registrar o que alterou e atualizar o estado da
 tarefa.
 
+Use `apply` para registrar a passagem de estado antes e depois da execução da
+skill indicada:
+
+```bash
+astrofy apply --slug atlas
+astrofy apply --slug atlas --task route --status completed
+```
+
 ## Conferência mínima
 
 ```bash
 npm run check
 npm run build
 astrofy check --root .
+astrofy check --root . --browser
 ```
+
+O primeiro `check` não abre navegador. A opção `--browser` inclui Chromium e
+confere temas, overflow, responsividade e erros de runtime no preview local.
 
 Use também os testes próprios do projeto e revise a página no navegador em
 larguras de celular e desktop. Formulários, menus, foco, links e mensagens de

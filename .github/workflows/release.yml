@@ -8,6 +8,7 @@ on:
 permissions:
   contents: write
   id-token: write
+  actions: read
 
 jobs:
   release:
@@ -17,6 +18,18 @@ jobs:
     steps:
       - name: Obter código da tag
         uses: actions/checkout@v4
+      - name: Aguardar validação do commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for attempt in {1..60}; do
+            conclusion="$(gh run list --workflow ci.yml --commit "$GITHUB_SHA" --event push --limit 1 --json status,conclusion --jq '.[0] | if .status == "completed" then .conclusion else .status end')"
+            if [ "$conclusion" = "success" ]; then exit 0; fi
+            if [ "$conclusion" = "failure" ] || [ "$conclusion" = "cancelled" ]; then exit 1; fi
+            sleep 10
+          done
+          echo "A validação do commit não terminou dentro de dez minutos."
+          exit 1
       - name: Configurar Node e npm
         uses: actions/setup-node@v4
         with:
@@ -27,11 +40,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libxml2-utils poppler-utils unzip
       - name: Instalar dependências
         run: npm ci
-      - name: Instalar Chromium
-        run: npx playwright install --with-deps chromium
-      - name: Validar implementação, documentação, ebook e tag
+      - name: Validar documentação, ebook e tag
         run: |
-          npm test
           npm run docs:verify
           npm run ebook:verify
           npm run release:check -- "${GITHUB_REF_NAME}"

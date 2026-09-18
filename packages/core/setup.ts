@@ -12,7 +12,8 @@ type StepStatus='completed'|'pending'|'not_applicable';
 interface WorkflowStep {skill:string;dependsOn:string[];inputs:string[];outputs:string[]}
 interface Workflow {schemaVersion:string;entrypoint:string;finalizers:string[];steps:WorkflowStep[]}
 interface SetupStep extends WorkflowStep {status:StepStatus;updatedAt:string|null}
-interface SetupState {schemaVersion:string;workflowVersion:string;createdAt:string;updatedAt:string;files:Record<string,string>;changedFiles:string[];steps:SetupStep[]}
+interface SetupRun {startedAt:string;completedAt:string;durationMs:number;resumed:boolean;changedFiles:string[]}
+interface SetupState {schemaVersion:string;workflowVersion:string;createdAt:string;updatedAt:string;files:Record<string,string>;changedFiles:string[];steps:SetupStep[];runs?:SetupRun[]}
 
 const stateFile='.astrofy/setup-state.json';
 const workflowFile=fileURLToPath(new URL('../../skills/astrofy-setup/references/workflow.json',import.meta.url));
@@ -52,6 +53,7 @@ const applicable=(skill:string,features:Record<string,boolean>):boolean=>{
 export async function setupProject(root:string,options:RunOptions={}):Promise<SetupState>{
   await initialize(root,options);
   const execute=async()=>{
+    const startedAt=new Date().toISOString();
     const info=await inspect(root),workflow=await readWorkflow();
     const files=await snapshot(root,info.files.filter(file=>!file.startsWith('.astrofy/')));
     const target=await safePath(root,stateFile);
@@ -65,7 +67,9 @@ export async function setupProject(root:string,options:RunOptions={}):Promise<Se
       const status:StepStatus=!applicable(step.skill,info.features)?'not_applicable':step.skill==='astrofy-setup'||step.skill==='astrofy-init'?'completed':old?.status??'pending';
       return {...step,status,updatedAt:status==='completed'?(old?.updatedAt??now):old?.updatedAt??null};
     });
-    const state:SetupState={schemaVersion:'1.0.0',workflowVersion:workflow.schemaVersion,createdAt:previous?.createdAt??now,updatedAt:now,files,changedFiles,steps};
+    const completedAt=new Date().toISOString();
+    const runs=[...(previous?.runs??[]),{startedAt,completedAt,durationMs:Math.max(0,Date.parse(completedAt)-Date.parse(startedAt)),resumed:!!previous,changedFiles}].slice(-50);
+    const state:SetupState={schemaVersion:'1.0.0',workflowVersion:workflow.schemaVersion,createdAt:previous?.createdAt??now,updatedAt:now,files,changedFiles,steps,runs};
     validate<SetupState>('setup-state',state);
     if(!options.dryRun)await atomicWrite(root,stateFile,jsonText(state),{signal:options.signal});
     return state;

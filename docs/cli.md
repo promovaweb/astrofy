@@ -90,7 +90,9 @@ astrofy inspect --root "site existente" --no-color
 
 Executa as regras aplicáveis ao escopo selecionado.
 
-Filtros opcionais --category, --rule, --page, --component e --changed. Aceita --dry-run.
+Filtros opcionais --category, --rule, --page, --component e --changed. Aceita
+--dry-run. `--browser` inclui as verificações que abrem Chromium; sem essa
+opção, o comando mantém os resultados anteriores dessas regras.
 
 Grava relatório e checklist. Uma execução parcial preserva avaliações de outros escopos. --page e --component são mutuamente exclusivos. Confira a saída do comando e use `status` após uma operação que altere a checklist.
 
@@ -102,6 +104,7 @@ astrofy check --rule links.broken --page /blog/exemplo/
 astrofy check --category design-system --json
 astrofy check --component src/components/Header.astro
 astrofy check --changed --ci --offline
+astrofy check --browser
 ```
 
 ## astrofy status
@@ -138,6 +141,111 @@ astrofy tui --root apps/site
 astrofy tui --no-color
 astrofy tui --json
 astrofy tui --ci
+```
+
+## astrofy page create
+
+Inicia uma entrevista retomável para um dos sete tipos de página. `--slug` e
+`--type` são obrigatórios. O comando grava `interview.json` e retorna até três
+perguntas ainda sem resposta.
+
+```bash
+astrofy page create --slug produto --type product
+astrofy page create --slug consultoria --type service
+astrofy page create --slug inicio --type homepage
+astrofy page create --slug contato --type contact --json
+astrofy page create --slug planos --type pricing --dry-run
+```
+
+## astrofy page answer
+
+Registra uma resposta na entrevista indicada por `--slug`. `--field` recebe o
+identificador retornado por `nextQuestions`, e `--value` recebe o texto. Quando
+as entradas obrigatórias terminam, o comando gera `page-spec.json` e `page.md`.
+
+```bash
+astrofy page answer --slug produto --field title --value "Astrofy"
+astrofy page answer --slug produto --field route --value /astrofy/
+astrofy page answer --slug produto --field objective --value "Instalar o CLI"
+astrofy page answer --slug produto --field audience --value "Equipes web" --json
+astrofy page answer --slug produto --field integrations --value "GitHub, ClickUp" --dry-run
+```
+
+## astrofy page status
+
+Consulta as respostas, lacunas e próximas perguntas sem alterar a entrevista.
+
+```bash
+astrofy page status --slug produto
+astrofy page status --slug produto --json
+astrofy page status --slug contato --root apps/site
+astrofy page status --slug planos --offline
+astrofy page status --slug inicio --ci
+```
+
+## astrofy plan
+
+Converte um `page-spec.json` pronto em fases e tarefas retomáveis. Cada tarefa
+registra skill principal, arquivos, dependências, estimativa e validações.
+
+```bash
+astrofy plan --slug produto
+astrofy plan --slug produto --json
+astrofy plan --slug produto --dry-run
+astrofy plan --slug contato --root apps/site
+astrofy plan --slug planos --offline
+```
+
+## astrofy apply
+
+Inicia uma tarefa pronta ou registra `completed`, `failed` ou `skipped` em uma
+tarefa indicada. O comando atualiza somente o plano; a skill informada na
+tarefa executa a alteração correspondente no site.
+
+```bash
+astrofy apply --slug produto
+astrofy apply --slug produto --task route --status completed
+astrofy apply --slug produto --task content --status failed
+astrofy apply --slug produto --task content --status skipped
+astrofy apply --slug produto --task check --status completed --json
+```
+
+## astrofy browser status
+
+Confere se o Chromium do Playwright está disponível e, quando instalado,
+retorna o caminho e a versão aberta em modo headless.
+
+```bash
+astrofy browser status
+astrofy browser status --json
+astrofy browser status --ci
+astrofy browser status --offline
+astrofy browser status --no-color
+```
+
+## astrofy browser install
+
+Instala somente Chromium no cache compartilhado do Playwright. O pacote npm
+do Astrofy não transporta o binário do navegador.
+
+```bash
+astrofy browser install
+astrofy browser install --json
+astrofy browser install --ci
+astrofy browser install --offline
+astrofy browser install --no-color
+```
+
+## astrofy browser remove
+
+Remove os browsers mantidos pela instalação atual do Playwright.
+
+```bash
+astrofy browser remove
+astrofy browser remove --json
+astrofy browser remove --ci
+astrofy browser remove --offline
+astrofy browser remove --no-color
 ```
 
 ## astrofy tokens validate
@@ -277,7 +385,9 @@ astrofy report --output resumo.md --markdown --dry-run
 
 Mostra ou aplica a migração de contrato registrada.
 
---apply aplica a migração. O padrão é somente planejar. Aceita --dry-run, incompatível com --apply.
+--apply aplica a migração. O padrão é somente planejar. `--check` retorna código
+1 quando existe uma migração pendente. Aceita --dry-run, incompatível com
+--apply.
 
 Uma versão desconhecida é recusada. A aplicação grava configurações validadas e o registro de migração, conservando a checklist. Confira a saída do comando e use `status` após uma operação que altere a checklist.
 
@@ -289,6 +399,7 @@ astrofy migrate --dry-run
 astrofy migrate --json
 astrofy migrate --apply
 astrofy migrate --root apps/site --apply --offline
+astrofy migrate --check
 ```
 
 ## astrofy skills list
@@ -646,4 +757,103 @@ astrofy tokens import-brandfy --source brand/tokens.json
 astrofy tokens import-brandfy --source brand/tokens.json --dry-run
 astrofy tokens import-brandfy --source brand/tokens.json --json
 astrofy tokens import-brandfy --source brand/tokens.json --root apps/site
+```
+
+## --slug
+
+Tipo: `string`. Identifica uma página nos comandos `page`, `plan` e `apply`.
+
+```bash
+astrofy page create --slug produto --type product
+astrofy page status --slug produto
+astrofy page answer --slug produto --field title --value "Produto"
+astrofy plan --slug produto
+astrofy apply --slug produto
+```
+
+## --type
+
+Tipo: `string`. Em `page create`, aceita `sales`, `product`, `service`,
+`homepage`, `about`, `contact` ou `pricing`.
+
+```bash
+astrofy page create --slug venda --type sales
+astrofy page create --slug produto --type product
+astrofy page create --slug servico --type service
+astrofy page create --slug sobre --type about
+astrofy page create --slug contato --type contact
+```
+
+## --field
+
+Tipo: `string`. Identificador de resposta retornado pela entrevista.
+
+```bash
+astrofy page answer --slug produto --field title --value "Produto"
+astrofy page answer --slug produto --field route --value /produto/
+astrofy page answer --slug produto --field audience --value "Equipes web"
+astrofy page answer --slug contato --field fields --value "Nome, email"
+astrofy page answer --slug planos --field billing --value "Mensal e anual"
+```
+
+## --value
+
+Tipo: `string`. Conteúdo associado a `--field`; valores vazios são recusados.
+
+```bash
+astrofy page answer --slug produto --field title --value "Produto"
+astrofy page answer --slug produto --field route --value /produto/
+astrofy page answer --slug produto --field objective --value "Gerar demonstrações"
+astrofy page answer --slug contato --field channels --value "Email, telefone"
+astrofy page answer --slug planos --field plans --value "Inicial, Pro"
+```
+
+## --task
+
+Tipo: `string`. Seleciona uma tarefa existente do plano em `apply`.
+
+```bash
+astrofy apply --slug produto --task route --status completed
+astrofy apply --slug produto --task content --status in_progress
+astrofy apply --slug produto --task content --status failed
+astrofy apply --slug produto --task content --status skipped
+astrofy apply --slug produto --task check --status completed
+```
+
+## --status
+
+Tipo: `string`. Em `apply`, aceita `in_progress`, `completed`, `failed` ou
+`skipped` conforme a transição da tarefa.
+
+```bash
+astrofy apply --slug produto --task route --status in_progress
+astrofy apply --slug produto --task route --status completed
+astrofy apply --slug produto --task content --status failed
+astrofy apply --slug produto --task content --status skipped
+astrofy apply --slug produto --task check --status completed
+```
+
+## --browser
+
+Tipo: `boolean`. Inclui no `check` as regras que abrem Chromium.
+
+```bash
+astrofy check --browser
+astrofy check --browser --json
+astrofy check --browser --page /
+astrofy check --browser --category theme
+astrofy check --browser --rule layout.overflow
+```
+
+## --check
+
+Tipo: `boolean`. Em `migrate`, retorna código 1 quando há alterações de
+contrato ainda não aplicadas.
+
+```bash
+astrofy migrate --check
+astrofy migrate --check --json
+astrofy migrate --check --root apps/site
+astrofy migrate --check --offline
+astrofy migrate --check --ci
 ```

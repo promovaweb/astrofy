@@ -97,7 +97,7 @@ dados estruturados compatíveis com o conteúdo e testes das combinações.
 
 ## Resultado comum
 
-Cada exemplo termina com `page-spec.json`, `brief.md`,
+Cada exemplo termina com `page-spec.json`, `page.md`,
 `implementation-plan.json` e `implementation-plan.md`. A implementação somente
 usa fatos e textos aprovados na entrevista.
 

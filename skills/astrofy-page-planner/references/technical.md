@@ -46,9 +46,27 @@ usa `product`; uma captação para consultoria usa `service`.
   "behaviors": [],
   "openItems": [],
   "sources": [],
-  "approvedAt": null
+  "approvedAt": null,
+  "seo": {
+    "title": "Produto Exemplo",
+    "description": null,
+    "canonical": "/produtos/exemplo/",
+    "indexable": true
+  },
+  "integrations": [],
+  "accessibility": {
+    "landmarks": true,
+    "keyboard": true,
+    "mediaAlternatives": true
+  },
+  "tests": ["renderização da rota", "ação principal"]
 }
 ```
+
+`interview.json` conserva respostas, campos ausentes e até três perguntas
+seguintes. As perguntas comuns cobrem título, rota, objetivo, público e ação.
+Cada tipo acrescenta os assuntos próprios, como oferta em vendas, capacidades
+em produto, escopo em serviço e cobrança em Preços.
 
 Cada `section` possui `id`, `type`, `status`, `purpose`, `content`, `actions`,
 `media` e `sourceNotes`. O conteúdo mantém os campos próprios da área sem HTML.

@@ -23,18 +23,20 @@ node dist/cli/index.js --help
 O pacote está disponível publicamente no npm. Instale ou atualize com:
 
 ```bash
-npm install --global @promovaweb/astrofy@0.5.4
+npm install --global @promovaweb/astrofy@0.6.0
 astrofy --help
 astrofy --version
 ```
 
 Depois da instalação, execute `astrofy tui --root /caminho/do/site` para
 abrir o painel em um projeto já inicializado com `astrofy init`.
-A versão 0.5.4 inclui planejamento conversacional e técnico para páginas de
+A versão 0.6.0 inclui planejamento conversacional e técnico para páginas de
 vendas, produto, serviço, Home, Sobre, Contato e Preços.
 
 O pacote conserva `UNLICENSED`, sem concessão de licença aberta. Para uma
 instalação a partir do checkout autorizado, `npm pack` gera o arquivo `.tgz`.
+O tarball mantém somente a edição atual do ebook. Edições anteriores continuam
+disponíveis nas respectivas GitHub Releases.
 
 ## Adotar em um site existente
 
@@ -66,11 +68,27 @@ componentes, checklist e scripts atuais. O plano em
 dependências, estimativas e validações. Nenhuma das duas orquestradoras altera
 ou publica o site sem uma solicitação posterior.
 
+O CLI conserva a mesma sequência em arquivos retomáveis:
+
+```bash
+astrofy page create --slug produto --type product
+astrofy page status --slug produto
+astrofy page answer --slug produto --field title --value "Produto"
+astrofy plan --slug produto
+astrofy apply --slug produto
+```
+
+Cada resposta atualiza `interview.json`. Quando não há lacunas obrigatórias,
+o CLI gera o contrato com conteúdo, SEO, integrações, acessibilidade e testes.
+`apply` registra a passagem das tarefas por `ready`, `in_progress`,
+`completed`, `failed` e `skipped`; a skill indicada executa a alteração no site.
+
 ## Documentação
 
 - [Guia do usuário](docs/user/README.md)
 - [Ebook em PDF e EPUB](ebook/README.md)
 - [Referência das skills](docs/skills.md)
+- [Matriz operacional das skills](docs/skill-matrix.md)
 - [CLI](docs/cli.md)
 - [Configuração](docs/configuration.md)
 
@@ -86,14 +104,17 @@ ou publica o site sem uma solicitação posterior.
 
 ## Desenvolvimento
 
-`npm test` compila o TypeScript e executa os testes Node. `npm run check` faz
-somente a checagem de tipos. O código fica em `packages/` e o JavaScript de
-distribuição é gerado em `dist/`.
+`npm test` compila o TypeScript e executa a suíte sem navegador.
+`npm run test:browser` executa apenas os testes que abrem Chromium e
+`npm run test:all` reúne os dois grupos. `npm run check` faz somente a checagem
+de tipos. O código fica em `packages/` e o JavaScript de distribuição é gerado
+em `dist/`.
 
-Os testes de comportamento do framework abrem Chromium contra servidores
-locais temporários. Após `npm ci`, execute `npx playwright install chromium`
-antes de `npm test`. A suíte confere temas, persistência, overflow, erros
-JavaScript e restrições de rede sem depender de um preview já aberto.
+O pacote não transporta o binário do Chromium. Instale-o sob demanda com
+`astrofy browser install`, confira com `astrofy browser status` e remova com
+`astrofy browser remove`. `astrofy check` executa as verificações estáticas;
+`astrofy check --browser` inclui temas, persistência, overflow, erros
+JavaScript e responsividade contra o preview configurado.
 
 Os builds adicionais com Astro 5, 6 e 7 ficam nas
 [fixtures de compatibilidade](fixtures/compatibility/README.md), com seus
@@ -105,4 +126,5 @@ Depois de instalar as dependências das fixtures, os scripts
 respectivamente o site mínimo, os procedimentos comuns e os domínios de Astro
 7 usados pelas skills.
 O job `compatibility` do CI instala os três lockfiles, gera os builds e executa
-esses runners no Linux com Node 26 e Chromium.
+esses runners no Linux com Node 26 e Chromium. O job `browser` mantém um cache
+próprio; a matriz de Node e sistemas operacionais não baixa navegador.
