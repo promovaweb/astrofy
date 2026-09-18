@@ -24,7 +24,7 @@ configurada preserva os relatórios citados pela checklist e pelo histórico.
 
 ## astrofy setup
 
-Inicia ou retoma a coordenação das 40 skills no projeto existente.
+Inicia ou retoma a coordenação das 49 skills no projeto existente.
 
 Sem argumentos posicionais. Aceita `--dry-run`.
 
@@ -293,7 +293,7 @@ astrofy migrate --root apps/site --apply --offline
 
 ## astrofy skills list
 
-Lista as 40 skills distribuídas com o pacote, incluindo astrofy-setup como
+Lista as 49 skills distribuídas com o pacote, incluindo astrofy-setup como
 entrada inicial e astrofy-markdown para formatação com linter.
 
 Sem argumentos posicionais. Não exige um projeto Astro.

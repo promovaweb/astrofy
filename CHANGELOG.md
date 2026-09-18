@@ -1,5 +1,35 @@
 # Changelog
 
+## [0.3.0] - 2026-09-18
+
+### Adicionado
+
+- Duas orquestradoras para definir páginas por conversa e converter a
+  especificação aprovada em tarefas técnicas retomáveis.
+- Sete entrevistadoras para páginas de vendas, produto, serviço, Home, Sobre,
+  Contato e Preços.
+- Schemas fechados para `page-spec.json` e `implementation-plan.json`, com
+  estados, áreas, ações, mídia, fases, dependências, estimativas e validações.
+- Testes dos contratos, do roteamento entre especialistas e da instalação das
+  49 skills em Codex e Claude.
+
+### Alterado
+
+- O setup inclui o planejamento modular no grafo sem executar ou publicar uma
+  página automaticamente.
+- A documentação explica a entrevista por checkpoints, as saídas em
+  `.astrofy/pages/` e `.astrofy/plans/` e o encaminhamento para as skills
+  técnicas existentes.
+
+### Validação
+
+- `npm test`: 84 testes aprovados.
+- TypeScript, Markdown, schemas e proibições das skills aprovados.
+- Nove skills novas aprovadas pelo validador estrutural de skills.
+
+Não há migração obrigatória. Projetos podem continuar usando as skills
+existentes e adotar o planejamento quando precisarem definir uma página.
+
 ## [0.2.0] - 2026-09-17
 
 ### Adicionado

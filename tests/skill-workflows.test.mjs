@@ -42,11 +42,11 @@ test('setup registra o workflow completo e retoma a partir dos arquivos alterado
   const root=await project(t);
   const exec=(...args)=>run([...args,'--root',root,'--json']);
   const preview=await exec('setup','--dry-run');
-  assert.equal(preview.report.data.steps.length,40);
+  assert.equal(preview.report.data.steps.length,49);
   await assert.rejects(access(path.join(root,'.astrofy/setup-state.json')));
   const first=await exec('setup');
   assert.equal(first.code,0);
-  assert.equal(first.report.data.steps.length,40);
+  assert.equal(first.report.data.steps.length,49);
   assert.equal(first.report.data.steps[0].skill,'astrofy-setup');
   assert.equal(first.report.data.steps.find(step=>step.skill==='astrofy-setup').status,'completed');
   assert.equal(first.report.data.steps.find(step=>step.skill==='astrofy-init').status,'completed');
@@ -79,7 +79,7 @@ test('referências técnicas registram versão e data da conferência',async()=>
   for(const skill of await skillCatalog()){
     for(const relative of ['references/technical.md']){
       const text=await readFile(new URL(`../skills/${skill.name}/${relative}`,import.meta.url),'utf8');
-      assert.match(text,/Astro 7\.3\.3 em 17\/09\/2026/,`${skill.name}: base técnica sem versão e data`);
+      assert.match(text,/Astro 7\.3\.3 em \d{2}\/\d{2}\/\d{4}/,`${skill.name}: base técnica sem versão e data`);
     }
   }
 });
@@ -124,7 +124,7 @@ test('checkup conserva revisão pendente e exporta relatório com as flags docum
   assert.match(await readFile(path.join(root,'.astrofy/reports/resumo.md'),'utf8'),/^#/);
 });
 
-test('as 40 skills instaladas resolvem todas as referências locais nos dois agentes',async t=>{
+test('as 49 skills instaladas resolvem todas as referências locais nos dois agentes',async t=>{
   const root=await project(t);
   for(const agent of ['codex','claude']) {
     await installSkills(root,agent);

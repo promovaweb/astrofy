@@ -1,6 +1,6 @@
 # Astrofy
 
-O Astrofy reúne 40 skills e um CLI Node.js para trabalhar em sites Astro.
+O Astrofy reúne 49 skills e um CLI Node.js para trabalhar em sites Astro.
 Comece por astrofy-setup para reconhecer o projeto e coordenar as especialistas.
 Use astrofy-markdown para formatar e validar a documentação com markdownlint.
 O CLI prepara a adoção em projetos existentes, gera CSS a partir de tokens e
@@ -23,15 +23,15 @@ node dist/cli/index.js --help
 O pacote está disponível publicamente no npm. Instale ou atualize com:
 
 ```bash
-npm install --global @promovaweb/astrofy@0.2.0
+npm install --global @promovaweb/astrofy@0.3.0
 astrofy --help
 astrofy --version
 ```
 
 Depois da instalação, execute `astrofy tui --root /caminho/do/site` para
 abrir o painel em um projeto já inicializado com `astrofy init`.
-A versão 0.2.0 adiciona o setup retomável e amplia a validação técnica das
-skills em Astro 7.
+A versão 0.3.0 adiciona planejamento conversacional e técnico para páginas de
+vendas, produto, serviço, Home, Sobre, Contato e Preços.
 
 O pacote conserva `UNLICENSED`, sem concessão de licença aberta. Para uma
 instalação a partir do checkout autorizado, `npm pack` gera o arquivo `.tgz`.
@@ -53,6 +53,19 @@ O check grava relatórios e a checklist. Ele não instala dependências nem
 executa scripts do site com a configuração padrão. Uma revisão visual ou
 editorial continua pendente até receber uma avaliação identificada.
 
+## Planejar uma página
+
+Peça a página em linguagem natural, como "quero criar uma página para meu
+produto". `astrofy-page-planner` inspeciona o site, escolhe a entrevistadora
+adequada e coleta finalidade, público, áreas, textos, mídia e ações. A
+especificação aprovada fica em `.astrofy/pages/<slug>/`.
+
+Depois, `astrofy-implementation-planner` relaciona a especificação com rotas,
+componentes, checklist e scripts atuais. O plano em
+`.astrofy/plans/<slug>/` registra fases, tarefas, skills, arquivos,
+dependências, estimativas e validações. Nenhuma das duas orquestradoras altera
+ou publica o site sem uma solicitação posterior.
+
 ## Documentação
 
 - **Uso do CLI:** [comandos e opções](docs/cli.md).
@@ -61,7 +74,7 @@ editorial continua pendente até receber uma avaliação identificada.
 - **TUI:** [navegação e revisão manual](docs/tui.md).
 - **Arquitetura:** [pacotes e integridade de escrita](docs/architecture.md).
 - **Compatibilidade:** [faixas e validação](docs/compatibility.md).
-- **Skills:** [guia das 40 skills, instalação, fluxos e exemplos](docs/skills.md).
+- **Skills:** [guia das 49 skills, instalação, fluxos e exemplos](docs/skills.md).
 - **Verificação das skills:** [cenários executados e limites dos testes](docs/skills-validation.md).
 - **Gestão do projeto:** [backlog, timesheets e redistribuição de datas](docs/backlog-timesheets.md).
 

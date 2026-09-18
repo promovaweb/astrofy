@@ -9,7 +9,7 @@ do campo sem reproduzir seu valor.
 
 `astrofy setup` cria `.astrofy/setup-state.json` depois da adoção incremental.
 O arquivo registra a versão do workflow, hashes dos arquivos observados,
-`changedFiles` e as 40 etapas com `dependsOn`, `inputs`, `outputs`, `status` e
+`changedFiles` e as 49 etapas com `dependsOn`, `inputs`, `outputs`, `status` e
 `updatedAt`. O grafo canônico fica em
 `skills/astrofy-setup/references/workflow.json`.
 O contrato fechado fica em `packages/schemas/setup-state.schema.json`; campo,
@@ -18,6 +18,11 @@ status, hash ou data inválidos interrompem a retomada antes da escrita.
 Uma segunda execução conserva os marcos já registrados e compara os hashes.
 O agente relaciona `changedFiles` aos consumidores do grafo antes de repetir
 uma etapa. `--dry-run` calcula o mesmo estado sem criar arquivos.
+
+As definições conversacionais de páginas ficam em `.astrofy/pages/<slug>/`.
+Os planos técnicos correspondentes ficam em `.astrofy/plans/<slug>/`. Esses
+arquivos pertencem ao agente e ao fluxo das skills; o comando `setup` apenas
+registra suas etapas no grafo e não cria uma página ou aprova conteúdo.
 
 ## Arquivos editáveis
 
@@ -34,6 +39,9 @@ uma etapa. `--dry-run` calcula o mesmo estado sem criar arquivos.
 
 Os schemas distribuídos ficam em `packages/schemas/`. Consulte o arquivo
 correspondente para os tipos e limites completos. A validação funciona offline.
+`page-spec.schema.json` valida a definição conversacional de uma página;
+`implementation-plan.schema.json` valida fases, tarefas, dependências,
+estimativas e conferências da implementação.
 
 ## Seleção e instalação de skills
 

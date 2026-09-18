@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astrofy.promovaweb.com/schemas/1.0.0/page-spec",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "type", "status", "title", "route", "objective", "audience", "primaryAction", "sections", "assets", "behaviors", "openItems", "sources", "approvedAt"],
+  "properties": {
+    "schemaVersion": {"const": "1.0.0"},
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "type": {"enum": ["sales", "product", "service", "homepage", "about", "contact", "pricing"]},
+    "status": {"enum": ["proposed", "content_pending", "approved", "ready"]},
+    "title": {"type": "string", "minLength": 1},
+    "route": {"type": "string", "pattern": "^/"},
+    "objective": {"type": "string", "minLength": 1},
+    "audience": {"$ref": "#/$defs/approvalValue"},
+    "primaryAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "label", "href"],
+      "properties": {
+        "status": {"$ref": "#/$defs/contentStatus"},
+        "label": {"type": ["string", "null"]},
+        "href": {"type": ["string", "null"]}
+      }
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type", "status", "purpose", "content", "actions", "media", "sourceNotes"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+          "type": {"type": "string", "minLength": 1},
+          "status": {"$ref": "#/$defs/contentStatus"},
+          "purpose": {"type": "string", "minLength": 1},
+          "content": {"type": "object"},
+          "actions": {"type": "array", "items": {"$ref": "#/$defs/action"}},
+          "media": {"type": "array", "items": {"$ref": "#/$defs/media"}},
+          "sourceNotes": {"type": "array", "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    },
+    "assets": {"type": "array", "items": {"$ref": "#/$defs/media"}},
+    "behaviors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "status", "description", "states"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+          "status": {"$ref": "#/$defs/contentStatus"},
+          "description": {"type": "string", "minLength": 1},
+          "states": {"type": "array", "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    },
+    "openItems": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "sources": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "approvedAt": {"type": ["string", "null"], "format": "date-time"}
+  },
+  "$defs": {
+    "contentStatus": {"enum": ["proposed", "content_pending", "approved", "ready"]},
+    "approvalValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "value"],
+      "properties": {
+        "status": {"$ref": "#/$defs/contentStatus"},
+        "value": {"type": ["string", "null"]}
+      }
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "href", "kind", "status"],
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "href": {"type": ["string", "null"]},
+        "kind": {"enum": ["link", "submit", "purchase", "download", "schedule"]},
+        "status": {"$ref": "#/$defs/contentStatus"}
+      }
+    },
+    "media": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "status", "source", "alt", "purpose"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+        "kind": {"enum": ["image", "video", "illustration", "logo", "icon"]},
+        "status": {"$ref": "#/$defs/contentStatus"},
+        "source": {"type": ["string", "null"]},
+        "alt": {"type": ["string", "null"]},
+        "purpose": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

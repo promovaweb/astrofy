@@ -1,6 +1,6 @@
 # Biblioteca de skills do Astrofy
 
-O Astrofy distribui 40 skills para agentes trabalharem em projetos Astro
+O Astrofy distribui 49 skills para agentes trabalharem em projetos Astro
 existentes. Cada skill reúne um procedimento, referências técnicas e casos
 práticos. O agente lê essas instruções e executa o trabalho solicitado sobre os
 arquivos do projeto. Instalar uma skill apenas disponibiliza esses arquivos; a
@@ -10,7 +10,7 @@ execução ocorre quando você solicita o trabalho ao agente.
 
 Execute os comandos na raiz do site ou informe `--root` com o caminho do
 projeto. Escolha `codex` ou `claude` em `--agent`. Sem `--skill`, a instalação
-inclui as 40 skills; para selecionar algumas, use nomes separados por vírgula.
+inclui as 49 skills; para selecionar algumas, use nomes separados por vírgula.
 
 ```bash
 astrofy skills list
@@ -79,6 +79,7 @@ etapa que corresponde ao problema e preserve o que já funciona.
 | Trabalho                  | Sequência sugerida                                                    | Conferência final                 |
 | ------------------------- | --------------------------------------------------------------------- | --------------------------------- |
 | Adoção em site existente  | init → architecture → config → documentation                          | checkup                           |
+| Definição de página       | page-planner → plan-*-page → implementation-planner                   | aprovação do plano                |
 | Identidade e temas        | branding → design-system → tailwind → themes                          | accessibility e testing           |
 | Componentes e navegação   | components → sections → header → navigation → footer → component-docs | accessibility e testing           |
 | Página inicial ou landing | page-design → homepage ou landing-pages → images → editorial-review   | seo, open-graph e checkup         |
@@ -90,6 +91,28 @@ etapa que corresponde ao problema e preserve o que já funciona.
 Os nomes abreviados da tabela usam o prefixo `astrofy-`. A publicação segue a
 autorização recebida e o provedor já adotado pelo projeto. As regras de texto
 público vêm das instruções editoriais do site.
+
+## Planejamento modular de páginas
+
+`astrofy-page-planner` recebe o pedido em linguagem natural, inspeciona o site
+e seleciona uma entrevistadora pelo tipo de página. A conversa define
+finalidade, público, áreas, textos, mídia, comportamento e ações. O resultado
+fica em `.astrofy/pages/<slug>/`, separado do código até receber aprovação.
+
+As especialistas cobrem vendas, produto, serviço, Home, Sobre, Contato e
+Preços. Elas não implementam componentes nem publicam conteúdo. Depois da
+aprovação, `astrofy-implementation-planner` relaciona a especificação com os
+arquivos atuais, a checklist e as skills técnicas. O plano retomável fica em
+`.astrofy/plans/<slug>/`.
+
+Um pedido pode começar sem comandos ou formulários:
+
+> Quero criar uma página para meu produto de atendimento.
+
+O planner identifica o tipo provável, confirma a finalidade, oferece três
+arquiteturas e coleta o texto de cada área. A pessoa pode fornecer os textos,
+aprovar propostas editoriais ou manter uma área opcional pendente. A
+implementação começa somente depois da revisão integral da página e do plano.
 
 ## Entrada e formatação
 
@@ -109,10 +132,28 @@ a validação após ler o diff. Consulte as instruções e recursos distribuído
   [linter](../skills/astrofy-markdown/references/technical.md) e
   [casos](../skills/astrofy-markdown/examples/cases.md).
 
-## Índice das 40 skills
+## Índice das 49 skills
 
 - **[astrofy-setup](../skills/astrofy-setup/SKILL.md):** Entrada inicial e
   coordenação da biblioteca conforme os recursos presentes no projeto.
+- **[astrofy-page-planner](../skills/astrofy-page-planner/SKILL.md):** Entrevista
+  modular e especificação aprovada da página.
+- **[astrofy-implementation-planner](../skills/astrofy-implementation-planner/SKILL.md):**
+  Fases e tarefas técnicas retomáveis para a página aprovada.
+- **[astrofy-plan-sales-page](../skills/astrofy-plan-sales-page/SKILL.md):**
+  Oferta, prova, preço, objeções e conversão.
+- **[astrofy-plan-product-page](../skills/astrofy-plan-product-page/SKILL.md):**
+  Produto, casos de uso, recursos, demonstração e aquisição.
+- **[astrofy-plan-service-page](../skills/astrofy-plan-service-page/SKILL.md):**
+  Serviço, entregas, processo, responsabilidades e contratação.
+- **[astrofy-plan-homepage](../skills/astrofy-plan-homepage/SKILL.md):** Papel da
+  Home, públicos, prioridades e destinos.
+- **[astrofy-plan-about-page](../skills/astrofy-plan-about-page/SKILL.md):**
+  Empresa, atuação, história, pessoas e fontes.
+- **[astrofy-plan-contact-page](../skills/astrofy-plan-contact-page/SKILL.md):**
+  Campos, consentimento, envio, retorno e canais alternativos.
+- **[astrofy-plan-pricing-page](../skills/astrofy-plan-pricing-page/SKILL.md):**
+  Planos, preços, limites, cobrança e comparação.
 - **[astrofy-markdown](../skills/astrofy-markdown/SKILL.md):** Formatação e
   validação de Markdown com linter e preservação do conteúdo.
 

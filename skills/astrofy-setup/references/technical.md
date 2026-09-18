@@ -33,6 +33,8 @@ aplicação; um recurso ausente não deve ser criado apenas para executar a skil
 | Marca e estilos | branding, design-system, tailwind, themes | Ativos, tokens e modos |
 | Navegação global | header, navigation, footer | Links, foco e configuração |
 | Páginas solicitadas | page-design, homepage, landing-pages | Composição e CTAs existentes |
+| Definição de páginas | page-planner, plan-*-page | Conteúdo e arquitetura aprovados |
+| Plano de página | implementation-planner | Fases, tarefas e validações |
 | Conteúdo | mdx, blog, blog-post, blog-archives, editorial-review | Schemas, seleção publicável e templates |
 | Descoberta | seo, open-graph, structured-data, geo, internal-links | Metadados e destinos verificados |
 | URLs e idiomas | routing, i18n | Rotas, redirects e traduções |

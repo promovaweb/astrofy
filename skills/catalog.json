@@ -1,11 +1,56 @@
 {
   "schemaVersion": "1.0.0",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "skills": [
     {
       "name": "astrofy-setup",
       "title": "Iniciar projeto com Astrofy",
       "description": "Inicia o trabalho em um projeto Astro, mapeia sua implementação e coordena as skills Astrofy para organizar, documentar e validar o projeto existente."
+    },
+    {
+      "name": "astrofy-page-planner",
+      "title": "Planejar página",
+      "description": "Conduz a definição modular de páginas para sites Astro, seleciona a entrevista adequada e registra conteúdo, áreas, mídia e ações antes da implementação."
+    },
+    {
+      "name": "astrofy-implementation-planner",
+      "title": "Planejar implementação",
+      "description": "Converte uma especificação de página aprovada em fases e tarefas técnicas retomáveis, ligadas às skills Astrofy, aos arquivos reais e às validações."
+    },
+    {
+      "name": "astrofy-plan-sales-page",
+      "title": "Definir página de vendas",
+      "description": "Entrevista a pessoa sobre oferta, preço, prova, objeções e conversão para definir landing pages de vendas sem inventar afirmações comerciais."
+    },
+    {
+      "name": "astrofy-plan-product-page",
+      "title": "Definir página de produto",
+      "description": "Entrevista a pessoa sobre função, recursos, casos de uso, demonstração e contratação para definir páginas de SaaS, aplicativos, CLIs e ferramentas."
+    },
+    {
+      "name": "astrofy-plan-service-page",
+      "title": "Definir página de serviço",
+      "description": "Entrevista a pessoa sobre escopo, entregas, processo, responsabilidades e contratação para definir páginas de serviços profissionais."
+    },
+    {
+      "name": "astrofy-plan-homepage",
+      "title": "Definir Home",
+      "description": "Entrevista a pessoa sobre papel do site, públicos, ofertas e destinos para definir uma Home que distribui o acesso sem duplicar páginas internas."
+    },
+    {
+      "name": "astrofy-plan-about-page",
+      "title": "Definir página Sobre",
+      "description": "Entrevista a pessoa sobre empresa, atuação, história, pessoas e fontes para definir páginas Sobre com afirmações institucionais verificáveis."
+    },
+    {
+      "name": "astrofy-plan-contact-page",
+      "title": "Definir página de contato",
+      "description": "Entrevista a pessoa sobre finalidade, campos, consentimento, envio e retorno para definir páginas de contato, orçamento e demonstração."
+    },
+    {
+      "name": "astrofy-plan-pricing-page",
+      "title": "Definir página de preços",
+      "description": "Entrevista a pessoa sobre planos, preços, limites, cobrança e ações para definir páginas comerciais comparáveis e alinhadas à fonte vigente."
     },
     {
       "name": "astrofy-markdown",
