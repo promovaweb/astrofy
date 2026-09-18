@@ -1,0 +1,60 @@
+/* Gerado pelo Astrofy 0.1.1. Edite o design-system.json. */
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  color-scheme: light;
+  --astrofy-primitive-color-ink: rgb(15.3 22.95 40.8 / 1);
+  --astrofy-primitive-color-white: rgb(255 255 255 / 1);
+  --astrofy-primitive-spacing-4: 1rem;
+  --astrofy-semantic-color-content: rgb(15.3 22.95 40.8 / 1);
+  --astrofy-semantic-color-surface: rgb(255 255 255 / 1);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --astrofy-primitive-color-ink: rgb(15.3 22.95 40.8 / 1);
+  --astrofy-primitive-color-white: rgb(255 255 255 / 1);
+  --astrofy-primitive-spacing-4: 1rem;
+  --astrofy-semantic-color-content: rgb(15.3 22.95 40.8 / 1);
+  --astrofy-semantic-color-surface: rgb(255 255 255 / 1);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --astrofy-primitive-color-ink: rgb(15.3 22.95 40.8 / 1);
+  --astrofy-primitive-color-white: rgb(255 255 255 / 1);
+  --astrofy-primitive-spacing-4: 1rem;
+  --astrofy-semantic-color-content: rgb(255 255 255 / 1);
+  --astrofy-semantic-color-surface: rgb(15.3 22.95 40.8 / 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --astrofy-primitive-color-ink: rgb(15.3 22.95 40.8 / 1);
+    --astrofy-primitive-color-white: rgb(255 255 255 / 1);
+    --astrofy-primitive-spacing-4: 1rem;
+    --astrofy-semantic-color-content: rgb(255 255 255 / 1);
+    --astrofy-semantic-color-surface: rgb(15.3 22.95 40.8 / 1);
+  }
+}
+
+@theme inline {
+  --color-primitive-ink: var(--astrofy-primitive-color-ink);
+  --color-primitive-white: var(--astrofy-primitive-color-white);
+  --spacing-4: var(--astrofy-primitive-spacing-4);
+  --color-content: var(--astrofy-semantic-color-content);
+  --color-surface: var(--astrofy-semantic-color-surface);
+}
+
+@layer base {
+  body {
+    background: var(--astrofy-semantic-color-surface);
+    color: var(--astrofy-semantic-color-content);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto; }
+  }
+}

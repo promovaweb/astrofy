@@ -8,7 +8,7 @@ import {chromium} from 'playwright';
 const directory=fileURLToPath(new URL('.',import.meta.url));
 const browser=await chromium.launch({headless:true});
 try {
- for(const name of ['astro5','astro6']){
+ for(const name of ['astro5','astro6','astro7']){
   const output=path.join(directory,name,'dist');
   await readFile(path.join(output,'index.html'));
   const server=createServer(async(request,response)=>{

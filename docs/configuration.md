@@ -5,6 +5,20 @@ assunto e usa `schemaVersion: "1.0.0"`. Campos desconhecidos e tipos inválidos
 são recusados pelo schema local. Mensagens de validação identificam o caminho
 do campo sem reproduzir seu valor.
 
+## Estado do setup
+
+`astrofy setup` cria `.astrofy/setup-state.json` depois da adoção incremental.
+O arquivo registra a versão do workflow, hashes dos arquivos observados,
+`changedFiles` e as 40 etapas com `dependsOn`, `inputs`, `outputs`, `status` e
+`updatedAt`. O grafo canônico fica em
+`skills/astrofy-setup/references/workflow.json`.
+O contrato fechado fica em `packages/schemas/setup-state.schema.json`; campo,
+status, hash ou data inválidos interrompem a retomada antes da escrita.
+
+Uma segunda execução conserva os marcos já registrados e compara os hashes.
+O agente relaciona `changedFiles` aos consumidores do grafo antes de repetir
+uma etapa. `--dry-run` calcula o mesmo estado sem criar arquivos.
+
 ## Arquivos editáveis
 
 | Arquivo | Campos e comportamento |

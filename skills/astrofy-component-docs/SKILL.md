@@ -1,36 +1,55 @@
 ---
 name: astrofy-component-docs
-description: Documenta a API e os usos reais dos componentes Astro em Markdown, mantendo propriedades e exemplos alinhados à implementação.
+description:
+  Documenta a API e os usos reais dos componentes Astro em Markdown, mantendo
+  propriedades e exemplos alinhados à implementação.
 ---
 
 # Documentar componentes
 
-Documenta a API e os usos reais dos componentes Astro em Markdown, mantendo propriedades e exemplos alinhados à implementação.
+## Entradas
 
-## Preparação e alcance
+Leia Props, defaults, slots, imports, estilos, exemplos existentes e índice em
+.astrofy/docs. Use os caminhos definidos em `.astrofy/config/paths.json` quando
+diferirem dos exemplos. Confira a versão instalada no lockfile e em node_modules
+antes de aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Arquivo do componente e seus consumidores.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Documente valor aceito, padrão, obrigatoriedade e efeito de cada prop. Separe
+exemplos observados de exemplos novos que ainda precisam ser compilados.
 
-## Procedimento
+Leia Props, defaults e slots no código. Registre o caminho, domínio, imports e
+dependências. Explique os estados, tokens e necessidade de JavaScript. Inclua um
+exemplo copiado de um consumidor válido e a lista de arquivos conferidos.
 
-Leia Props, defaults e slots no código. Registre o caminho, domínio, imports e dependências. Explique os estados, tokens e necessidade de JavaScript. Inclua um exemplo copiado de um consumidor válido e a lista de arquivos conferidos.
+### Sequência específica
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+1. Leia Props, defaults, slots, classes, estados e todos os consumidores.
+2. Documente assinatura, HTML emitido, slot obrigatório e variantes válidas.
+3. Inclua exemplos de uso que compilem no projeto atual.
+4. Atualize a página da API junto com qualquer mudança do componente.
+5. Confira combinações de props, atributos encaminhados e fallback dos slots.
+   Valide exemplos novos num consumidor compilável, não apenas no Markdown.
 
-## Verificação e conclusão
+### Alteração de implementação existente
 
-A página em .astrofy/docs/components descreve a API atual e é alcançável pelo índice.
+Ao remover uma prop, altere assinatura, consumidores e exemplo documental no
+mesmo escopo. Registre o caminho real do componente e atualize o índice.
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+## Verificação
+
+Um exemplo usando prop removida deve ser identificado na revisão. Quando a API
+é estrita, confira também o diagnóstico de tipos; quando aceita atributos
+arbitrários, verifique HTML e comportamento. A versão corrigida deve compilar
+e mostrar o estado descrito.
+
+A página em .astrofy/docs/components descreve a API atual e é alcançável pelo
+índice.
 
 ```bash
 astrofy docs check
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

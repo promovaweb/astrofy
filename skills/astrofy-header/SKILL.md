@@ -1,36 +1,54 @@
 ---
 name: astrofy-header
-description: Configura cabeçalhos Astro com marca, ações e comportamento sticky, verificando a relação com navegação, foco e conteúdo da página.
+description:
+  Configura cabeçalhos Astro com marca, ações e comportamento sticky,
+  verificando a relação com navegação, foco e conteúdo da página.
 ---
 
 # Compor cabeçalho
 
-Configura cabeçalhos Astro com marca, ações e comportamento sticky, verificando a relação com navegação, foco e conteúdo da página.
+## Entradas
 
-## Preparação e alcance
+Leia Header.astro, configuração pública, logos e componente de navegação. Use os
+caminhos definidos em `.astrofy/config/paths.json` quando diferirem dos
+exemplos. Confira a versão instalada no lockfile e em node_modules antes de
+aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Logo por tema, ações e configuração de cabeçalho.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Separe marca, ações e controle do menu. Confira cabeçalho sticky com zoom,
+teclado e âncoras. A navegação deve continuar alcançável em tela estreita.
 
-## Procedimento
+Componha marca e ações usando a configuração pública. Delegue abertura de menus
+ao componente de navegação. Confira a altura sticky em zoom e celular. Garanta
+espaço para destinos de âncora e elementos focados.
 
-Componha marca e ações usando a configuração pública. Delegue abertura de menus ao componente de navegação. Confira a altura sticky em zoom e celular. Garanta espaço para destinos de âncora e elementos focados.
+### Sequência específica
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+1. Modele marca, navegação, ação e estado mobile como entradas distintas.
+2. Use header, nav, botão de menu e lista de links com nomes acessíveis.
+3. Sincronize aria-expanded, aria-controls e estado visual do menu.
+4. Teste foco, Escape, rota ativa, sticky e sobreposição de conteúdo.
+5. Diferencie sticky de fixed antes de reservar espaço. Confira âncoras com
+   altura real, fontes carregadas, zoom e mudança de breakpoint com menu aberto.
+6. Refaça o percurso após navegação com ClientRouter quando ele estiver ativo,
+   verificando listeners, IDs e controles da versão responsiva oculta.
 
-## Verificação e conclusão
+### Alteração de implementação existente
+
+Preserve URLs e seletor de tema ao reorganizar a composição. Ajuste compensação
+de âncora conforme a altura real do cabeçalho.
+
+## Verificação
+
+Ao focar um link ou abrir uma âncora, o destino não pode ficar encoberto.
+Capture a posição do elemento depois de rolar.
 
 O cabeçalho não cobre foco nem conteúdo de âncoras nas larguras testadas.
-
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
 
 ```bash
 astrofy check --category header
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

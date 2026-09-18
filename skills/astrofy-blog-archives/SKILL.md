@@ -1,36 +1,54 @@
 ---
 name: astrofy-blog-archives
-description: Implementa arquivos paginados de blog Astro com ordenação determinística e taxonomias, verificando URLs e estados vazios.
+description:
+  Implementa arquivos paginados de blog Astro com ordenação determinística e
+  taxonomias, verificando URLs e estados vazios.
 ---
 
 # Paginar arquivos do blog
 
-Implementa arquivos paginados de blog Astro com ordenação determinística e taxonomias, verificando URLs e estados vazios.
+## Entradas
 
-## Preparação e alcance
+Leia coleção publicável, paginate, pageSize e URLs de taxonomias. Use os
+caminhos definidos em `.astrofy/config/paths.json` quando diferirem dos
+exemplos. Confira a versão instalada no lockfile e em node_modules antes de
+aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Coleção publicável, pageSize e convenção de URLs.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Defina ordenação com desempate estável antes de paginar. Use a mesma seleção do
+post individual e estabeleça o comportamento do arquivo vazio.
 
-## Procedimento
+Use paginate em getStaticPaths. Ordene por data com desempate estável. Reutilize
+a seleção de posts em tags, categorias e autores habilitados. Preserve um estado
+vazio utilizável e canônicas específicas para cada página.
 
-Use paginate em getStaticPaths. Ordene por data com desempate estável. Reutilize a seleção de posts em tags, categorias e autores habilitados. Preserve um estado vazio utilizável e canônicas específicas para cada página.
+### Sequência específica
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+1. Filtre e ordene a coleção antes de chamar paginate.
+2. Defina pageSize fixo e confira a mesma regra em categoria, tag e autor.
+3. Gere canonical, título e navegação próprios para cada página.
+4. Use page.url.prev e page.url.next somente quando definidos. Confira a URL da
+   primeira página conforme [page] ou [...page] no nome do arquivo.
+5. Teste coleção vazia, última página e número ímpar de entradas. Compare os
+   IDs de todas as páginas com a seleção de origem para detectar perda e repetição.
 
-## Verificação e conclusão
+### Alteração de implementação existente
 
-Nenhum post aparece duplicado ou desaparece na sequência. Os links anterior e próximo fecham o percurso.
+Mantenha prefixos existentes como /artigos. Confira redirects se o pedido
+alterar URLs; preserve metadados específicos por página.
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+## Verificação
+
+Com três posts e pageSize 2, a união das páginas deve conter exatamente três IDs
+sem repetição. Página 2 precisa ter sua própria canônica.
+
+Nenhum post aparece duplicado ou desaparece na sequência. Os links anterior e
+próximo fecham o percurso.
 
 ```bash
 astrofy check --rule blog.archives
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

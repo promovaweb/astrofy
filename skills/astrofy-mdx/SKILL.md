@@ -1,36 +1,54 @@
 ---
 name: astrofy-mdx
-description: Configura integração MDX e schemas de conteúdo em sites Astro, documentando componentes permitidos e a origem confiável dos arquivos.
+description:
+  Configura integração MDX e schemas de conteúdo em sites Astro, documentando
+  componentes permitidos e a origem confiável dos arquivos.
 ---
 
 # Configurar conteúdo MDX
 
-Configura integração MDX e schemas de conteúdo em sites Astro, documentando componentes permitidos e a origem confiável dos arquivos.
+## Entradas
 
-## Preparação e alcance
+Leia integração MDX, coleção, schema, imports e origem do conteúdo. Use os
+caminhos definidos em `.astrofy/config/paths.json` quando diferirem dos
+exemplos. Confira a versão instalada no lockfile e em node_modules antes de
+aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Integração instalada, schema e exemplos de conteúdo.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Diferencie API de coleções da versão instalada de exemplos de outra major.
+Compile apenas conteúdo de origem autorizada, pois MDX pode executar código.
 
-## Procedimento
+Confirme a integração compatível com Astro. Defina campos obrigatórios e limites
+por tipo de post. Documente imports de componentes e exemplos de uso. Compile
+conteúdo válido e um caso inválido que deve apontar o arquivo e o campo.
 
-Confirme a integração compatível com Astro. Defina campos obrigatórios e limites por tipo de post. Documente imports de componentes e exemplos de uso. Compile conteúdo válido e um caso inválido que deve apontar o arquivo e o campo.
+Para coleções e renderização, use o fluxo atual de
+[MDX e Content Layer no Astro 7](references/implementation.md).
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+### Sequência específica
 
-## Verificação e conclusão
+1. Defina loader, schema e coleção em src/content.config.ts.
+2. Compile uma entrada válida e uma com frontmatter inválido.
+3. Limite imports MDX aos componentes aprovados pelo projeto.
+4. Teste renderização do corpo e campos derivados no HTML.
 
-O MDX renderiza componentes e o schema recusa frontmatter inválido. A origem do conteúdo está documentada.
+### Alteração de implementação existente
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+Mapeie campos antigos sem mudar seu significado. Valide uma entrada antes de
+migrar o acervo e registre componentes permitidos.
+
+## Verificação
+
+Um campo obrigatório ausente precisa apontar a entrada inválida; o mesmo arquivo
+corrigido deve renderizar o componente MDX no HTML.
+
+O MDX renderiza componentes e o schema recusa frontmatter inválido. A origem do
+conteúdo está documentada.
 
 ```bash
 astrofy check --category mdx
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

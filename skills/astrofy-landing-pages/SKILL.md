@@ -1,36 +1,53 @@
 ---
 name: astrofy-landing-pages
-description: Monta landing pages Astro com oferta e ação fornecidas, compondo seções reutilizáveis e verificando destinos e estados do fluxo.
+description:
+  Monta landing pages Astro com oferta e ação fornecidas, compondo seções
+  reutilizáveis e verificando destinos e estados do fluxo.
 ---
 
 # Montar landing page
 
-Monta landing pages Astro com oferta e ação fornecidas, compondo seções reutilizáveis e verificando destinos e estados do fluxo.
+## Entradas
 
-## Preparação e alcance
+Leia oferta fornecida, rota, ação, endpoint quando houver e componentes. Use os
+caminhos definidos em `.astrofy/config/paths.json` quando diferirem dos
+exemplos. Confira a versão instalada no lockfile e em node_modules antes de
+aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Oferta confirmada, ação esperada e conteúdo autorizado.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Registre qual ação encerra o fluxo: navegar, enviar ou comprar. Confira termos e
+valores na fonte recebida e trate estados de erro de qualquer formulário.
 
-## Procedimento
+Defina a sequência de leitura conforme a ação esperada. Reutilize seções do
+projeto. Confira o destino do botão e, quando houver formulário, trate erros e
+sucesso. Teste a página em larguras representativas.
 
-Defina a sequência de leitura conforme a ação esperada. Reutilize seções do projeto. Confira o destino do botão e, quando houver formulário, trate erros e sucesso. Teste a página em larguras representativas.
+### Sequência específica
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+1. Relacione promessa, prova, CTA e destino de conversão fornecidos.
+2. Monte seções com componentes existentes e conteúdo autorizado.
+3. Verifique cada CTA por texto, URL, método e estado do destino.
+4. Teste leitura mobile, formulário e retorno de erro.
+5. Confira parâmetros de campanha, personalização e cache quando presentes.
+   Diferencie clique, envio aceito e conclusão da operação na medição existente.
 
-## Verificação e conclusão
+### Alteração de implementação existente
 
-A ação tem destino funcional e os estados presentes foram exercitados. O texto não inventa características da oferta.
+Preserve destino e parâmetros de uma campanha existente. Mudanças na oferta
+dependem de conteúdo autorizado, mesmo durante ajuste visual.
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+## Verificação
+
+Simule rejeição do endpoint em teste: a página deve informar erro e permitir
+correção, sem exibir sucesso antecipado.
+
+A ação tem destino funcional e os estados presentes foram exercitados. O texto
+não inventa características da oferta.
 
 ```bash
 astrofy check --page /apresentacao/
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

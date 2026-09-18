@@ -1,36 +1,56 @@
 ---
 name: astrofy-geo
-description: Revisa clareza, autoria e acesso ao conteúdo de sites Astro para descoberta por IA, distinguindo orientações oficiais de hipóteses.
+description:
+  Revisa clareza, autoria e acesso ao conteúdo de sites Astro para descoberta
+  por IA, distinguindo orientações oficiais de hipóteses.
 ---
 
 # Revisar descoberta por IA
 
-Revisa clareza, autoria e acesso ao conteúdo de sites Astro para descoberta por IA, distinguindo orientações oficiais de hipóteses.
+## Entradas
 
-## Preparação e alcance
+Leia HTML sem interação, autoria, fontes do conteúdo e plataforma solicitada.
+Use os caminhos definidos em `.astrofy/config/paths.json` quando diferirem dos
+exemplos. Confira a versão instalada no lockfile e em node_modules antes de
+aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Conteúdo, fontes e plataformas de interesse.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Diferencie recomendação oficial da plataforma de hipótese de melhoria. Relacione
+cada sugestão ao trecho observado e à fonte consultada.
 
-## Procedimento
+Confira se a informação principal está acessível no HTML. Relacione afirmações
+às fontes fornecidas e identifique autoria quando pertinente. Consulte a
+orientação da plataforma específica. Registre recomendações com justificativa e
+limites de observação.
 
-Confira se a informação principal está acessível no HTML. Relacione afirmações às fontes fornecidas e identifique autoria quando pertinente. Consulte a orientação da plataforma específica. Registre recomendações com justificativa e limites de observação.
+### Sequência específica
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+1. Leia HTML sem JavaScript e identifique autoria, data, fontes e escopo.
+2. Relacione afirmações verificáveis à fonte mostrada na página.
+3. Revise rotas canônicas, acesso público e conteúdo principal.
+4. Registre o que foi verificado e o que depende de plataforma externa.
+5. Diferencie busca, consulta e treinamento na documentação do produto avaliado.
+   Não generalize uma regra de acesso entre finalidades diferentes.
+6. Compare resposta pública inicial com conteúdo após interação. Confira versões
+   Markdown ou índices existentes contra a mesma fonte da página canônica.
 
-## Verificação e conclusão
+### Alteração de implementação existente
 
-A revisão mostra o trecho e a fonte que sustentam cada recomendação, sem prometer citações ou posições.
+Preserve llms.txt quando existente, mas documente seu uso local sem impor o
+arquivo a todos os sites.
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+## Verificação
+
+Uma informação acessível apenas após clique deve ser identificada na comparação
+do HTML. Nenhuma mudança permite garantir citação por um sistema externo.
+
+A revisão mostra o trecho e a fonte que sustentam cada recomendação, sem
+prometer citações ou posições.
 
 ```bash
 astrofy check --category geo
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

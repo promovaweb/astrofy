@@ -7,12 +7,12 @@ import path from 'node:path';
 import {skillCatalog,installSkills} from '../dist/core/skills.js';
 test('catálogo completo instala referências locais e recusa perda de personalização',async t=>{
  const root=await mkdtemp(path.join(os.tmpdir(),'astrofy-skills-'));t.after(()=>rm(root,{recursive:true,force:true}));
- const catalog=await skillCatalog();assert.equal(catalog.length,38);assert.equal(new Set(catalog.map(skill=>skill.name)).size,38);
+ const catalog=await skillCatalog();assert.equal(catalog.length,40);assert.equal(new Set(catalog.map(skill=>skill.name)).size,40);
  const result=await installSkills(root,'codex',['astrofy-themes'],true);assert.equal(result.written.length,3);
  await assert.rejects(access(path.join(root,'.agents')));
  await installSkills(root,'codex',['astrofy-themes']);
  const skill=path.join(root,'.agents/skills/astrofy-themes/SKILL.md');
- assert.match(await readFile(skill,'utf8'),/references\/technical.md/);
+ assert.match(await readFile(skill,'utf8'),/^# Implementar temas/m);
  await access(path.join(root,'.agents/skills/astrofy-themes/references/technical.md'));
  assert.equal((await installSkills(root,'codex',['astrofy-themes'])).written.length,0);
  await writeFile(skill,'# Personalizado\n');

@@ -1,59 +1,76 @@
 ---
 name: astrofy-checkup
-description: Executa verificações do Astrofy e organiza revisões manuais por escopo, mantendo checklist, relatórios e validade dos resultados.
+description:
+  Executa verificações do Astrofy e organiza revisões manuais por escopo,
+  mantendo checklist, relatórios e validade dos resultados.
 ---
 
 # Executar check-up
 
-Executa verificações do Astrofy e organiza revisões manuais por escopo, mantendo checklist, relatórios e validade dos resultados.
+## Entradas
 
-## Preparação e alcance
+Leia policies.json, checks.json, paths.json, checklist e relatórios citados. Use
+os caminhos definidos em `.astrofy/config/paths.json` quando diferirem dos
+exemplos. Confira a versão instalada no lockfile e em node_modules antes de
+aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Configuração, checklist e escopo solicitado.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
-
-## Procedimento
+Selecione escopo antes de executar. Observe trustedExecution e baseUrl.
+Diferencie falha de regra, execução incompleta e item manual pendente.
 
 1. Consulte `astrofy status --json` para conhecer o estado atual. A consulta
-   reconcilia o catálogo e recalcula validade em memória, sem gravar a
-   checklist ou executar código do site.
+   reconcilia o catálogo e recalcula validade em memória, sem gravar a checklist
+   ou executar código do site.
 2. Selecione categoria, regra, página ou componente conforme o pedido.
    `check --changed` avalia entradas diferentes da última execução; seu
    relatório não representa cobertura integral do projeto.
-3. Confira `checks.trustedExecution` antes de checks que executam scripts.
-   Para navegador, confirme o preview e `checks.baseUrl`. Ausência dessas
-   condições corresponde a avaliação não concluída, não a aprovação.
+3. Confira `checks.trustedExecution` antes de checks que executam scripts. Para
+   navegador, confirme o preview e `checks.baseUrl`. Ausência dessas condições
+   corresponde a avaliação não concluída, não a aprovação.
 4. Execute o check e leia os achados, arquivos e ações sugeridas. Scripts
-   preparatórios terminam antes da conferência final do HTML; um build com
-   erro não permite usar a saída anterior como comprovação atual.
+   preparatórios terminam antes da conferência final do HTML; um build com erro
+   não permite usar a saída anterior como comprovação atual.
 5. Registre revisão humana somente para regras manuais ou híbridas, com
-   responsável e justificativa. A TUI oferece esse registro com `m`.
-   Regras automáticas usam seu verificador, mesmo que uma checklist antiga
-   apresente outro método. Instâncias retiradas exigem reconciliação.
+   responsável e justificativa. A TUI oferece esse registro com `m`. Regras
+   automáticas usam seu verificador, mesmo que uma checklist antiga apresente
+   outro método. Instâncias retiradas exigem reconciliação.
 6. Consulte novamente o status após alterações. Preserve notas, relatórios
-   citados e histórico. Uma dispensa vigente altera a aplicação da política,
-   mas não transforma um resultado desfavorável em aprovação.
+   citados e histórico. Uma dispensa vigente altera a aplicação da política, mas
+   não transforma um resultado desfavorável em aprovação.
 
 Interprete o código de saída junto do relatório: 0 corresponde à política
-selecionada, 1 a falhas avaliadas, 2 a entrada ou configuração inválida,
-3 a operação não concluída e 130 a cancelamento. Não conclua uma revisão
-apenas porque o processo retornou 0.
+selecionada, 1 a falhas avaliadas, 2 a entrada ou configuração inválida, 3 a
+operação não concluída e 130 a cancelamento. Não conclua uma revisão apenas
+porque o processo retornou 0.
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+### Sequência específica
 
-## Verificação e conclusão
+1. Consulte status sem escrita e selecione regra, categoria ou rota solicitada.
+2. Confirme trustedExecution, baseUrl e build atual antes de check de navegador.
+3. Diferencie falha avaliada, execução incompleta e revisão manual pendente.
+4. Registre revisão humana somente no método manual ou híbrido.
+5. Identifique o pacote e o artefato servido por baseUrl. Confira consumidores
+   afetados quando a correção atingir um componente compartilhado.
+6. Na entrega, separe cobertura efetiva, falhas e partes não executadas; não
+   apresente uma amostra de rotas como aprovação integral do site.
 
-A checklist corresponde ao escopo avaliado. Pendências e falhas operacionais não contam como aprovações.
+### Alteração de implementação existente
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+Reconcilie catálogo preservando notas e histórico. Alteração de entrada invalida
+avaliação anterior; dispensa muda política, não aprova o resultado.
+
+## Verificação
+
+Uma regra manual pendente não pode receber passed por scanner. Sem build atual,
+um relatório não deve afirmar validação do HTML publicado.
+
+A checklist corresponde ao escopo avaliado. Pendências e falhas operacionais não
+contam como aprovações.
 
 ```bash
 astrofy check --changed
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

@@ -1,36 +1,60 @@
 ---
 name: astrofy-images
-description: Configura imagens em sites Astro conforme origem e uso, verificando dimensões, responsividade e carregamento no layout publicado.
+description:
+  Configura imagens em sites Astro conforme origem e uso, verificando dimensões,
+  responsividade e carregamento no layout publicado.
 ---
 
 # Configurar imagens
 
-Configura imagens em sites Astro conforme origem e uso, verificando dimensões, responsividade e carregamento no layout publicado.
+## Entradas
 
-## Preparação e alcance
+Leia origem dos ativos, dimensões, componentes Image/Picture ou img e layout.
+Use os caminhos definidos em `.astrofy/config/paths.json` quando diferirem dos
+exemplos. Confira a versão instalada no lockfile e em node_modules antes de
+aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Ativos, dimensões e prioridade de exibição.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Distinga ativo processado em src de arquivo servido em public. Escolha texto
+alternativo pela função e dimensões pela composição real.
 
-## Procedimento
+Escolha processamento Astro ou public conforme a origem. Declare dimensões ou
+proporção e alternativas pertinentes. Use tamanhos responsivos e carregamento
+adequado à posição. Confira distorção e deslocamento de layout em páginas
+representativas.
 
-Escolha processamento Astro ou public conforme a origem. Declare dimensões ou proporção e alternativas pertinentes. Use tamanhos responsivos e carregamento adequado à posição. Confira distorção e deslocamento de layout em páginas representativas.
+Aplique as regras de origem, geração e carregamento de
+[imagens no Astro 7](references/implementation.md) antes de escolher Image,
+Picture ou img.
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+### Sequência específica
 
-## Verificação e conclusão
+1. Classifique origem como import de src, arquivo public ou URL remota
+   autorizada.
+2. Use Image ou Picture quando o pipeline Astro processa o ativo.
+3. Informe dimensões, sizes e estratégia de carregamento pela posição visual.
+4. Verifique LCP, proporção e alt. No navegador, compare currentSrc com a largura
+   CSS e a densidade do dispositivo; confirme content type e bytes recebidos.
+5. Para recorte por viewport, use fontes distintas com media; para formatos
+   alternativos da mesma imagem, use Picture. Confira o ponto focal em ambos.
 
-A imagem mantém proporção, possui alternativa adequada e não ocupa bytes desnecessários para o tamanho exibido.
+### Alteração de implementação existente
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+Preserve vetores de marca e URLs externas autorizadas. Atualize consumidores ao
+mover ativos e confira variantes nos temas.
+
+## Verificação
+
+Uma imagem com proporção errada deve ser percebida na comparação visual. Imagem
+decorativa pode ter alt vazio; imagem funcional precisa comunicar a ação.
+
+A imagem mantém proporção, possui alternativa adequada e não ocupa bytes
+desnecessários para o tamanho exibido.
 
 ```bash
 astrofy check --category images
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

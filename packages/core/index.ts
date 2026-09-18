@@ -4,3 +4,4 @@ export * from './discovery.js';
 export * from './config.js';
 export * from './checklist.js';
 export * from './init.js';
+export * from './setup.js';

@@ -1,36 +1,56 @@
 ---
 name: astrofy-editorial-review
-description: Revisa ortografia e nomenclatura em textos visíveis de sites Astro, preservando fatos, código e a direção editorial fornecida.
+description:
+  Revisa ortografia e nomenclatura em textos visíveis de sites Astro,
+  preservando fatos, código e a direção editorial fornecida.
 ---
 
 # Revisar texto visível
 
-Revisa ortografia e nomenclatura em textos visíveis de sites Astro, preservando fatos, código e a direção editorial fornecida.
+## Entradas
 
-## Preparação e alcance
+Leia texto completo, glossário, idioma, fontes factuais e componentes que o
+exibem. Use os caminhos definidos em `.astrofy/config/paths.json` quando
+diferirem dos exemplos. Confira a versão instalada no lockfile e em node_modules
+antes de aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Texto atual, idioma e glossário do projeto.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Separe correção linguística de alteração de fatos. Preserve código inline, nomes
+de propriedades, URLs e citações que exigem reprodução literal.
 
-## Procedimento
+Leia a página completa e seu objetivo. Corrija ortografia no texto visível e
+preserve identificadores de código. Confira nomes próprios na fonte fornecida.
+Registre lacunas factuais separadas das correções de linguagem e confira a
+renderização final.
 
-Leia a página completa e seu objetivo. Corrija ortografia no texto visível e preserve identificadores de código. Confira nomes próprios na fonte fornecida. Registre lacunas factuais separadas das correções de linguagem e confira a renderização final.
+### Sequência específica
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+1. Extraia texto visível sem alterar código, URLs, datas ou identificadores.
+2. Compare nomes próprios, termos do produto e fatos com as fontes fornecidas.
+3. Corrija somente ocorrência confirmada e preserve a direção editorial.
+4. Renderize a rota e revise texto no contexto da interface.
+5. Confira mensagens, alt e nomes acessíveis além da prosa inicial. Ao alterar
+   heading, verifique seus fragmentos e consumidores.
+6. Separe validação de schema, compilação MDX e conferência factual conforme
+   o trecho alterado. Não considere lint como comprovação do conteúdo.
 
-## Verificação e conclusão
+### Alteração de implementação existente
 
-O texto está legível e mantém o significado confirmado. Nenhuma incerteza factual foi convertida em afirmação inventada.
+Revise texto antigo respeitando a voz registrada e o glossário do projeto.
+Alterações de oferta e números exigem confirmação na fonte correspondente.
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+## Verificação
+
+Corrigir um rótulo não deve mudar href ou nome de evento. Compare texto e
+atributos antes e depois da edição.
+
+O texto está legível e mantém o significado confirmado. Nenhuma incerteza
+factual foi convertida em afirmação inventada.
 
 ```bash
 astrofy check --category editorial
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

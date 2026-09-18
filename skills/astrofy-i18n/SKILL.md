@@ -1,36 +1,58 @@
 ---
 name: astrofy-i18n
-description: Configura idiomas e relações entre páginas em sites Astro, verificando rotas, fallback e metadados das traduções disponíveis.
+description:
+  Configura idiomas e relações entre páginas em sites Astro, verificando rotas,
+  fallback e metadados das traduções disponíveis.
 ---
 
 # Configurar idiomas
 
-Configura idiomas e relações entre páginas em sites Astro, verificando rotas, fallback e metadados das traduções disponíveis.
+## Entradas
 
-## Preparação e alcance
+Leia idiomas existentes, idioma padrão, política de prefixos, traduções e
+fallback. Use os caminhos definidos em `.astrofy/config/paths.json` quando
+diferirem dos exemplos. Confira a versão instalada no lockfile e em node_modules
+antes de aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Idiomas habilitados e traduções reais.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Relacione equivalentes por identidade do conteúdo, não apenas pelo slug. Gere
+alternates somente para rotas existentes e confira lang.
 
-## Procedimento
+Defina convenção de rotas e idioma padrão. Use a integração nativa compatível
+com Astro. Relacione páginas equivalentes e documente fallback. Confira
+navegação entre idiomas, lang, canônicas e hreflang sem anunciar tradução
+ausente.
 
-Defina convenção de rotas e idioma padrão. Use a integração nativa compatível com Astro. Relacione páginas equivalentes e documente fallback. Confira navegação entre idiomas, lang, canônicas e hreflang sem anunciar tradução ausente.
+### Sequência específica
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+1. Liste locales, idioma padrão, prefixo, fallback e rotas traduzidas.
+2. Gere rota e hreflang apenas para pares realmente publicados.
+3. Mantenha identificador estável e slug por idioma no conteúdo.
+4. Teste locale padrão, tradução ausente, rota dinâmica e 404.
+5. Diferencie path de locale e código de idioma; resolva a tradução antes
+   de compor a URL com helpers de astro:i18n.
+6. Confira redirect e rewrite por status, URL final e idioma entregue.
+   Não registre fallback como tradução publicada.
+7. Teste troca de idioma com slugs distintos, query e fragmentos, além de
+   negociação por requisição quando ela existir no projeto.
 
-## Verificação e conclusão
+### Alteração de implementação existente
 
-A navegação chega a páginas existentes e identifica corretamente o idioma de cada conteúdo.
+Preserve o idioma padrão sem prefixo quando esse for o contrato atual. Ao
+adicionar idioma, teste menus e fallback antes de gerar hreflang.
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+## Verificação
+
+Uma tradução ausente não pode produzir link 404. Cada página traduzida deve
+declarar seu idioma e alternates coerentes.
+
+A navegação chega a páginas existentes e identifica corretamente o idioma de
+cada conteúdo.
 
 ```bash
-astrofy check --category i18n
+astrofy check --category routing
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.
