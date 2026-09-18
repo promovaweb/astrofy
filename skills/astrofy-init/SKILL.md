@@ -1,36 +1,58 @@
 ---
 name: astrofy-init
-description: Prepara a adoção do Astrofy em um projeto Astro existente, preservando arquivos personalizados e registrando o estado inicial.
+description:
+  Prepara a adoção do Astrofy em um projeto Astro existente, preservando
+  arquivos personalizados e registrando o estado inicial.
 ---
 
 # Inicializar adoção
 
-Prepara a adoção do Astrofy em um projeto Astro existente, preservando arquivos personalizados e registrando o estado inicial.
+## Entradas
 
-## Preparação e alcance
+Leia package.json, lockfile, astro.config.*, .astrofy/config/paths.json e
+.astrofy/config/features.json. Use os caminhos definidos em
+`.astrofy/config/paths.json` quando diferirem dos exemplos. Confira a versão
+instalada no lockfile e em node_modules antes de aplicar APIs da documentação
+online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Manifesto, lockfile e raiz do site.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Diferencie versão declarada, resolvida no lockfile e instalada. Use --root
+apontando ao pacote Astro, inclusive em monorepo. Confira caminhos e recursos
+detectados antes da primeira escrita.
 
-## Procedimento
+Execute astrofy inspect com a raiz explícita. Compare caminhos detectados com as
+convenções do site. Use astrofy init --dry-run, confira a lista e execute init
+para criar apenas os arquivos ausentes.
 
-Execute astrofy inspect com a raiz explícita. Compare caminhos detectados com as convenções do site. Use astrofy init --dry-run, confira a lista e execute init para criar apenas os arquivos ausentes.
+Para projetos Astro 7, siga o procedimento de adoção em
+[Astro 7](references/implementation.md). Ele separa atualização de Astro,
+integrações e plugins Vite 8 da criação do contrato Astrofy. Migração de major
+só ocorre quando incluída no pedido; init não substitui nem recria o site.
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+### Sequência específica
 
-## Verificação e conclusão
+1. Compare versão declarada, lockfile e Astro instalado.
+2. Execute inspect e init dry-run com --root do pacote Astro.
+3. Leia os oito contratos criados e ajuste paths para a estrutura existente.
+4. Execute init novamente e confirme created vazio.
 
-A reexecução conserva configurações, notas e código do site. A checklist inicia sem aprovações presumidas.
+### Alteração de implementação existente
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+Conserve as oito configurações existentes; corrija somente campos inválidos.
+init cria arquivos ausentes e não converte o site para outra estrutura.
+
+## Verificação
+
+Um features.json com blog como string deve recusar init e conservar seus bytes.
+Um segundo init válido deve produzir created vazio.
+
+A reexecução conserva configurações, notas e código do site. A checklist inicia
+sem aprovações presumidas.
 
 ```bash
 astrofy init --dry-run
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

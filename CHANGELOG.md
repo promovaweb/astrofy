@@ -1,5 +1,33 @@
 # Changelog
 
+## [0.2.0] - 2026-09-17
+
+### Adicionado
+
+- O comando `astrofy setup` coordena a entrada em projetos existentes e grava
+  um estado retomável com hashes, arquivos alterados e marcos das 40 skills.
+- O workflow distribuído declara dependências, entradas e saídas de todas as
+  skills; um schema fechado valida o estado antes da escrita.
+- A fixture permanente do Astro 7.3.3 e o CI conferem Actions, autenticação
+  SSR, Content Layer, MDX, paginação, i18n e `ClientRouter`.
+- A skill `astrofy-markdown` aplica markdownlint com configuração herdada e
+  conserva frontmatter, links, código e arquivos MDX fora do escopo do linter.
+
+### Alterado
+
+- As 40 skills passam a usar procedimentos técnicos aprofundados, exemplos
+  próprios e referências com versão e data de conferência.
+- Os runners de compatibilidade abrangem Astro 5, 6 e 7, com cenários de build,
+  navegador, hidratação, componentes e tokens.
+
+### Validação
+
+- `npm test`: 81 testes aprovados.
+- Builds e testes de navegador aprovados em Astro 5.13.0, 6.0.0 e 7.3.3.
+- Procedimentos especializados do Astro 7 aprovados em Chromium.
+- TypeScript, Markdown, schemas, pacote npm e proibições das skills aprovados.
+- Não há migração obrigatória; `astrofy setup` cria o novo estado quando usado.
+
 ## [0.1.1] - 2026-09-17
 
 ### Corrigido

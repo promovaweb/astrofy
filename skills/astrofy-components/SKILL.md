@@ -1,36 +1,59 @@
 ---
 name: astrofy-components
-description: Cria componentes Astro reutilizáveis com propriedades, slots e variantes limitadas, conservando os contratos dos consumidores.
+description:
+  Cria componentes Astro reutilizáveis com propriedades, slots e variantes
+  limitadas, conservando os contratos dos consumidores.
 ---
 
 # Compor componentes
 
-Cria componentes Astro reutilizáveis com propriedades, slots e variantes limitadas, conservando os contratos dos consumidores.
+## Entradas
 
-## Preparação e alcance
+Leia componente .astro, declaração Props, slots, estilos e dois consumidores
+reais. Use os caminhos definidos em `.astrofy/config/paths.json` quando
+diferirem dos exemplos. Confira a versão instalada no lockfile e em node_modules
+antes de aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Código repetido, propriedades e usos reais.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Diferencie link de botão pela ação. Declare variantes finitas, valores padrão e
+atributos encaminhados. Teste conteúdo longo e slot ausente quando forem
+aceitos.
 
-## Procedimento
+Delimite a responsabilidade do componente. Modele propriedades explícitas e
+slots para conteúdo composto. Use variantes finitas. Atualize os consumidores,
+descreva os estados e confira a renderização nas páginas afetadas.
 
-Delimite a responsabilidade do componente. Modele propriedades explícitas e slots para conteúdo composto. Use variantes finitas. Atualize os consumidores, descreva os estados e confira a renderização nas páginas afetadas.
+Use o contrato de [componentes Astro 7](references/implementation.md) para
+definir Props, slots, atributos encaminhados e fronteiras de hidratação.
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+### Sequência específica
 
-## Verificação e conclusão
+1. Declare Props com variantes finitas e defaults compatíveis.
+2. Encaminhe atributos apenas para o elemento semântico correto.
+3. Use slots para regiões estruturais, não para substituir toda a API.
+4. Verifique renderização com conteúdo longo, sem slot opcional e por teclado.
 
-Propriedades tipadas e exemplos correspondem ao código. A composição funciona com os conteúdos reais.
+### Alteração de implementação existente
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+Confira a precedência do spread de atributos e teste duas instâncias para
+detectar IDs duplicados. Uma variante que troca link por botão precisa tipar
+atributos de cada elemento e conservar o comportamento de teclado nativo.
+
+Adicione uma variante sem alterar o valor padrão existente. Só remova uma prop
+após migrar todos os consumidores e conferir usos em MDX.
+
+## Verificação
+
+Uma prop obrigatória ausente deve aparecer na checagem de tipos. Um link de
+navegação precisa renderizar href e receber foco por teclado.
+
+Propriedades tipadas e exemplos correspondem ao código. A composição funciona
+com os conteúdos reais.
 
 ```bash
 astrofy check --category components
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

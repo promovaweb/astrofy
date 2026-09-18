@@ -1,36 +1,55 @@
 ---
 name: astrofy-page-design
-description: Compõe páginas Astro a partir de conteúdo e identidade fornecidos, conferindo hierarquia, leitura e comportamento responsivo.
+description:
+  Compõe páginas Astro a partir de conteúdo e identidade fornecidos, conferindo
+  hierarquia, leitura e comportamento responsivo.
 ---
 
 # Compor página
 
-Compõe páginas Astro a partir de conteúdo e identidade fornecidos, conferindo hierarquia, leitura e comportamento responsivo.
+## Entradas
 
-## Preparação e alcance
+Leia conteúdo real, objetivo da rota, tokens, componentes e capturas atuais. Use
+os caminhos definidos em `.astrofy/config/paths.json` quando diferirem dos
+exemplos. Confira a versão instalada no lockfile e em node_modules antes de
+aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Objetivo da página, conteúdo confirmado e tokens.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Defina ordem de leitura antes da grade visual. Teste largura estreita, desktop,
+zoom e conteúdo maior que o exemplo. Preserve acesso a ações e texto completo.
 
-## Procedimento
+Organize a ordem das seções conforme a tarefa de leitura. Use larguras e
+espaçamentos do design system. Examine a página em celular e desktop com
+conteúdo real. Ajuste overflow e foco sem esconder informação necessária.
 
-Organize a ordem das seções conforme a tarefa de leitura. Use larguras e espaçamentos do design system. Examine a página em celular e desktop com conteúdo real. Ajuste overflow e foco sem esconder informação necessária.
+### Sequência específica
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+1. Levante conteúdo autorizado, rota, tokens e componentes existentes.
+2. Estruture landmarks e h1 antes de definir estilos ou ilhas.
+3. Escolha grid, espaço e tipografia por token sem criar valores locais.
+4. Compare mobile e desktop com conteúdo longo e estados sem mídia.
+5. Confira a estrutura fornecida pelo layout antes de adicionar landmarks.
+   Localize a causa do overflow sem escondê-la globalmente.
+6. Compare capturas com condições equivalentes e confira teclado, links e
+   estados interativos separadamente da aparência.
 
-## Verificação e conclusão
+### Alteração de implementação existente
 
-A página mantém leitura e ações acessíveis nas larguras verificadas, com comparação visual registrada.
+Altere uma região da página por vez; compare capturas com o mesmo conteúdo,
+viewport e tema. Reutilize espaçamentos já definidos.
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+## Verificação
+
+Um título longo não pode desaparecer por altura fixa. Verifique scrollWidth,
+quebra de linha e foco no botão principal.
+
+A página mantém leitura e ações acessíveis nas larguras verificadas, com
+comparação visual registrada.
 
 ```bash
 astrofy check --category layout
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

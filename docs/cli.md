@@ -15,12 +15,34 @@ falhas de leitura e gravação. Cancelamento retorna 130. Mensagens internas
 de falhas operacionais não são copiadas para a saída; erros na leitura dos
 nomes e tipos das flags também não repetem os valores fornecidos.
 
-`init`, `check`, `skills install`, `tokens build`, `tokens import-brandfy`,
+`setup`, `init`, `check`, `skills install`, `tokens build`, `tokens import-brandfy`,
 `docs check`, `links scan` e `migrate --apply` salvam o resultado em
 `.astrofy/reports/<runId>.json`. O caminho aparece em `artifacts` e pode ser
 consultado com `report --run`. Operações em `--dry-run` e consultas como
 `inspect` e `status` não criam esse arquivo automaticamente. A retenção
 configurada preserva os relatórios citados pela checklist e pelo histórico.
+
+## astrofy setup
+
+Inicia ou retoma a coordenação das 40 skills no projeto existente.
+
+Sem argumentos posicionais. Aceita `--dry-run`.
+
+Executa a adoção incremental, lê o grafo distribuído e grava
+`.astrofy/setup-state.json`. O estado contém hashes dos arquivos observados,
+`changedFiles`, dependências, entradas, saídas e status das etapas. A
+reexecução preserva marcos registrados e mostra quais arquivos mudaram. O
+comando não executa automaticamente as alterações descritas pelas skills.
+
+### Exemplos
+
+```bash
+astrofy setup
+astrofy setup --dry-run
+astrofy setup --root apps/site
+astrofy setup --root "site existente" --json
+astrofy setup --root apps/site --dry-run --offline
+```
 
 A exportação Markdown inclui ambiente, escopo solicitado e coberto, estado,
 severidade, arquivos relacionados e ação sugerida para cada achado. Resultados
@@ -271,7 +293,8 @@ astrofy migrate --root apps/site --apply --offline
 
 ## astrofy skills list
 
-Lista as 38 skills distribuídas com o pacote.
+Lista as 40 skills distribuídas com o pacote, incluindo astrofy-setup como
+entrada inicial e astrofy-markdown para formatação com linter.
 
 Sem argumentos posicionais. Não exige um projeto Astro.
 

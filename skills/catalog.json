@@ -3,6 +3,16 @@
   "version": "0.1.0",
   "skills": [
     {
+      "name": "astrofy-setup",
+      "title": "Iniciar projeto com Astrofy",
+      "description": "Inicia o trabalho em um projeto Astro, mapeia sua implementação e coordena as skills Astrofy para organizar, documentar e validar o projeto existente."
+    },
+    {
+      "name": "astrofy-markdown",
+      "title": "Formatar Markdown",
+      "description": "Formata e valida Markdown em projetos Astro com markdownlint, preservando frontmatter, exemplos de código e a configuração existente do projeto."
+    },
+    {
       "name": "astrofy-init",
       "title": "Inicializar adoção",
       "description": "Prepara a adoção do Astrofy em um projeto Astro existente, preservando arquivos personalizados e registrando o estado inicial."

@@ -1,36 +1,56 @@
 ---
 name: astrofy-open-graph
-description: Configura metadados Open Graph em páginas Astro com URLs absolutas e fallback por tipo de conteúdo, conferindo as imagens publicadas.
+description:
+  Configura metadados Open Graph em páginas Astro com URLs absolutas e fallback
+  por tipo de conteúdo, conferindo as imagens publicadas.
 ---
 
 # Configurar Open Graph
 
-Configura metadados Open Graph em páginas Astro com URLs absolutas e fallback por tipo de conteúdo, conferindo as imagens publicadas.
+## Entradas
 
-## Preparação e alcance
+Leia componente de metadados, título, descrição, imagem e domínio. Use os
+caminhos definidos em `.astrofy/config/paths.json` quando diferirem dos
+exemplos. Confira a versão instalada no lockfile e em node_modules antes de
+aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Título, descrição, imagem e tipo da página.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Verifique og:title, og:type, og:image e og:url no HTML. Resolva URLs absolutas e
+confira acesso à imagem. Registre fallback por tipo de página.
 
-## Procedimento
+Derive os campos do conteúdo atual. Use URLs absolutas e defina fallback
+documentado. Confira a imagem publicada, texto alternativo e proporção. Compare
+o HTML de uma página comum e de um artigo.
 
-Derive os campos do conteúdo atual. Use URLs absolutas e defina fallback documentado. Confira a imagem publicada, texto alternativo e proporção. Compare o HTML de uma página comum e de um artigo.
+### Sequência específica
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+1. Derive título, descrição, tipo, URL e imagem a partir da rota atual.
+2. Converta URL e imagem para absoluto usando site e base configurados.
+3. Defina fallback por tipo de página e não sobrescreva capa própria.
+4. Abra imagem emitida e confira status, dimensões e acesso público.
+5. Confira o HTML inicial de acesso direto, sem depender de hidratação ou
+   navegação cliente para inserir tags.
+6. Separe duplicação acidental de múltiplas imagens intencionais. Neste último
+   caso, confira ordem e associação das propriedades de cada imagem.
 
-## Verificação e conclusão
+### Alteração de implementação existente
 
-Tags obrigatórias aparecem uma vez e a imagem pode ser acessada no ambiente publicado.
+Preserve capas sociais próprias. Centralize a emissão sem duplicar tags já
+presentes em layouts herdados.
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+## Verificação
+
+Remova a capa específica de um post de teste: o fallback precisa ser válido. Uma
+imagem 404 deve impedir afirmar que o compartilhamento foi conferido.
+
+Tags obrigatórias não entram em conflito e a imagem pode ser acessada no ambiente
+publicado. Se houver várias imagens intencionais, sua ordem e propriedades
+correspondem ao contrato documentado.
 
 ```bash
 astrofy check --category og
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

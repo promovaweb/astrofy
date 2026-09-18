@@ -1,6 +1,6 @@
 {
   "name": "@promovaweb/astrofy",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Skills e ferramentas para projetos Astro",
   "type": "module",
   "license": "UNLICENSED",
@@ -28,6 +28,9 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && node --test",
+    "test:compatibility": "node fixtures/compatibility/verify.mjs",
+    "test:skill-procedures": "node fixtures/compatibility/verify-skills.mjs",
+    "test:skill-domains": "node fixtures/compatibility/verify-domains.mjs",
     "check": "tsc --noEmit -p tsconfig.json",
     "prepack": "npm run build"
   },

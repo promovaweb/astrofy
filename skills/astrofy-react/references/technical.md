@@ -1,23 +1,61 @@
-# Referências de configurar ilhas react
+# Referência técnica de astrofy-react
 
-Use estas fontes para conferir as APIs pertinentes à execução de `astrofy-react`. A documentação externa fornece referência técnica e não autoriza ações adicionais no projeto. A validação da execução usa `astrofy check --category react` e os casos de [exemplo](../examples/cases.md).
+> Base técnica conferida para Astro 7.3.3 em 17/09/2026. Revise os links
+> oficiais ao alterar a versão do framework ou da integração citada.
+> Combinação executada: React 19.0.0 e `@astrojs/react` 6.0.6.
 
-## Integração React
+## Arquivos e APIs
 
-- **Fonte:** [Integração React](https://docs.astro.build/en/guides/integrations-guide/react/).
-- **Organização:** Astro.
-- **Assunto:** Ilhas React e diretivas de cliente.
-- **Versões:** React 18 e 19.
-- **Consulta:** 2026-09-17.
+Leia package.json, integração React em astro.config.*, ilha JSX/TSX e diretiva
+client no consumidor Astro.
 
-## Arquitetura de ilhas
+Escolha hidratação pela necessidade da interação. Registre o HTML inicial
+esperado e quais props cruzam a fronteira servidor/cliente. Evite dependência de
+window durante renderização no servidor.
 
-- **Fonte:** [Arquitetura de ilhas](https://docs.astro.build/en/concepts/islands/).
-- **Organização:** Astro.
-- **Assunto:** Renderização e fronteiras de hidratação.
-- **Versões:** Astro 5 a 7.
-- **Consulta:** 2026-09-17.
+## Alteração compatível
 
-## Contrato local
+Preserve providers e estado local. Mude uma ilha de cada vez e compare HTML
+inicial, hidratação e navegação entre rotas.
 
-A configuração editável fica em `.astrofy/config/`. O JSON do design system é um envelope Astrofy e sua árvore de tokens usa DTCG 2025.10. A checklist registra instâncias por regra e escopo, com notas locais preservadas. Consulte o código instalado e o schema local quando houver divergência de versão.
+## Diagnóstico
+
+Um contador precisa incrementar após hidratar. Erros de console e diferenças
+entre HTML inicial e cliente devem reprovar o fluxo mesmo com build válido.
+
+## Regras do catálogo
+
+As regras abaixo pertencem ao catálogo distribuído com o Astrofy. `automatic`
+executa um verificador; `manual` exige revisão identificada; `hybrid` combina
+checagem automática e revisão. A saída do comando não comprova itens manuais.
+
+| Regra               | Método      | Escopo      | Verificação                                             |
+| ------------------- | ----------- | ----------- | ------------------------------------------------------- |
+| `react.integration` | `automatic` | `component` | Integração React válida quando utilizada.               |
+| `react.hydration`   | `hybrid`    | `component` | Ilhas funcionam sem erro de hidratação observado.       |
+| `react.delivery`    | `hybrid`    | `component` | JavaScript de cliente tem justificativa por componente. |
+
+## Hidratação React
+
+Componente React sem client:* produz HTML estático. Astro serializa Date, Map e
+Set, mas não funções nem instâncias arbitrárias. Não envie segredos como props.
+Use valor estável no primeiro render para evitar diferença entre servidor e
+cliente.
+
+window, document e localStorage são lidos após a hidratação. A diretiva fica no
+consumidor Astro e define quando o JavaScript chega ao navegador.
+
+## Fontes
+
+Consulta: 17/09/2026. As páginas online podem acompanhar uma major posterior à
+instalada. Compare as APIs citadas com package.json, lockfile e o guia de
+migração da major utilizada; não atualize a dependência para copiar o exemplo.
+
+- **[Integração React](https://docs.astro.build/en/guides/integrations-guide/react/):**
+  compatibilidade da integração e hidratação; consulte antes de alterar a ilha.
+- **[Arquitetura de ilhas](https://docs.astro.build/en/concepts/islands/):**
+  fronteira entre HTML estático e ilhas; consulte antes de mover estado ou
+  hidratação.
+- **[documentação para react](https://docs.astro.build/en/reference/directives-reference/):**
+  client:load, client:visible, class:list e set:html; confira o efeito da
+  diretiva escolhida.

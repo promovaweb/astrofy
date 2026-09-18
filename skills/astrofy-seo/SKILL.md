@@ -1,36 +1,56 @@
 ---
 name: astrofy-seo
-description: Verifica SEO no HTML renderizado de projetos Astro, relacionando metadados, canônicas e indexação às rotas e ao ambiente.
+description:
+  Verifica SEO no HTML renderizado de projetos Astro, relacionando metadados,
+  canônicas e indexação às rotas e ao ambiente.
 ---
 
 # Verificar SEO
 
-Verifica SEO no HTML renderizado de projetos Astro, relacionando metadados, canônicas e indexação às rotas e ao ambiente.
+## Entradas
 
-## Preparação e alcance
+Leia HTML atual, domínio de produção, política de staging, sitemap e robots. Use
+os caminhos definidos em `.astrofy/config/paths.json` quando diferirem dos
+exemplos. Confira a versão instalada no lockfile e em node_modules antes de
+aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: HTML publicado, domínio e política de indexação.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Compare tags renderizadas por rota, inclusive paginação. Registre origem de cada
+canonical e regra de indexação do ambiente.
 
-## Procedimento
+Leia títulos, descrições e canônicas no HTML final. Compare rotas elegíveis com
+sitemap e robots. Revise staging separadamente da produção. Confira arquivos
+paginados e overrides documentados.
 
-Leia títulos, descrições e canônicas no HTML final. Compare rotas elegíveis com sitemap e robots. Revise staging separadamente da produção. Confira arquivos paginados e overrides documentados.
+### Sequência específica
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+1. Gere HTML de rota comum, artigo, arquivo, 404 e staging.
+2. Compare title, description, canonical, robots e sitemap com a política local.
+3. Centralize tags em layout ou componente de metadados.
+4. Teste subdiretório base, paginação e URL absoluta.
+5. Confira status, redirects e headers do host, incluindo X-Robots-Tag e Link.
+   Distinga instrução de rastreamento de instrução de indexação.
+6. Compare sitemap com rotas SSR elegíveis que o build não enumera. Registre
+   exclusões e a fonte de URLs adicionais, sem tratar presença no XML como
+   comprovação de indexação.
 
-## Verificação e conclusão
+### Alteração de implementação existente
 
-Cada diagnóstico identifica rota e tag. Indexação e canônica correspondem à política do ambiente.
+Preserve overrides autorizados e URLs publicadas. Corrija duplicação no layout
+responsável em vez de acrescentar outra tag na página.
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+## Verificação
+
+Duas tags canonical na mesma página devem ser detectadas. Um staging
+intencionalmente noindex não deve receber index por correção automática.
+
+Cada diagnóstico identifica rota e tag. Indexação e canônica correspondem à
+política do ambiente.
 
 ```bash
 astrofy check --category seo
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

@@ -1,36 +1,63 @@
 ---
 name: astrofy-forms
-description: Integra formulários em páginas Astro com validação e mensagens acessíveis, verificando o destino de envio em ambiente autorizado.
+description:
+  Integra formulários em páginas Astro com validação e mensagens acessíveis,
+  verificando o destino de envio em ambiente autorizado.
 ---
 
 # Integrar formulários
 
-Integra formulários em páginas Astro com validação e mensagens acessíveis, verificando o destino de envio em ambiente autorizado.
+## Entradas
 
-## Preparação e alcance
+Leia campos, rótulos, endpoint, validação do servidor e ambiente autorizado. Use
+os caminhos definidos em `.astrofy/config/paths.json` quando diferirem dos
+exemplos. Confira a versão instalada no lockfile e em node_modules antes de
+aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Campos, endpoint e contrato de submissão fornecidos.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+1. Leia método, endpoint, nomes dos campos, tipo do corpo e formato das
+   respostas do provedor existente. Confirme o destino de teste antes de enviar.
+2. Associe cada label ao ID do campo. Relacione instruções e erros por
+   aria-describedby; use aria-invalid quando a validação reprovar o campo.
+3. Valide no servidor campos obrigatórios, formatos e limites. A validação HTML
+   ou JavaScript do cliente não substitui essa etapa.
+4. Durante o envio, impeça submissões duplicadas. Em erro HTTP, de rede ou de
+   validação, conserve valores preenchidos e reabilite a tentativa.
+5. Anuncie o resultado numa região acessível e direcione o foco para o erro
+   quando necessário. Não renderize mensagens recebidas como HTML arbitrário.
+6. Em teste autorizado, confira recebimento no endpoint. Resposta visual de
+   sucesso sem confirmação do destino não encerra a verificação.
 
-## Procedimento
+### Sequência específica
 
-Modele rótulos e instruções dos campos. Valide também no servidor e trate estados de envio, erro e sucesso. Use proteção adequada ao endpoint. Teste submissão somente no ambiente autorizado e confirme a chegada ao destino esperado.
+1. Diferencie provedor externo, endpoint e Astro Action; confira qual runtime
+   executa o processamento depois do deploy.
+2. Preserve campos repetidos, checkbox ausente e arquivos conforme o contrato.
+   Construa o corpo antes de desabilitar os controles.
+3. Separe erro de input, autorização e serviço indisponível. Confirme permissão
+   no handler, mesmo quando a página oculta o formulário.
+4. Teste sucesso, 4xx, 5xx e timeout após persistência. Confira idempotência
+   quando uma nova tentativa não puder repetir o efeito externo.
+5. Distinga aceitação assíncrona de entrega e correlacione o ID retornado com
+   a operação registrada no destino de teste.
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+### Alteração de implementação existente
 
-## Verificação e conclusão
+Preserve contrato do provedor existente e nomes dos campos. Mudanças visuais não
+justificam trocar endpoint nem enviar mensagens reais.
 
-O envio de teste chega ao destino, mensagens são acessíveis e nenhuma credencial aparece no cliente.
+## Verificação
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+Endpoint retornando erro deve conservar campos e apresentar falha. Resposta de
+sucesso precisa corresponder ao recebimento verificado.
+
+O envio de teste chega ao destino, mensagens são acessíveis e nenhuma credencial
+aparece no cliente.
 
 ```bash
 astrofy check --category forms
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

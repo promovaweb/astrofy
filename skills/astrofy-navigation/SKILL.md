@@ -1,36 +1,60 @@
 ---
 name: astrofy-navigation
-description: Implementa menus e submenus de sites Astro operáveis por teclado e toque, com foco, estado atual e destinos verificados.
+description:
+  Implementa menus e submenus de sites Astro operáveis por teclado e toque, com
+  foco, estado atual e destinos verificados.
 ---
 
 # Implementar navegação
 
-Implementa menus e submenus de sites Astro operáveis por teclado e toque, com foco, estado atual e destinos verificados.
+## Entradas
 
-## Preparação e alcance
+Leia árvore de links, controle de abertura, IDs, aria-expanded e rota atual. Use
+os caminhos definidos em `.astrofy/config/paths.json` quando diferirem dos
+exemplos. Confira a versão instalada no lockfile e em node_modules antes de
+aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Árvore de navegação e comportamento por largura.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+1. Renderize destinos como `a[href]` dentro de `nav`; use `button type="button"`
+   para expandir uma lista, com `aria-controls` apontando a um ID único.
+2. Sincronize `aria-expanded` do botão e `hidden` da lista no mesmo handler. O
+   estado inicial precisa corresponder ao HTML antes do JavaScript.
+3. Em Escape, feche a lista e retorne o foco ao botão controlador. No clique
+   externo, feche sem deslocar o foco do elemento escolhido pelo visitante.
+4. Remova a lista fechada do percurso de Tab. Não use somente opacity: 0.
+5. Aplique `aria-current="page"` ao destino atual, considerando base e a
+   política de barra final. Não aplique `role="menu"` à navegação comum.
+6. Se o site usa navegação com transições, confira listeners após trocar de
+   rota; um clique não pode disparar o mesmo handler duas vezes.
 
-## Procedimento
+### Sequência específica
 
-Modele links numa fonte compartilhada. Use semântica de navegação de site. Teste abrir, fechar, Escape, clique externo e retorno de foco. Identifique a rota atual e valide destinos e âncoras.
+1. Modele item, subitem, rota ativa e controle mobile na configuração.
+2. Use link para navegação e button apenas para abrir ou fechar painel.
+3. Sincronize aria-expanded, aria-controls, hidden e foco em cada transição.
+4. Teste Tab, Enter, Space, Escape, clique externo e mudança de rota.
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+### Alteração de implementação existente
 
-## Verificação e conclusão
+Ao integrar ClientRouter, teste navegação de ida e volta: o menu precisa
+reassociar elementos sem duplicar listeners. No fechamento por clique externo,
+preserve o foco do destino; ao fechar por Escape, devolva-o ao gatilho.
 
-As ações funcionam por mouse, toque e teclado. O menu fechado não mantém links invisíveis no percurso de foco.
+Preserve caminhos publicados e estados existentes ao centralizar a árvore. Teste
+duas instâncias quando houver navegação de desktop e móvel.
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+## Verificação
+
+Abrir com Enter, avançar com Tab e fechar com Escape deve retornar o foco ao
+controle. Menu fechado não pode receber foco interno.
+
+As ações funcionam por mouse, toque e teclado. O menu fechado não mantém links
+invisíveis no percurso de foco.
 
 ```bash
 astrofy check --category navigation
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

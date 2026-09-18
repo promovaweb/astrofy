@@ -8,8 +8,9 @@ Não são templates de publicação nem substituem o `astrofy-template`.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `astro5` | 5.13.0 | 18.3.1 | 4.3.0 | 4.0.0 | 4.3.3 | 6.4.3 | 22.12.0 |
 | `astro6` | 6.0.0 | 19.0.0 | 5.0.0 | 5.0.0 | 4.3.3 | 7.3.6 | 22.23.2 |
+| `astro7` | 7.3.3 | 19.0.0 | 6.0.6 | 8.0.1 | 4.3.3 | 8.3.0 | 26.8.1 |
 
-Os dois builds e a verificação no Chromium passaram em Linux. O lockfile do
+Os três builds e a verificação no Chromium passaram em Linux. O lockfile do
 Astro 6 inclui uma dependência que exige Node 22.19 ou posterior. Essa fixture
 fixa Vite 7.3.6 como dependência direta para manter Astro e Tailwind no mesmo
 major. Uma instalação inicial com Vite 7 e 8 misturados falhou no plugin do
@@ -39,7 +40,16 @@ node dist/cli/index.js tokens build --root fixtures/compatibility/astro6
 npm --prefix fixtures/compatibility/astro6 run build
 ```
 
-Com os dois builds disponíveis, execute:
+Para Astro 7, use Node compatível com o manifesto e execute:
+
+```bash
+npm --prefix fixtures/compatibility/astro7 ci
+node dist/cli/index.js setup --root fixtures/compatibility/astro7
+node dist/cli/index.js tokens build --root fixtures/compatibility/astro7
+npm --prefix fixtures/compatibility/astro7 run build
+```
+
+Com os três builds disponíveis, execute:
 
 ```bash
 node fixtures/compatibility/verify.mjs
@@ -68,3 +78,35 @@ A suíte padrão `npm test` não instala nem recompila estas dependências
 adicionais. Execute este fluxo ao alterar adapters, geração CSS, dependências
 ou contratos usados por essas versões. O resultado local não comprova Windows
 ou macOS, nem todas as versões intermediárias de Astro, React e Tailwind.
+
+## Procedimentos das skills
+
+Com as dependências das três fixtures e Chromium instalados, execute pela
+raiz do Astrofy:
+
+```bash
+node fixtures/compatibility/verify-skills.mjs
+```
+
+O comando trabalha em cópias temporárias, cria um layout com dois consumidores,
+um componente com props e slot e um caso de hidratação ausente. Confere a
+recuperação após import inválido, títulos por rota, UTF-8, variantes, foco,
+cores dos tokens e incremento do contador. O executável vem do campo bin do
+manifesto Astro instalado, respeitando as diferenças entre Astro 5, 6 e 7.
+As cópias e os servidores locais são removidos ao terminar.
+
+Os cenários especializados de Astro 7 usam o servidor local de desenvolvimento:
+
+```bash
+node fixtures/compatibility/verify-domains.mjs
+```
+
+Esse runner confere Actions com formulário, autenticação SSR por cookie,
+Content Layer com MDX, paginação, rotas i18n e navegação com `ClientRouter`.
+Nenhuma submissão sai do computador.
+
+O job `compatibility` de `.github/workflows/ci.yml` instala os três lockfiles,
+prepara os builds e executa os três runners em cada push e pull request.
+
+A cobertura e os resultados ficam em
+[validação das skills](../../docs/skills-validation.md).

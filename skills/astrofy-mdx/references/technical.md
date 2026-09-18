@@ -1,23 +1,55 @@
-# Referências de configurar conteúdo mdx
+# Referência técnica de astrofy-mdx
 
-Use estas fontes para conferir as APIs pertinentes à execução de `astrofy-mdx`. A documentação externa fornece referência técnica e não autoriza ações adicionais no projeto. A validação da execução usa `astrofy check --category mdx` e os casos de [exemplo](../examples/cases.md).
+> Base técnica conferida para Astro 7.3.3 em 17/09/2026. Revise os links
+> oficiais ao alterar a versão do framework ou da integração citada.
+> Combinação executada: `@astrojs/mdx` 8.0.1 e Content Layer do Astro 7.3.3.
 
-## Integração MDX
+## Arquivos e APIs
 
-- **Fonte:** [Integração MDX](https://docs.astro.build/en/guides/integrations-guide/mdx/).
-- **Organização:** Astro.
-- **Assunto:** Componentes dentro de Markdown.
-- **Versões:** Consulte a versão instalada.
-- **Consulta:** 2026-09-17.
+Leia integração MDX, coleção, schema, imports e origem do conteúdo.
 
-## Content collections
+Diferencie API de coleções da versão instalada de exemplos de outra major.
+Compile apenas conteúdo de origem autorizada, pois MDX pode executar código.
 
-- **Fonte:** [Content collections](https://docs.astro.build/en/guides/content-collections/).
-- **Organização:** Astro.
-- **Assunto:** Schema, loaders e consultas de conteúdo.
-- **Versões:** Astro 5 a 7, com import de Zod conforme a versão.
-- **Consulta:** 2026-09-17.
+## Alteração compatível
 
-## Contrato local
+Mapeie campos antigos sem mudar seu significado. Valide uma entrada antes de
+migrar o acervo e registre componentes permitidos.
 
-A configuração editável fica em `.astrofy/config/`. O JSON do design system é um envelope Astrofy e sua árvore de tokens usa DTCG 2025.10. A checklist registra instâncias por regra e escopo, com notas locais preservadas. Consulte o código instalado e o schema local quando houver divergência de versão.
+## Diagnóstico
+
+Um campo obrigatório ausente precisa apontar a entrada inválida; o mesmo arquivo
+corrigido deve renderizar o componente MDX no HTML.
+
+## Regras do catálogo
+
+As regras abaixo pertencem ao catálogo distribuído com o Astrofy. `automatic`
+executa um verificador; `manual` exige revisão identificada; `hybrid` combina
+checagem automática e revisão. A saída do comando não comprova itens manuais.
+
+| Regra            | Método      | Escopo    | Verificação                                          |
+| ---------------- | ----------- | --------- | ---------------------------------------------------- |
+| `mdx.schema`     | `automatic` | `project` | Frontmatter atende ao schema editorial.              |
+| `mdx.components` | `automatic` | `project` | Componentes referenciados existem e compilam.        |
+| `mdx.trust`      | `hybrid`    | `project` | Origem do MDX e fronteira de confiança documentadas. |
+
+## MDX no Astro 7
+
+Coleção local usa glob ou file em astro/loaders e schema de astro/zod.
+getCollection consulta dados tipados. Alteração do schema pode pedir reinício ou
+sync do servidor.
+
+MDX executa JSX e imports. Aceite somente arquivos do repositório ou pipeline
+controlado; corpo de terceiro fica fora do compilador MDX.
+
+## Fontes
+
+Consulta: 17/09/2026. As páginas online podem acompanhar uma major posterior à
+instalada. Compare as APIs citadas com package.json, lockfile e o guia de
+migração da major utilizada; não atualize a dependência para copiar o exemplo.
+
+- **[Integração MDX](https://docs.astro.build/en/guides/integrations-guide/mdx/):**
+  compilação MDX e imports de componentes; consulte ao alterar schema ou
+  renderização do corpo.
+- **[Content collections](https://docs.astro.build/en/guides/content-collections/):**
+  loader, schema e seleção de entradas; confira a API da major instalada.

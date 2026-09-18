@@ -14,4 +14,14 @@ Não vincule automaticamente a imagem social ao tema atual do visitante. O crawl
 
 ## Conferência
 
-Tags obrigatórias aparecem uma vez e a imagem pode ser acessada no ambiente publicado. Use `astrofy check --category og` e registre o resultado da operação no escopo realmente verificado.
+Tags obrigatórias não entram em conflito. Quando houver várias imagens, cada grupo mantém suas propriedades e a ordem de preferência. As imagens podem ser acessadas no ambiente publicado. Use `astrofy check --category og` e registre o resultado da operação no escopo realmente verificado.
+
+## Regressão específica
+
+- **Arquivos envolvidos:** componente de metadados, título, descrição, imagem e domínio.
+- **Alteração sob teste:** Preserve capas sociais próprias. Centralize a emissão sem duplicar tags já presentes em layouts herdados.
+- **Falha e resultado esperado:** Remova a capa específica de um post de teste: o fallback precisa ser válido. Uma imagem 404 deve impedir afirmar que o compartilhamento foi conferido.
+- **Comando complementar:** `astrofy check --category og`.
+
+Execute a falha deliberada em uma cópia descartável. Compare o resultado
+antes e depois da correção, mantendo os mesmos arquivos de entrada.

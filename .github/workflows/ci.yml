@@ -39,3 +39,44 @@ jobs:
           npm install --global .
           astrofy --help
           astrofy --version --json
+
+  compatibility:
+    name: Fixtures Astro 5, 6 e 7
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Obter código
+        uses: actions/checkout@v4
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '26'
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            fixtures/compatibility/astro5/package-lock.json
+            fixtures/compatibility/astro6/package-lock.json
+            fixtures/compatibility/astro7/package-lock.json
+      - name: Instalar framework e fixtures
+        run: |
+          npm ci
+          npm --prefix fixtures/compatibility/astro5 ci
+          npm --prefix fixtures/compatibility/astro6 ci
+          npm --prefix fixtures/compatibility/astro7 ci
+      - name: Instalar Chromium e dependências do navegador
+        run: npx playwright install --with-deps chromium
+      - name: Preparar builds das fixtures
+        run: |
+          npm run build
+          for version in astro5 astro6 astro7; do
+            node dist/cli/index.js init --root "fixtures/compatibility/$version"
+            mkdir -p "fixtures/compatibility/$version/.astrofy/design"
+            cp fixtures/design-system.json "fixtures/compatibility/$version/.astrofy/design/design-system.json"
+            node dist/cli/index.js tokens build --root "fixtures/compatibility/$version"
+            npm --prefix "fixtures/compatibility/$version" run build
+          done
+      - name: Conferir builds e procedimentos das skills
+        run: |
+          npm run test:compatibility
+          npm run test:skill-procedures
+          npm run test:skill-domains

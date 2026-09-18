@@ -1,36 +1,62 @@
 ---
 name: astrofy-themes
-description: Implementa light, dark e system com preferência persistente em sites Astro, conferindo a primeira pintura e estados dos componentes.
+description:
+  Implementa light, dark e system com preferência persistente em sites Astro,
+  conferindo a primeira pintura e estados dos componentes.
 ---
 
 # Implementar temas
 
-Implementa light, dark e system com preferência persistente em sites Astro, conferindo a primeira pintura e estados dos componentes.
+## Entradas
 
-## Preparação e alcance
+Leia script inicial do tema, seletor, localStorage, CSS dark e ativos por modo.
+Use os caminhos definidos em `.astrofy/config/paths.json` quando diferirem dos
+exemplos. Confira a versão instalada no lockfile e em node_modules antes de
+aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Ativos por tema, persistência e política de scripts.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+1. Leia a preferência persistida em try/catch. Aceite somente `light`, `dark` e
+   `system`; normalize valor desconhecido para o padrão documentado.
+2. Resolva `system` com `matchMedia('(prefers-color-scheme: dark)')`. Uma
+   preferência explícita prevalece sobre o resultado dessa consulta.
+3. Aplique a classe ou o atributo de tema no elemento html antes da primeira
+   pintura, respeitando a política CSP existente.
+4. No seletor, atualize o estado visual, a preferência e o atributo usado pelo
+   CSS. Falha de localStorage não pode interromper a troca naquela página.
+5. No evento change de matchMedia, atualize o tema somente quando a preferência
+   for system. Remova listeners antigos se o ciclo de navegação os recriar.
+6. Confira o logo e estilos computados em cada modo; recarregue após escolher
+   dark e repita com armazenamento indisponível.
 
-## Procedimento
+### Sequência específica
 
-Aplique a preferência explícita no início do documento. Trate falhas de armazenamento. Em system, acompanhe mudanças de prefers-color-scheme. Confira logos, foco e estados de interação em páginas representativas.
+1. Normalize preferência para light, dark ou system em leitura protegida.
+2. Resolva system por matchMedia e aplique atributo no html antes da pintura.
+3. Persistir escolha não pode impedir a página quando storage falhar.
+4. Teste recarga, troca do sistema, logo e estilo calculado nos dois modos.
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+### Alteração de implementação existente
 
-## Verificação e conclusão
+Conserve preferência system separada do modo resolvido. Confira o atributo de
+tema após a troca de documento do ClientRouter e o estilo computado antes de
+afirmar persistência; a seleção visual do botão não basta.
 
-A preferência explícita prevalece. System acompanha o sistema e o site continua utilizável com armazenamento indisponível.
+Adapte a convenção existente de classe ou data-theme. Não adicione um segundo
+controlador. Confira reinicialização após navegação quando o site usa
+transições.
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+## Verificação
+
+Armazenamento indisponível não pode lançar erro que impeça o restante da página.
+Recarregar após selecionar dark deve manter o tema e o logo correto.
+
+A preferência explícita prevalece. System acompanha o sistema e o site continua
+utilizável com armazenamento indisponível.
 
 ```bash
 astrofy check --category theme
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

@@ -1,36 +1,55 @@
 ---
 name: astrofy-routing
-description: Organiza rotas e redirects em sites Astro, preservando URLs existentes e verificando colisões, parâmetros e comportamento de 404.
+description:
+  Organiza rotas e redirects em sites Astro, preservando URLs existentes e
+  verificando colisões, parâmetros e comportamento de 404.
 ---
 
 # Organizar rotas
 
-Organiza rotas e redirects em sites Astro, preservando URLs existentes e verificando colisões, parâmetros e comportamento de 404.
+## Entradas
 
-## Preparação e alcance
+Leia src/pages, getStaticPaths, slugs, base, trailingSlash e regras do provedor.
+Use os caminhos definidos em `.astrofy/config/paths.json` quando diferirem dos
+exemplos. Confira a versão instalada no lockfile e em node_modules antes de
+aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Rotas atuais, slugs e redirects autorizados.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Compare rota de origem e URL final considerando base e modo de renderização.
+Teste colisões e ciclos de redirect.
 
-## Procedimento
+Mapeie rotas estáticas e dinâmicas. Normalize slugs e verifique colisões.
+Preserve URLs publicadas ou crie redirects explícitos. Teste destino final,
+ausência de ciclos e status 404 no provedor adotado.
 
-Mapeie rotas estáticas e dinâmicas. Normalize slugs e verifique colisões. Preserve URLs publicadas ou crie redirects explícitos. Teste destino final, ausência de ciclos e status 404 no provedor adotado.
+Consulte o algoritmo de rotas de [Astro 7](references/implementation.md) antes
+de criar páginas dinâmicas, endpoints ou renderização sob demanda.
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+### Sequência específica
 
-## Verificação e conclusão
+1. Mapeie arquivo em src/pages, URL, params, output e prerender.
+2. Gere params em getStaticPaths: strings para segmentos; undefined somente
+   quando um rest parameter precisa representar a raiz.
+3. Valide slug e responda 404 em rota sob demanda sem entrada válida.
+4. Teste URL antiga, redirect, canonical, base e trailingSlash.
 
-As rotas são únicas e redirects terminam no destino esperado. A página de erro recebe status coerente.
+### Alteração de implementação existente
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+Conserve URLs publicadas ou registre a relação antiga/nova. Verifique status
+HTTP no servidor utilizado, inclusive 404.
+
+## Verificação
+
+Dois conteúdos com o mesmo slug devem ser recusados ou resolvidos
+explicitamente. Redirect circular precisa falhar no teste do destino final.
+
+As rotas são únicas e redirects terminam no destino esperado. A página de erro
+recebe status coerente.
 
 ```bash
 astrofy check --category routing
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

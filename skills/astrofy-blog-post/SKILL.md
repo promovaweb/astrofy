@@ -1,36 +1,52 @@
 ---
 name: astrofy-blog-post
-description: Compõe templates de post Astro com corpo MDX, autoria e metadados derivados da coleção, verificando leitura e mídia responsiva.
+description:
+  Compõe templates de post Astro com corpo MDX, autoria e metadados derivados da
+  coleção, verificando leitura e mídia responsiva.
 ---
 
 # Compor post individual
 
-Compõe templates de post Astro com corpo MDX, autoria e metadados derivados da coleção, verificando leitura e mídia responsiva.
+## Entradas
 
-## Preparação e alcance
+Leia entrada da coleção, layout de leitura, componentes MDX e metadados. Use os
+caminhos definidos em `.astrofy/config/paths.json` quando diferirem dos
+exemplos. Confira a versão instalada no lockfile e em node_modules antes de
+aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Post validado e componentes de leitura.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Derive título, autoria e datas da entrada atual. Confira código, tabela, imagem
+e componente no corpo, com largura de leitura adequada.
 
-## Procedimento
+Renderize o corpo com a API da versão instalada. Apresente autoria e datas
+fornecidas. Use largura de leitura e estilos para tabelas e código. Derive
+metadados do post e confira imagens e componentes embutidos.
 
-Renderize o corpo com a API da versão instalada. Apresente autoria e datas fornecidas. Use largura de leitura e estilos para tabelas e código. Derive metadados do post e confira imagens e componentes embutidos.
+### Sequência específica
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+1. Carregue uma entrada tipada da coleção e valide slug, publicação e dados
+   opcionais.
+2. Renderize o corpo pelo renderer da Content Layer.
+3. Derive título, descrição, data, autor, canonical e imagem da mesma entrada.
+4. Teste post sem capa, sem atualização e sem campos opcionais.
 
-## Verificação e conclusão
+### Alteração de implementação existente
 
-O post tem rota própria e corpo legível nos temas suportados. Metadados correspondem ao artigo.
+Preserve canonical externo autorizado e slugs existentes. Atualize layout e
+metadados sem reescrever o conteúdo factual.
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+## Verificação
+
+Dois artigos com títulos diferentes devem emitir títulos e canônicas
+correspondentes. Uma tabela longa deve continuar legível no celular.
+
+O post tem rota própria e corpo legível nos temas suportados. Metadados
+correspondem ao artigo.
 
 ```bash
 astrofy check --page /blog/exemplo/
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

@@ -1,36 +1,54 @@
 ---
 name: astrofy-homepage
-description: Monta páginas iniciais Astro com conteúdo fornecido e seções reutilizáveis, alinhando navegação, hierarquia e ação principal.
+description:
+  Monta páginas iniciais Astro com conteúdo fornecido e seções reutilizáveis,
+  alinhando navegação, hierarquia e ação principal.
 ---
 
 # Montar página inicial
 
-Monta páginas iniciais Astro com conteúdo fornecido e seções reutilizáveis, alinhando navegação, hierarquia e ação principal.
+## Entradas
 
-## Preparação e alcance
+Leia rota inicial, público, ação principal, conteúdo autorizado e seções
+disponíveis. Use os caminhos definidos em `.astrofy/config/paths.json` quando
+diferirem dos exemplos. Confira a versão instalada no lockfile e em node_modules
+antes de aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Público, objetivo principal e conteúdo confirmado.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Relacione a abertura à ação principal e confirme seus destinos. Use conteúdo
+real antes de avaliar a composição visual e os metadados.
 
-## Procedimento
+Identifique a ação principal da página e o conteúdo necessário para sustentá-la.
+Componha a abertura e as seções com componentes existentes. Verifique os
+destinos e compare a leitura em celular e desktop.
 
-Identifique a ação principal da página e o conteúdo necessário para sustentá-la. Componha a abertura e as seções com componentes existentes. Verifique os destinos e compare a leitura em celular e desktop.
+### Sequência específica
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+1. Confirme objetivo da rota, ação principal, conteúdo autorizado e seções
+   existentes.
+2. Ordene hero, prova, conteúdo e CTA pela função da página.
+3. Reutilize seções e tokens já disponíveis, sem duplicar componentes.
+4. Teste mobile, links de CTA, headings e primeira dobra.
+5. Confira conteúdo inicial antes da hidratação, mídia principal e falha de
+   fontes secundárias. Use a seleção publicável ao exibir conteúdo de coleções.
 
-## Verificação e conclusão
+### Alteração de implementação existente
 
-A página permite compreender o assunto e encontrar a ação principal com conteúdo factual e navegação funcional.
+Substitua seções gradualmente preservando URLs, marca e informações confirmadas.
+Compare primeiro celular e depois desktop.
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+## Verificação
+
+O botão principal deve chegar a uma rota existente. Remover o texto de abertura
+deve ser detectado pela revisão de conteúdo e hierarquia.
+
+A página permite compreender o assunto e encontrar a ação principal com conteúdo
+factual e navegação funcional.
 
 ```bash
 astrofy check --page /
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

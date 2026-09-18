@@ -1,36 +1,59 @@
 ---
 name: astrofy-tailwind
-description: Integra utilitários Tailwind ao design system de um projeto Astro, verificando versão, entrada CSS e classes emitidas pelo build.
+description:
+  Integra utilitários Tailwind ao design system de um projeto Astro, verificando
+  versão, entrada CSS e classes emitidas pelo build.
 ---
 
 # Integrar Tailwind
 
-Integra utilitários Tailwind ao design system de um projeto Astro, verificando versão, entrada CSS e classes emitidas pelo build.
+## Entradas
 
-## Preparação e alcance
+Leia versão resolvida do Tailwind, integração Vite, CSS de entrada e classes
+usadas. Use os caminhos definidos em `.astrofy/config/paths.json` quando
+diferirem dos exemplos. Confira a versão instalada no lockfile e em node_modules
+antes de aplicar APIs da documentação online.
 
-Apresente um plano curto e atualize o progresso quando concluir uma etapa. Identifique a raiz Astro e leia `.astrofy/docs/index.md`, a configuração pertinente e os arquivos reais do escopo. Entradas desta operação: Versão instalada, CSS de entrada e classes dos componentes.
+## Execução
 
-Consulte [referências técnicas](references/technical.md) para as APIs usadas e [casos de execução](examples/cases.md) para adoção e erros recorrentes. Preserve alterações locais e retome arquivos existentes pelo conteúdo atual. Esta skill pode operar em qualquer projeto Astro compatível, inclusive sem o Astrofy Template.
+Confirme Tailwind 4 antes de usar o adaptador CSS-first. Relacione classe
+semântica à variável emitida por @theme inline. Examine o CSS do build, não
+apenas o fonte.
 
-## Procedimento
+Selecione o adaptador compatível com a versão instalada. Mantenha uma única
+importação de Tailwind. Use os utilitários semânticos gerados e examine o CSS
+compilado. Registre exceções técnicas de valores literais por arquivo.
 
-Selecione o adaptador compatível com a versão instalada. Mantenha uma única importação de Tailwind. Use os utilitários semânticos gerados e examine o CSS compilado. Registre exceções técnicas de valores literais por arquivo.
+### Sequência específica
 
-Atualize a documentação dos arquivos alterados e somente os itens de checklist efetivamente avaliados. Falta de preview ou falha operacional deve aparecer no relatório como avaliação não concluída. Não instale dependências, envie formulários ou publique o site durante uma simples inspeção.
+1. Identifique a major do Tailwind. Para Tailwind 4, confira plugin Vite e
+   folha global efetivamente importada pelo layout.
+2. Ligue tokens por variáveis CSS ou @theme sem duplicar paleta.
+3. Mantenha classes detectáveis estaticamente pelo compilador.
+4. Inspecione CSS final e confira dark no seletor usado pelo tema.
+5. Em workspace, teste uma classe exclusiva do pacote compartilhado e confira
+   descoberta de arquivos. Restrinja @source ao diretório necessário.
+6. Quando uma classe emitida não surtir efeito, identifique a regra vencedora
+   e a resolução de variáveis no navegador antes de alterar especificidade.
 
-## Verificação e conclusão
+### Alteração de implementação existente
 
-As classes usadas aparecem no CSS final. O CSS global não repete valores de marca.
+Preserve Tailwind 3 quando a migração não estiver no pedido. Em Tailwind 4,
+remova importação duplicada somente depois de identificar o ponto de entrada
+efetivo.
 
-Use o comando abaixo quando o CLI estiver instalado, junto dos testes específicos do site. O resultado da checklist não substitui a revisão humana exigida pelo escopo.
+## Verificação
+
+Uma classe bg-surface deve produzir a cor do token no navegador. Uma string
+construída dinamicamente pode não gerar utilitário; use variantes explicitamente
+detectáveis.
+
+As classes usadas aparecem no CSS final. O CSS global não repete valores de
+marca.
 
 ```bash
 astrofy check --rule design.token-usage
 ```
 
-No resumo final, informe arquivos modificados, comandos executados e pendências reais. Confira os links de Markdown alterados e o estado do Git.
-
-## Texto público
-
-A redação pública segue o Contrato Editorial Compartilhado do projeto. No Hub Promovaweb, leia os índices editoriais da raiz e seus módulos aplicáveis. Em outros sites, consulte as instruções locais e preserve a voz e os fatos fornecidos. Não atribua experiências ou opiniões sem fonte.
+Consulte [APIs e regras deste domínio](references/technical.md) antes da
+implementação e [cenários de validação](examples/cases.md) ao conferir a saída.

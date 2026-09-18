@@ -1,17 +1,39 @@
-# Casos de revisar fronteiras de execução
+# Casos de fronteiras de execução
 
-## Uso comum
+## JSON-LD com fechamento de script
 
-Escape o caractere menor que ao serializar JSON-LD dentro de script.
+Em fixture descartável, use uma propriedade de texto contendo fechamento de
+script e uma tag com evento. Renderize com o serializador de produção. O DOM
+não deve ganhar a tag injetada, nenhum evento deve executar e JSON.parse do
+textContent deve recuperar o texto original. JSON.parse isolado antes de
+renderizar não testa o parser HTML do navegador.
 
-## Projeto existente
+## HTML recebido de CMS
 
-Um site recebe HTML de CMS. Confira a política de sanitização no ponto de entrada existente.
+Envie ao sanitizador uma amostra com formatação permitida, atributo onerror,
+href javascript e HTML malformado. A formatação permitida permanece; atributos
+executáveis e protocolos não autorizados desaparecem. Repita pelo consumidor
+que usa set:html para confirmar que não existe caminho sem sanitização.
 
-## Erro recorrente
+## Permissão sobre recurso
 
-Não compile MDX externo nem importe configuração desconhecida durante uma inspeção estática.
+Crie dois usuários e dois recursos no ambiente de teste. Com sessão do primeiro,
+tente alterar o recurso do segundo usando o endpoint direto, mesmo sem link na
+UI. Espere rejeição sem mudança no banco. Repita sem sessão e com origem externa
+para cobrir autenticação e proteção CSRF separadamente.
 
-## Conferência
+## Cache compartilhado
 
-As correções possuem caso reproduzível. O relatório não expõe credenciais nem declara auditoria completa por análise automática. Use `astrofy check --rule config.secrets` e registre o resultado da operação no escopo realmente verificado.
+Aqueça a URL privada com sessão A. Requisite a mesma URL com sessão B e sem
+sessão, passando pelo CDN de teste. Nenhuma resposta deve conter dados de A.
+Inspecione configuração e headers junto ao corpo; teste local sem CDN não
+comprova a política aplicada no host.
+
+## Segredo refletido no cliente
+
+Use valor fictício identificável no ambiente do servidor. Confira se ele aparece
+em props hidratadas, HTML, arquivos estáticos ou respostas de erro. O relatório
+registra apenas o marcador fictício e os caminhos encontrados.
+
+Execute `astrofy check --rule config.secrets` como verificação complementar.
+Esse comando não comprova sanitização, autorização, CSRF ou isolamento de cache.

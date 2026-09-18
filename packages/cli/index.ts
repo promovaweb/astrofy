@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { realpathSync } from 'node:fs';
 import { discoverRoot, inspect } from '../core/discovery.js';
 import { initialize } from '../core/init.js';
+import { setupProject } from '../core/setup.js';
 import { loadConfig } from '../core/config.js';
 import { createReport, checkProject, projectStatus } from '../core/runner.js';
 import { tokensCommand } from '../design-system/index.js';
@@ -16,10 +17,10 @@ import { exportReport, readReport, persistReport } from '../core/reports.js';
 import { importBrandfyFile } from '../core/branding.js';
 import { redactReport, redactText } from '../core/redaction.js';
 import { AstrofyError, VERSION, type Report, type RunOptions } from '../core/types.js';
-export const COMMANDS=['init','inspect','check','status','tui','tokens validate','tokens build','tokens check','tokens import-brandfy','docs check','links scan','report','migrate','skills list','skills install'] as const;
+export const COMMANDS=['setup','init','inspect','check','status','tui','tokens validate','tokens build','tokens check','tokens import-brandfy','docs check','links scan','report','migrate','skills list','skills install'] as const;
 export const FLAGS={root:'string',json:'boolean',ci:'boolean',offline:'boolean','no-color':'boolean','dry-run':'boolean',category:'string',rule:'string',page:'string',component:'string',changed:'boolean',help:'boolean',version:'boolean',apply:'boolean',agent:'string',skill:'string',run:'string',output:'string',markdown:'boolean',source:'string'} as const;
 export const COMMAND_OPTIONS:Record<string,string[]>={
-  init:['dry-run'],inspect:[],check:['dry-run','category','rule','page','component','changed'],status:[],tui:[],
+  setup:['dry-run'],init:['dry-run'],inspect:[],check:['dry-run','category','rule','page','component','changed'],status:[],tui:[],
   'tokens validate':[],'tokens build':['dry-run'],'tokens check':[],'tokens import-brandfy':['source','dry-run'],
   'docs check':[],'links scan':[],report:['run','output','markdown','dry-run'],migrate:['apply','dry-run'],
   'skills list':[],'skills install':['agent','skill','dry-run'],
@@ -51,7 +52,11 @@ export async function run(argv:string[],signal?:AbortSignal):Promise<{report:Rep
   }
   const report=createReport(command,options);
   let code=0;
-  if(command==='init'){
+  if(command==='setup'){
+    const state=await setupProject(root,options);report.data=state;
+    if(!options.dryRun)report.artifacts=['.astrofy/setup-state.json'];
+  }
+  else if(command==='init'){
     const state=await initialize(root,options);report.data=state;
     if(!options.dryRun)report.artifacts=state.created;
   }
@@ -92,7 +97,7 @@ export async function run(argv:string[],signal?:AbortSignal):Promise<{report:Rep
     report.data=rows;code=rows.some(row=>row.broken.length)?1:0;
   }
   report.status=code===1?'failed':'completed';
-  const persistent=['init','skills install','tokens build','tokens import-brandfy','docs check','links scan'].includes(command)||command==='migrate'&&!!values.apply;
+  const persistent=['setup','init','skills install','tokens build','tokens import-brandfy','docs check','links scan'].includes(command)||command==='migrate'&&!!values.apply;
   if(persistent&&!options.dryRun){
     report.coveredScope=command==='links scan'?(report.data as {route:string}[]).map(row=>({type:'page',target:row.route})):[{type:'project',target:'.'}];
     await persistReport(root,report);
