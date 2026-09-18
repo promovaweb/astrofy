@@ -1,0 +1,10 @@
+docs/user/README.md
+docs/user/00-visao-geral.md
+docs/user/01-instalacao-e-setup.md
+docs/user/02-planejamento-de-pagina.md
+docs/user/03-entrevista-e-conteudo.md
+docs/user/04-plano-de-implementacao.md
+docs/user/05-execucao-e-validacao.md
+docs/user/06-exemplo-pagina-de-produto.md
+docs/user/07-retomada-e-manutencao.md
+docs/user/08-solucao-de-problemas.md

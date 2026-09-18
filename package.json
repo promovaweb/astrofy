@@ -1,6 +1,6 @@
 {
   "name": "@promovaweb/astrofy",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Skills e ferramentas para projetos Astro",
   "type": "module",
   "license": "UNLICENSED",
@@ -21,6 +21,7 @@
     "skills",
     "templates",
     "docs",
+    "ebook",
     "fixtures/compatibility/README.md",
     "VERSION",
     "CHANGELOG.md"
@@ -31,6 +32,8 @@
     "test:compatibility": "node fixtures/compatibility/verify.mjs",
     "test:skill-procedures": "node fixtures/compatibility/verify-skills.mjs",
     "test:skill-domains": "node fixtures/compatibility/verify-domains.mjs",
+    "ebook": "node .ebook/build-ebook.mjs",
+    "ebook:verify": "node .ebook/build-ebook.mjs --check",
     "check": "tsc --noEmit -p tsconfig.json",
     "prepack": "npm run build"
   },

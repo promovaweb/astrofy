@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "version": "0.4.0",
+  "edition": "v0.4.0",
+  "generated_at": "2026-09-18T15:21:26Z",
+  "source_sha256": "5b4f96cb2a4975846d97ad2926692d5173646f16cc53582a293d391b968aaab7",
+  "sources": [
+    ".ebook/assets/logo.svg",
+    ".ebook/build-ebook.mjs",
+    ".ebook/epub.css",
+    ".ebook/metadata.yaml",
+    ".ebook/pdf.css",
+    ".ebook/template.html",
+    "docs/user/00-visao-geral.md",
+    "docs/user/01-instalacao-e-setup.md",
+    "docs/user/02-planejamento-de-pagina.md",
+    "docs/user/03-entrevista-e-conteudo.md",
+    "docs/user/04-plano-de-implementacao.md",
+    "docs/user/05-execucao-e-validacao.md",
+    "docs/user/06-exemplo-pagina-de-produto.md",
+    "docs/user/07-retomada-e-manutencao.md",
+    "docs/user/08-solucao-de-problemas.md",
+    "docs/user/README.md",
+    "docs/user/reading-order.txt",
+    "ebook/VERSION"
+  ],
+  "artifacts": {
+    "pdf": {
+      "file": "Astrofy-Guia-do-Usuario-v0.4.0.pdf",
+      "sha256": "bd5093beaf9716674826b24bd34b7db99f7025b3b29b7bfadc6cca81df4795f2"
+    },
+    "epub": {
+      "file": "Astrofy-Guia-do-Usuario-v0.4.0.epub",
+      "sha256": "c2ae9703e3d288d5cb19de0135964297435a0280dcc5fc587ef62565dfe5b4be"
+    }
+  }
+}

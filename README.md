@@ -23,14 +23,14 @@ node dist/cli/index.js --help
 O pacote está disponível publicamente no npm. Instale ou atualize com:
 
 ```bash
-npm install --global @promovaweb/astrofy@0.3.0
+npm install --global @promovaweb/astrofy@0.4.0
 astrofy --help
 astrofy --version
 ```
 
 Depois da instalação, execute `astrofy tui --root /caminho/do/site` para
 abrir o painel em um projeto já inicializado com `astrofy init`.
-A versão 0.3.0 adiciona planejamento conversacional e técnico para páginas de
+A versão 0.4.0 inclui planejamento conversacional e técnico para páginas de
 vendas, produto, serviço, Home, Sobre, Contato e Preços.
 
 O pacote conserva `UNLICENSED`, sem concessão de licença aberta. Para uma
@@ -67,6 +67,12 @@ dependências, estimativas e validações. Nenhuma das duas orquestradoras alter
 ou publica o site sem uma solicitação posterior.
 
 ## Documentação
+
+- [Guia do usuário](docs/user/README.md)
+- [Ebook em PDF e EPUB](ebook/README.md)
+- [Referência das skills](docs/skills.md)
+- [CLI](docs/cli.md)
+- [Configuração](docs/configuration.md)
 
 - **Uso do CLI:** [comandos e opções](docs/cli.md).
 - **Contratos:** [configuração e estado](docs/configuration.md).

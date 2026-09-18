@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Astrofy: guia do usuário</title>
+</head>
+<body>
+  <div class="cover">
+    <img class="cover-mark" src="assets/logo.svg" alt="Logo do Astrofy">
+    <div class="cover-title">
+      <div class="cover-kicker">Astrofy</div>
+      <h1>Guia do usuário</h1>
+      <div class="cover-tagline">Do pedido da página à implementação validada</div>
+      <div class="cover-desc">Setup, entrevista, especificação, plano técnico, execução e checkup em projetos Astro.</div>
+    </div>
+    <div class="cover-meta">
+      <div>Edição v0.4.0</div>
+      <div>Gerado em 18 de setembro de 2026</div>
+      <div>Fonte editorial: docs/user/</div>
+    </div>
+  </div>
+    <nav id="TOC" role="doc-toc"><ul>
+<li><a href="#readme.md__astrofy-guia-do-usuário"
+id="toc-readme.md__astrofy-guia-do-usuário">Astrofy: guia do usuário</a>
+<ul>
+<li><a href="#readme.md__percurso-recomendado"
+id="toc-readme.md__percurso-recomendado">Percurso recomendado</a></li>
+<li><a href="#readme.md__formatos"
+id="toc-readme.md__formatos">Formatos</a></li>
+</ul></li>
+<li><a href="#visao-geral.md__visão-geral"
+id="toc-visao-geral.md__visão-geral">Visão geral</a>
+<ul>
+<li><a href="#visao-geral.md__artefatos-do-projeto"
+id="toc-visao-geral.md__artefatos-do-projeto">Artefatos do
+projeto</a></li>
+</ul></li>
+<li><a href="#instalacao-e-setup.md__instalação-e-setup"
+id="toc-instalacao-e-setup.md__instalação-e-setup">Instalação e
+setup</a>
+<ul>
+<li><a href="#instalacao-e-setup.md__requisitos"
+id="toc-instalacao-e-setup.md__requisitos">Requisitos</a></li>
+<li><a href="#instalacao-e-setup.md__instalação-global"
+id="toc-instalacao-e-setup.md__instalação-global">Instalação
+global</a></li>
+<li><a href="#instalacao-e-setup.md__primeira-execução"
+id="toc-instalacao-e-setup.md__primeira-execução">Primeira
+execução</a></li>
+<li><a href="#instalacao-e-setup.md__resultado-esperado"
+id="toc-instalacao-e-setup.md__resultado-esperado">Resultado
+esperado</a></li>
+</ul></li>
+<li><a href="#planejamento-de-pagina.md__planejamento-de-uma-página"
+id="toc-planejamento-de-pagina.md__planejamento-de-uma-página">Planejamento
+de uma página</a>
+<ul>
+<li><a href="#planejamento-de-pagina.md__pontos-de-revisão"
+id="toc-planejamento-de-pagina.md__pontos-de-revisão">Pontos de
+revisão</a></li>
+</ul></li>
+<li><a href="#entrevista-e-conteudo.md__entrevista-e-conteúdo"
+id="toc-entrevista-e-conteudo.md__entrevista-e-conteúdo">Entrevista e
+conteúdo</a>
+<ul>
+<li><a href="#entrevista-e-conteudo.md__informações-comuns"
+id="toc-entrevista-e-conteudo.md__informações-comuns">Informações
+comuns</a></li>
+<li><a href="#entrevista-e-conteudo.md__como-responder"
+id="toc-entrevista-e-conteudo.md__como-responder">Como
+responder</a></li>
+<li><a href="#entrevista-e-conteudo.md__exemplo-curto"
+id="toc-entrevista-e-conteudo.md__exemplo-curto">Exemplo curto</a></li>
+</ul></li>
+<li><a href="#plano-de-implementacao.md__plano-de-implementação"
+id="toc-plano-de-implementacao.md__plano-de-implementação">Plano de
+implementação</a>
+<ul>
+<li><a href="#plano-de-implementacao.md__aprovação"
+id="toc-plano-de-implementacao.md__aprovação">Aprovação</a></li>
+</ul></li>
+<li><a href="#execucao-e-validacao.md__execução-e-validação"
+id="toc-execucao-e-validacao.md__execução-e-validação">Execução e
+validação</a>
+<ul>
+<li><a href="#execucao-e-validacao.md__conferência-mínima"
+id="toc-execucao-e-validacao.md__conferência-mínima">Conferência
+mínima</a></li>
+</ul></li>
+<li><a href="#exemplo-pagina-de-produto.md__exemplo-página-de-produto"
+id="toc-exemplo-pagina-de-produto.md__exemplo-página-de-produto">Exemplo:
+página de produto</a>
+<ul>
+<li><a href="#exemplo-pagina-de-produto.md__pedido-inicial"
+id="toc-exemplo-pagina-de-produto.md__pedido-inicial">Pedido
+inicial</a></li>
+<li><a href="#exemplo-pagina-de-produto.md__conteúdo-definido"
+id="toc-exemplo-pagina-de-produto.md__conteúdo-definido">Conteúdo
+definido</a></li>
+<li><a href="#exemplo-pagina-de-produto.md__plano-técnico"
+id="toc-exemplo-pagina-de-produto.md__plano-técnico">Plano
+técnico</a></li>
+</ul></li>
+<li><a href="#retomada-e-manutencao.md__retomada-e-manutenção"
+id="toc-retomada-e-manutencao.md__retomada-e-manutenção">Retomada e
+manutenção</a>
+<ul>
+<li><a href="#retomada-e-manutencao.md__atualização-do-astrofy"
+id="toc-retomada-e-manutencao.md__atualização-do-astrofy">Atualização do
+Astrofy</a></li>
+</ul></li>
+<li><a href="#solucao-de-problemas.md__solução-de-problemas"
+id="toc-solucao-de-problemas.md__solução-de-problemas">Solução de
+problemas</a>
+<ul>
+<li><a href="#solucao-de-problemas.md__o-projeto-não-é-reconhecido"
+id="toc-solucao-de-problemas.md__o-projeto-não-é-reconhecido">O projeto
+não é reconhecido</a></li>
+<li><a href="#solucao-de-problemas.md__o-setup-encontrou-json-inválido"
+id="toc-solucao-de-problemas.md__o-setup-encontrou-json-inválido">O
+setup encontrou JSON inválido</a></li>
+<li><a href="#solucao-de-problemas.md__o-tipo-de-página-ficou-ambíguo"
+id="toc-solucao-de-problemas.md__o-tipo-de-página-ficou-ambíguo">O tipo
+de página ficou ambíguo</a></li>
+<li><a
+href="#solucao-de-problemas.md__a-implementação-divergiu-do-conteúdo-aprovado"
+id="toc-solucao-de-problemas.md__a-implementação-divergiu-do-conteúdo-aprovado">A
+implementação divergiu do conteúdo aprovado</a></li>
+<li><a href="#solucao-de-problemas.md__o-plano-ficou-desatualizado"
+id="toc-solucao-de-problemas.md__o-plano-ficou-desatualizado">O plano
+ficou desatualizado</a></li>
+<li><a href="#solucao-de-problemas.md__o-ebook-não-confere"
+id="toc-solucao-de-problemas.md__o-ebook-não-confere">O ebook não
+confere</a></li>
+</ul></li>
+</ul></nav>
+    <main><h1 id="readme.md__astrofy-guia-do-usuário">Astrofy: guia do
+usuário</h1>
+<p>Este manual mostra como usar o Astrofy para entender um projeto
+Astro, definir uma página por conversa, transformar o conteúdo aprovado
+em um plano técnico e acompanhar a implementação.</p>
+<h2 id="readme.md__percurso-recomendado">Percurso recomendado</h2>
+<ol type="1">
+<li>Entenda o fluxo completo.</li>
+<li>Instale e execute o setup.</li>
+<li>Escolha e planeje o tipo de página.</li>
+<li>Responda à entrevista de conteúdo.</li>
+<li>Gere o plano de implementação.</li>
+<li>Implemente e valide.</li>
+<li>Acompanhe um exemplo de página de produto.</li>
+<li>Retome ou altere um trabalho.</li>
+<li>Consulte as soluções para falhas comuns.</li>
+</ol>
+<h2 id="readme.md__formatos">Formatos</h2>
+<p>Os capítulos deste diretório são a fonte canônica. O projeto gera a
+mesma edição em PDF e EPUB dentro de <code>ebook/</code>. A versão do
+manual acompanha a versão do pacote Astrofy.</p>
+<h1 id="visao-geral.md__visão-geral">Visão geral</h1>
+<p>O Astrofy organiza a criação e a evolução de sites Astro em quatro
+fases:</p>
+<ol type="1">
+<li><code>astrofy-setup</code> lê o projeto, reconhece seus recursos e
+prepara o estado de trabalho em <code>.astrofy/</code>.</li>
+<li><code>astrofy-page-planner</code> identifica o tipo de página e
+encaminha a conversa para uma especialista.</li>
+<li><code>astrofy-implementation-planner</code> relaciona o conteúdo
+aprovado com rotas, componentes, integrações, testes e documentação do
+projeto real.</li>
+<li>As skills técnicas implementam e conferem cada parte do plano.</li>
+</ol>
+<pre class="text"><code>pedido da página
+  -&gt; setup e leitura do projeto
+  -&gt; entrevista especializada
+  -&gt; especificação aprovada
+  -&gt; plano técnico retomável
+  -&gt; implementação por skills
+  -&gt; checkup e documentação</code></pre>
+<p>O Astrofy não exige um formulário completo no primeiro contato. A
+pessoa pode começar com uma frase, como “quero uma página para meu
+produto”. A orquestradora confirma o tipo, coleta o conteúdo por etapas
+e apresenta três alternativas quando uma escolha editorial depende do
+usuário.</p>
+<h2 id="visao-geral.md__artefatos-do-projeto">Artefatos do projeto</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Caminho</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.astrofy/config/project.json</code></td>
+<td>Configuração reconhecida pelo setup</td>
+</tr>
+<tr>
+<td><code>.astrofy/pages/&lt;slug&gt;/page-spec.json</code></td>
+<td>Especificação estruturada da página</td>
+</tr>
+<tr>
+<td><code>.astrofy/pages/&lt;slug&gt;/brief.md</code></td>
+<td>Leitura humana do conteúdo aprovado</td>
+</tr>
+<tr>
+<td><code>.astrofy/plans/&lt;slug&gt;/implementation-plan.json</code></td>
+<td>Fases e tarefas</td>
+</tr>
+<tr>
+<td><code>.astrofy/plans/&lt;slug&gt;/implementation-plan.md</code></td>
+<td>Plano técnico para revisão</td>
+</tr>
+<tr>
+<td><code>.astrofy/checklist.json</code></td>
+<td>Estado das verificações do site</td>
+</tr>
+</tbody>
+</table>
+<h1 id="instalacao-e-setup.md__instalação-e-setup">Instalação e
+setup</h1>
+<h2 id="instalacao-e-setup.md__requisitos">Requisitos</h2>
+<ul>
+<li>Node.js 22.12.0 ou posterior.</li>
+<li>Um projeto Astro existente com <code>package.json</code>.</li>
+<li>Permissão de escrita no diretório do projeto.</li>
+</ul>
+<h2 id="instalacao-e-setup.md__instalação-global">Instalação global</h2>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">--global</span> @promovaweb/astrofy</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">astrofy</span> <span class="at">--version</span></span></code></pre></div>
+<p>Para manter a versão junto ao projeto:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">--save-dev</span> @promovaweb/astrofy</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> astrofy <span class="at">--version</span></span></code></pre></div>
+<h2 id="instalacao-e-setup.md__primeira-execução">Primeira execução</h2>
+<p>Comece pela skill <code>astrofy-setup</code>. Ela lê
+<code>package.json</code>, a configuração do Astro, as rotas, os
+componentes, as coleções de conteúdo e as integrações já instaladas.
+Antes de gravar arquivos, confira a leitura do CLI:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">astrofy</span> inspect <span class="at">--root</span> .</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">astrofy</span> init <span class="at">--root</span> . <span class="at">--dry-run</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">astrofy</span> init <span class="at">--root</span> .</span></code></pre></div>
+<p>O setup preserva convenções válidas do projeto. Diretórios
+personalizados, adaptadores e integrações detectadas entram no contexto
+usado pelas próximas skills.</p>
+<h2 id="instalacao-e-setup.md__resultado-esperado">Resultado
+esperado</h2>
+<p>Ao terminar, o projeto possui <code>.astrofy/</code>, configuração
+válida e um registro inicial da checklist. Execute <code>git diff</code>
+para revisar os arquivos criados.</p>
+<h1
+id="planejamento-de-pagina.md__planejamento-de-uma-página">Planejamento
+de uma página</h1>
+<p>Chame <code>astrofy-page-planner</code> com o pedido em linguagem
+natural. A skill lê o contexto preparado pelo setup e escolhe uma
+especialista.</p>
+<table>
+<thead>
+<tr>
+<th>Pedido</th>
+<th>Especialista</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Landing page de vendas</td>
+<td><code>astrofy-plan-sales-page</code></td>
+</tr>
+<tr>
+<td>Página de produto</td>
+<td><code>astrofy-plan-product-page</code></td>
+</tr>
+<tr>
+<td>Página de serviço</td>
+<td><code>astrofy-plan-service-page</code></td>
+</tr>
+<tr>
+<td>Página inicial</td>
+<td><code>astrofy-plan-homepage</code></td>
+</tr>
+<tr>
+<td>Página Sobre</td>
+<td><code>astrofy-plan-about-page</code></td>
+</tr>
+<tr>
+<td>Página de contato</td>
+<td><code>astrofy-plan-contact-page</code></td>
+</tr>
+<tr>
+<td>Página de preços</td>
+<td><code>astrofy-plan-pricing-page</code></td>
+</tr>
+</tbody>
+</table>
+<p>Se o pedido combinar dois formatos, a orquestradora define um tipo
+principal e registra as necessidades complementares. Uma página de
+produto com tabela de planos, por exemplo, continua sendo produto e
+recebe requisitos de preços.</p>
+<h2 id="planejamento-de-pagina.md__pontos-de-revisão">Pontos de
+revisão</h2>
+<p>A conversa avança por finalidade, público, arquitetura, conteúdo,
+mídia, comportamento e revisão integral. Cada etapa dependente de
+preferência oferece três opções materialmente diferentes, com uma
+recomendação fundamentada.</p>
+<p>A saída segue <code>packages/schemas/page-spec.schema.json</code>. A
+implementação ainda não começa: primeiro a pessoa revisa
+<code>brief.md</code> e aprova a especificação.</p>
+<h1 id="entrevista-e-conteudo.md__entrevista-e-conteúdo">Entrevista e
+conteúdo</h1>
+<p>A especialista pergunta somente o necessário para o tipo escolhido.
+Ela aceita texto pronto, notas incompletas ou autorização para propor
+alternativas.</p>
+<h2 id="entrevista-e-conteudo.md__informações-comuns">Informações
+comuns</h2>
+<ul>
+<li>finalidade e ação principal;</li>
+<li>público e contexto de chegada;</li>
+<li>áreas da página e ordem de leitura;</li>
+<li>títulos, textos, rótulos e mensagens de estado;</li>
+<li>imagens, vídeos, ilustrações e suas fontes;</li>
+<li>links, formulários e integrações;</li>
+<li>fatos que precisam de fonte;</li>
+<li>conteúdo ainda pendente.</li>
+</ul>
+<h2 id="entrevista-e-conteudo.md__como-responder">Como responder</h2>
+<p>Você pode responder uma etapa por vez. Use <code>aprovar</code>,
+<code>ajustar</code> ou <code>manter pendente</code> para cada proposta.
+Quando fornecer um texto final, diga que ele deve ser preservado. Quando
+quiser ajuda editorial, informe os fatos disponíveis e o tom
+desejado.</p>
+<p>Áreas opcionais podem ficar pendentes. A aprovação final registra seu
+estado e impede que uma lacuna seja preenchida silenciosamente durante a
+implementação.</p>
+<h2 id="entrevista-e-conteudo.md__exemplo-curto">Exemplo curto</h2>
+<pre class="text"><code>Usuário: Quero uma página do produto Atlas.
+Astrofy: A ação principal deve iniciar teste, solicitar demonstração ou comprar?
+Usuário: Solicitar demonstração.
+Astrofy: Vou propor três arquiteturas para uma página de produto orientada à demo.</code></pre>
+<h1 id="plano-de-implementacao.md__plano-de-implementação">Plano de
+implementação</h1>
+<p>Depois da aprovação da página, chame
+<code>astrofy-implementation-planner</code>. A skill relê o projeto para
+relacionar cada área com arquivos existentes e mudanças necessárias.</p>
+<p>O plano registra:</p>
+<ul>
+<li>rota e modo de renderização;</li>
+<li>layouts, componentes e conteúdo reutilizados;</li>
+<li>arquivos que serão criados ou alterados;</li>
+<li>integrações e variáveis de ambiente;</li>
+<li>acessibilidade, SEO e dados estruturados;</li>
+<li>testes automáticos e revisões manuais;</li>
+<li>documentação afetada;</li>
+<li>dependências, ordem e estimativa de cada tarefa.</li>
+</ul>
+<p>O JSON segue
+<code>packages/schemas/implementation-plan.schema.json</code>. O
+Markdown equivalente permite revisar o plano sem ferramentas
+adicionais.</p>
+<h2 id="plano-de-implementacao.md__aprovação">Aprovação</h2>
+<p>Confira se cada tarefa aponta para um resultado observável e uma
+forma de conferência. Ajuste o plano antes de executar quando o caminho
+proposto não combinar com a arquitetura atual. A aprovação libera as
+skills técnicas por fase.</p>
+<h1 id="execucao-e-validacao.md__execução-e-validação">Execução e
+validação</h1>
+<p>O plano indica as skills adequadas para cada tarefa. Uma sequência
+comum usa:</p>
+<ol type="1">
+<li><code>astrofy-architecture</code>, <code>astrofy-routing</code> e
+<code>astrofy-config</code> para a base.</li>
+<li><code>astrofy-components</code>, <code>astrofy-sections</code> e
+<code>astrofy-page-design</code> para a interface.</li>
+<li><code>astrofy-images</code>, <code>astrofy-forms</code> ou
+<code>astrofy-react</code> conforme a página.</li>
+<li><code>astrofy-accessibility</code>, <code>astrofy-seo</code>,
+<code>astrofy-open-graph</code> e <code>astrofy-structured-data</code>
+para qualidade pública.</li>
+<li><code>astrofy-testing</code>, <code>astrofy-documentation</code> e
+<code>astrofy-checkup</code> para fechar o trabalho.</li>
+</ol>
+<p>Execute somente as skills relacionadas ao escopo. Cada uma deve ler o
+plano, conferir a implementação atual, registrar o que alterou e
+atualizar o estado da tarefa.</p>
+<h2 id="execucao-e-validacao.md__conferência-mínima">Conferência
+mínima</h2>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run check</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run build</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">astrofy</span> check <span class="at">--root</span> .</span></code></pre></div>
+<p>Use também os testes próprios do projeto e revise a página no
+navegador em larguras de celular e desktop. Formulários, menus, foco,
+links e mensagens de erro exigem interação real.</p>
+<h1
+id="exemplo-pagina-de-produto.md__exemplo-página-de-produto">Exemplo:
+página de produto</h1>
+<h2 id="exemplo-pagina-de-produto.md__pedido-inicial">Pedido
+inicial</h2>
+<pre class="text"><code>Quero criar uma página para o Atlas, nosso produto de atendimento.</code></pre>
+<p><code>astrofy-page-planner</code> seleciona
+<code>astrofy-plan-product-page</code>. A entrevista confirma que a
+página apresenta o produto a equipes de suporte e direciona a uma
+demonstração.</p>
+<h2 id="exemplo-pagina-de-produto.md__conteúdo-definido">Conteúdo
+definido</h2>
+<p>Uma arquitetura aprovada pode conter:</p>
+<ol type="1">
+<li>Hero com proposta e ação de demonstração.</li>
+<li>Problemas atendidos pelo produto.</li>
+<li>Casos de uso por perfil de equipe.</li>
+<li>Recursos ligados a resultados verificáveis.</li>
+<li>Demonstração visual com legendas.</li>
+<li>Integrações disponíveis.</li>
+<li>Perguntas frequentes.</li>
+<li>Chamada final para demonstração.</li>
+</ol>
+<p>Cada área recebe texto, mídia, origem das afirmações e estado de
+aprovação. O brief e o JSON ficam em
+<code>.astrofy/pages/atlas/</code>.</p>
+<h2 id="exemplo-pagina-de-produto.md__plano-técnico">Plano técnico</h2>
+<p>O planner técnico encontra o layout e os componentes do site, associa
+seções reutilizáveis, define a rota <code>/atlas/</code> e cria tarefas
+para formulário, imagens, metadados, JSON-LD, testes e documentação. O
+resultado fica em <code>.astrofy/plans/atlas/</code>.</p>
+<p>Após a aprovação, as skills executam as tarefas na ordem das
+dependências e o checkup confere a página renderizada.</p>
+<h1 id="retomada-e-manutencao.md__retomada-e-manutenção">Retomada e
+manutenção</h1>
+<p>Os arquivos em <code>.astrofy/</code> permitem continuar o trabalho
+em outra sessão. Ao retomar, execute o setup, leia a especificação e o
+plano, confira o Git e continue pela primeira tarefa pendente cujas
+dependências estejam concluídas.</p>
+<p>Se o conteúdo mudar antes da implementação, volte à especialista da
+página, atualize a especificação e gere novamente as partes afetadas do
+plano. Se a mudança surgir durante a execução, registre seu impacto
+antes de editar código.</p>
+<h2 id="retomada-e-manutencao.md__atualização-do-astrofy">Atualização do
+Astrofy</h2>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> update <span class="at">--save-dev</span> @promovaweb/astrofy</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> astrofy <span class="at">--version</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> astrofy inspect <span class="at">--root</span> .</span></code></pre></div>
+<p>Leia o <code>CHANGELOG.md</code> entre a versão instalada e a nova
+edição. Execute as validações do projeto depois da atualização.</p>
+<h1 id="solucao-de-problemas.md__solução-de-problemas">Solução de
+problemas</h1>
+<h2 id="solucao-de-problemas.md__o-projeto-não-é-reconhecido">O projeto
+não é reconhecido</h2>
+<p>Execute <code>astrofy inspect --root &lt;diretório&gt;</code>
+apontando para a pasta que contém o <code>package.json</code> do site.
+Confira se <code>astro</code> aparece em <code>dependencies</code> ou
+<code>devDependencies</code>.</p>
+<h2 id="solucao-de-problemas.md__o-setup-encontrou-json-inválido">O
+setup encontrou JSON inválido</h2>
+<p>Abra o caminho informado, corrija a sintaxe e repita
+<code>astrofy init --dry-run</code>. O comando preserva arquivos
+existentes e interrompe a gravação quando não pode interpretá-los.</p>
+<h2 id="solucao-de-problemas.md__o-tipo-de-página-ficou-ambíguo">O tipo
+de página ficou ambíguo</h2>
+<p>Informe a finalidade principal e a ação esperada. A orquestradora usa
+essas duas respostas para escolher a especialista e mantém necessidades
+secundárias na especificação.</p>
+<h2
+id="solucao-de-problemas.md__a-implementação-divergiu-do-conteúdo-aprovado">A
+implementação divergiu do conteúdo aprovado</h2>
+<p>Pare a tarefa, compare a página com <code>brief.md</code> e
+<code>page-spec.json</code> e corrija a implementação. Mudanças
+editoriais precisam voltar à etapa de conteúdo.</p>
+<h2 id="solucao-de-problemas.md__o-plano-ficou-desatualizado">O plano
+ficou desatualizado</h2>
+<p>Execute novamente <code>astrofy-implementation-planner</code> após
+reler o projeto. Peça uma atualização das tarefas afetadas e preserve o
+histórico das concluídas.</p>
+<h2 id="solucao-de-problemas.md__o-ebook-não-confere">O ebook não
+confere</h2>
+<p>Na raiz do Astrofy, execute:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run ebook</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run ebook:verify</span></code></pre></div>
+<p>O primeiro comando recompila PDF, EPUB e manifesto. O segundo compara
+a edição com todos os capítulos e arquivos do pipeline.</p></main>
+</body>
+</html>
