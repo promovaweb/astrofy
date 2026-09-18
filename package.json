@@ -1,6 +1,6 @@
 {
   "name": "@promovaweb/astrofy",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Skills e ferramentas para projetos Astro",
   "type": "module",
   "license": "UNLICENSED",

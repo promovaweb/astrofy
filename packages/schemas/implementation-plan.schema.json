@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astrofy.promovaweb.com/schemas/1.0.0/implementation-plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "pageSpec", "pageSpecFingerprint", "status", "generatedAt", "phases", "openItems"],
+  "properties": {
+    "schemaVersion": {"const": "1.0.0"},
+    "pageSpec": {"type": "string", "pattern": "^\\.astrofy/pages/.+/page-spec\\.json$"},
+    "pageSpecFingerprint": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "status": {"enum": ["planned", "in_progress", "completed"]},
+    "generatedAt": {"type": "string", "format": "date-time"},
+    "phases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "status", "dependsOn", "tasks"],
+        "properties": {
+          "id": {"$ref": "#/$defs/id"},
+          "title": {"type": "string", "minLength": 1},
+          "status": {"$ref": "#/$defs/taskStatus"},
+          "dependsOn": {"$ref": "#/$defs/idList"},
+          "tasks": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/task"}}
+        }
+      }
+    },
+    "openItems": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "idList": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+    "taskStatus": {"enum": ["pending", "ready", "in_progress", "completed", "not_applicable"]},
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "status", "primarySkill", "reviewSkills", "sourceItems", "checklistItems", "files", "dependsOn", "estimateMinutes", "estimateBasis", "steps", "validations", "manualChecks", "completion"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "title": {"type": "string", "minLength": 1},
+        "status": {"$ref": "#/$defs/taskStatus"},
+        "primarySkill": {"type": "string", "pattern": "^astrofy-[a-z0-9-]+$"},
+        "reviewSkills": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^astrofy-[a-z0-9-]+$"}},
+        "sourceItems": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "checklistItems": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "files": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "dependsOn": {"$ref": "#/$defs/idList"},
+        "estimateMinutes": {"type": "integer", "minimum": 1},
+        "estimateBasis": {"type": "string", "minLength": 1},
+        "steps": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "validations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "manualChecks": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "completion": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

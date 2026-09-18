@@ -38,6 +38,12 @@ components e component-docs para API de UI; design-system, tailwind e themes
 para estilos; routing e i18n para URLs; react e forms para interação. Inclua
 as demais skills quando o assunto da tarefa e a implementação pedirem.
 
+Quando a pessoa pedir uma página sem conteúdo e arquitetura aprovados, encaminhe
+para astrofy-page-planner. Ela seleciona a entrevistadora de vendas, produto,
+serviço, Home, Sobre, Contato ou Preços. Depois da aprovação da especificação,
+astrofy-implementation-planner cria as fases e tarefas para as especialistas
+técnicas. Não pule da solicitação curta para a implementação.
+
 Para cada etapa, confirme que as saídas de `dependsOn` existem, informe arquivos
 envolvidos, execute o procedimento da skill, registre status e `updatedAt` no
 estado e forneça as saídas à próxima etapa. Não execute
