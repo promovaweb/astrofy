@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.2] - 2026-09-18
+
+### Corrigido
+
+- O workflow publica o tarball por um caminho relativo explícito, impedindo que
+  o npm interprete o arquivo como uma dependência Git.
+
+### Validação
+
+- Suíte, ebook e instalação isolada aprovados no GitHub Actions antes da etapa
+  de publicação.
+
 ## [0.5.1] - 2026-09-18
 
 ### Corrigido
