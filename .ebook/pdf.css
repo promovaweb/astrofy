@@ -1,5 +1,33 @@
 /* pdf-design-system: 1.0.0 */
 
+@font-face {
+  font-family: "Inter";
+  src: url("../node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: url("../node_modules/@fontsource/manrope/files/manrope-latin-600-normal.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: url("../node_modules/@fontsource/manrope/files/manrope-latin-800-normal.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 800;
+}
+
 :root {
   --pdf-font-body: "Inter", -apple-system, "Segoe UI", Arial, sans-serif;
   --pdf-font-title: "Manrope", "Inter", -apple-system, "Segoe UI", Arial, sans-serif;

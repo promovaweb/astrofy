@@ -19,4 +19,9 @@ npm run ebook:verify
 ```
 
 O ambiente de geração requer Pandoc, WeasyPrint, ImageMagick, `xmllint`,
-`pdftotext` e `unzip`.
+`pdftotext`, `pdftohtml`, `pdffonts` e `unzip`. Inter e Manrope vêm das
+dependências fixadas no pacote e são incorporadas aos artefatos.
+
+`npm run ebook:verify` também confere XML, navegação interna, fontes, aliases e
+o conteúdo mínimo de cada edição. A CI executa essa conferência e instala o
+tarball em isolamento antes de uma release.

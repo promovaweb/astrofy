@@ -1,5 +1,36 @@
 # Changelog
 
+## [0.5.0] - 2026-09-18
+
+### Adicionado
+
+- Exemplos completos para landing page de vendas, produto, serviço, Home,
+  Sobre, Contato e Preços.
+- Diagramas do fluxo e da relação entre orquestradoras, artefatos e skills.
+- Capítulo sobre estados, execução e retomada prática das tarefas técnicas.
+- Testes da ordem dos capítulos, links, comandos, tipos de página, estados e
+  versões da documentação.
+- Workflow de release para validar a tag, instalar o pacote em isolamento,
+  publicar no npm e anexar ebook, tarball e checksums ao GitHub.
+
+### Corrigido
+
+- A distribuição npm passa a incluir `.ebook/`, permitindo executar os
+  comandos documentados dentro do pacote instalado.
+- Temporários em `.ebook/build/` deixam de integrar o Git e o pacote.
+
+### Alterado
+
+- PDF e EPUB incorporam Inter e Manrope a partir de dependências fixadas.
+- A conferência do ebook valida XML, navegação interna, fontes, aliases, hashes
+  e seções obrigatórias.
+- A CI possui um job próprio para manual, ebook, release e pacote instalado.
+
+### Validação
+
+- `npm test`, `npm run docs:verify`, `npm run ebook:verify`,
+  `npm run release:check` e instalação isolada do tarball.
+
 ## [0.4.0] - 2026-09-18
 
 ### Adicionado

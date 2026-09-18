@@ -1,0 +1,58 @@
+name: Publicar Astrofy
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  release:
+    name: Validar e publicar
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Obter código da tag
+        uses: actions/checkout@v4
+      - name: Configurar Node e npm
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - name: Instalar verificadores do ebook
+        run: sudo apt-get update && sudo apt-get install -y libxml2-utils poppler-utils unzip
+      - name: Instalar dependências
+        run: npm ci
+      - name: Validar implementação, documentação, ebook e tag
+        run: |
+          npm test
+          npm run docs:verify
+          npm run ebook:verify
+          npm run release:check -- "${GITHUB_REF_NAME}"
+      - name: Empacotar e validar em isolamento
+        run: |
+          mkdir -p release-assets
+          npm pack --pack-destination release-assets
+          version="$(node -p "require('./package.json').version")"
+          npm run package:verify -- "release-assets/promovaweb-astrofy-${version}.tgz"
+      - name: Reunir ebook e checksums
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          cp "ebook/Astrofy-Guia-do-Usuario-v${version}.pdf" release-assets/
+          cp "ebook/Astrofy-Guia-do-Usuario-v${version}.epub" release-assets/
+          node scripts/generate-checksums.mjs release-assets
+          node scripts/extract-release-notes.mjs release-notes.md
+      - name: Publicar pacote no npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish release-assets/*.tgz --access public
+      - name: Criar release e anexar artefatos
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1 || gh release create "${GITHUB_REF_NAME}" --notes-file release-notes.md --title "Astrofy ${GITHUB_REF_NAME#v}"
+          gh release upload "${GITHUB_REF_NAME}" release-assets/* --clobber
