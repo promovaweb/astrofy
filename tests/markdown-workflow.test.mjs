@@ -9,7 +9,7 @@ import path from 'node:path';
 import os from 'node:os';
 
 const execute=promisify(execFile);
-const markdownlint=fileURLToPath(new URL('../../node_modules/.bin/markdownlint',import.meta.url));
+const markdownlint=fileURLToPath(new URL('../node_modules/.bin/markdownlint',import.meta.url));
 
 test('markdownlint herdado preserva conteúdo e a segunda correção não altera o arquivo',async t=>{
   const workspace=await mkdtemp(path.join(os.tmpdir(),'astrofy-markdown-'));
