@@ -10,7 +10,7 @@ necessárias e apresenta o plano antes de implementar.
 Instale o pacote e as skills para o agente que usa no projeto:
 
 ```bash
-npm install --global @promovaweb/astrofy@0.7.0
+npm install --global @promovaweb/astrofy@0.7.1
 cd /caminho/do/site
 astrofy skills install --agent codex
 ```
@@ -47,7 +47,7 @@ npm run build
 node dist/cli/index.js --help
 ```
 
-O pacote está disponível publicamente no npm. A versão 0.7.0 inclui
+O pacote está disponível publicamente no npm. A versão 0.7.1 inclui
 planejamento conversacional e técnico para páginas de vendas, produto, serviço,
 Home, Sobre, Contato e Preços. O painel opcional abre com
 `astrofy tui --root /caminho/do/site` depois que o projeto foi inicializado

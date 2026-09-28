@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.7.1] - 2026-09-28
+
+### Corrigido
+
+- Explicita os comandos `astrofy inspect` e `astrofy init` no guia de
+  instalação, mantendo os exemplos de uso pelo terminal ao lado do fluxo por
+  conversa.
+
+### Validação
+
+- Matriz de skills, documentação, ebook, pacote isolado e release.
+
 ## [0.7.0] - 2026-09-28
 
 ### Adicionado
