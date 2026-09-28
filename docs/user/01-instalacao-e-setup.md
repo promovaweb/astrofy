@@ -32,9 +32,10 @@ específica, explique o que quer fazer. O agente confere o que precisa preparar 
 de chamar `astrofy-page-planner`.
 
 O agente executa as operações do Astrofy necessárias ao trabalho. Você não
-precisa rodar `inspect`, `init`, `page create`, `page answer` ou `plan` por
-separado. Use esses comandos diretamente apenas quando quiser conduzir a
-mesma etapa pelo terminal. O [manual do CLI](../cli.md) descreve esses comandos.
+precisa rodar `astrofy inspect`, `astrofy init`, `astrofy page create`,
+`astrofy page answer` ou `astrofy plan` por separado. Use esses comandos
+diretamente apenas quando quiser conduzir a mesma etapa pelo terminal. O
+[manual do CLI](../cli.md) descreve esses comandos.
 
 ## Resultado da instalação
 
