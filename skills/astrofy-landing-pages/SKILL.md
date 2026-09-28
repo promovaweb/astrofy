@@ -14,6 +14,11 @@ caminhos definidos em `.astrofy/config/paths.json` quando diferirem dos
 exemplos. Confira a versão instalada no lockfile e em node_modules antes de
 aplicar APIs da documentação online.
 
+Preserve o texto aprovado. Não reescreva copy fornecida pela pessoa apenas
+para ajustá-la ao layout. Se faltar conteúdo, registre a lacuna em vez de criar
+texto de preenchimento. Copy criada durante a tarefa pode ser corrigida dentro
+da direção aprovada.
+
 ## Execução
 
 Registre qual ação encerra o fluxo: navegar, enviar ou comprar. Confira termos e
@@ -31,6 +36,10 @@ sucesso. Teste a página em larguras representativas.
 4. Teste leitura mobile, formulário e retorno de erro.
 5. Confira parâmetros de campanha, personalização e cache quando presentes.
    Diferencie clique, envio aceito e conclusão da operação na medição existente.
+6. Se criar ou alterar texto, invoque `astrofy-editorial-review` em modo de
+   auditoria antes de concluir. Corrija os achados na copy criada durante a
+   tarefa e repita a auditoria. Não altere conteúdo fornecido e aprovado sem
+   autorização.
 
 ### Alteração de implementação existente
 
@@ -40,7 +49,7 @@ dependem de conteúdo autorizado, mesmo durante ajuste visual.
 ## Verificação
 
 Simule rejeição do endpoint em teste: a página deve informar erro e permitir
-correção, sem exibir sucesso antecipado.
+correção, sem afirmar conclusão antes da confirmação.
 
 A ação tem destino funcional e os estados presentes foram exercitados. O texto
 não inventa características da oferta.

@@ -39,7 +39,7 @@ executar os testes e conhecer sua cobertura.
 
 As skills técnicas centrais incluem implementation.md para Astro 7. Esses guias
 cobrem atualização para Vite 8, ambiente tipado, Content Layer, roteamento por
-arquivos, ilhas React, fronteiras de execução, artefatos de build, testes de
+arquivos, ilhas React, limites de execução, artefatos de build, testes de
 runtime, processamento de imagens e contratos de componentes. Leia esse arquivo
 junto da referência técnica ao atuar em init, config, routing, mdx, react,
 security, build-deploy, testing, images ou components.
@@ -105,30 +105,37 @@ gera o [ebook oficial](../ebook/README.md) em PDF e EPUB.
 
 `astrofy-page-planner` recebe o pedido em linguagem natural, inspeciona o site
 e seleciona uma entrevistadora pelo tipo de página. A conversa define
-finalidade, público, áreas, textos, mídia, comportamento e ações. O resultado
-fica em `.astrofy/pages/<slug>/`, separado do código até receber aprovação.
+finalidade, público, áreas, textos, mídia, comportamento, ações e direção de
+voz. A amostra aprovada e as expressões a preservar ou evitar ficam registradas
+em `page.md`. Sugestões do agente permanecem como propostas até aprovação. O
+resultado fica em `.astrofy/pages/<slug>/`, separado do código até receber
+aprovação.
 
 As especialistas cobrem vendas, produto, serviço, Home, Sobre, Contato e
 Preços. Elas não implementam componentes nem publicam conteúdo. Depois da
 aprovação, `astrofy-implementation-planner` relaciona a especificação com os
-arquivos atuais, a checklist e as skills técnicas. O plano retomável fica em
-`.astrofy/plans/<slug>/`.
+arquivos atuais, a checklist e as skills técnicas. A direção de voz acompanha
+as tarefas que exibem texto, com revisão de `astrofy-editorial-review` quando a
+copy for criada ou alterada. O plano retomável fica em `.astrofy/plans/<slug>/`.
 
 Um pedido pode começar sem comandos ou formulários:
 
 > Quero criar uma página para meu produto de atendimento.
 
 O planner identifica o tipo provável, confirma a finalidade, oferece três
-arquiteturas e coleta o texto de cada área. A pessoa pode fornecer os textos,
-aprovar propostas editoriais ou manter uma área opcional pendente. A
-implementação começa somente depois da revisão integral da página e do plano.
+arquiteturas, coleta a direção de voz e pede o texto de cada área. A pessoa
+pode fornecer os textos, aprovar propostas editoriais ou manter uma área
+opcional pendente. A implementação começa somente depois da revisão integral
+da página e do plano.
 
 ## Entrada e formatação
 
-Execute astrofy-setup primeiro em um projeto. Ela reconhece estrutura e recursos,
-coordena adoção, documentação e organização pelas skills aplicáveis, acompanha
-resultados e termina com formatação e checkup. A coordenação acontece no agente,
-não por execução automática de um comando do CLI.
+Descreva a tarefa ao agente e ele seleciona as skills compatíveis. Para uma
+página, comece pelo pedido na conversa; `astrofy-page-planner` conduz a
+entrevista e encaminha o plano aprovado às especialistas técnicas. Use
+`astrofy-setup` quando quiser preparar a adoção do Astrofy ou revisar o site de
+forma ampla. A coordenação acontece no agente; o CLI oferece comandos opcionais
+para acompanhar o estado e conduzir etapas pelo terminal.
 
 astrofy-markdown usa o linter já configurado ou prepara markdownlint-cli quando
 necessário. Verifica antes de corrigir, preserva frontmatter e código e repete
@@ -146,7 +153,7 @@ a validação após ler o diff. Consulte as instruções e recursos distribuído
 - **[astrofy-setup](../skills/astrofy-setup/SKILL.md):** Entrada inicial e
   coordenação da biblioteca conforme os recursos presentes no projeto.
 - **[astrofy-page-planner](../skills/astrofy-page-planner/SKILL.md):** Entrevista
-  modular e especificação aprovada da página.
+  modular, direção de voz e especificação aprovada da página.
 - **[astrofy-implementation-planner](../skills/astrofy-implementation-planner/SKILL.md):**
   Fases e tarefas técnicas retomáveis para a página aprovada.
 - **[astrofy-plan-sales-page](../skills/astrofy-plan-sales-page/SKILL.md):**
@@ -232,9 +239,8 @@ a validação após ler o diff. Consulte as instruções e recursos distribuído
 - **[astrofy-blog-archives](#astrofy-blog-archives):** Implementa arquivos
   paginados de blog Astro com ordenação determinística e taxonomias, verificando
   URLs e estados vazios.
-- **[astrofy-editorial-review](#astrofy-editorial-review):** Revisa ortografia e
-  nomenclatura em textos visíveis de sites Astro, preservando fatos, código e a
-  direção editorial fornecida.
+- **[astrofy-editorial-review](#astrofy-editorial-review):** Audita texto sem
+  editar ou revisa linguagem, voz e alegações em conteúdo visível de sites Astro.
 - **[astrofy-seo](#astrofy-seo):** Verifica SEO no HTML renderizado de projetos
   Astro, relacionando metadados, canônicas e indexação às rotas e ao ambiente.
 - **[astrofy-open-graph](#astrofy-open-graph):** Configura metadados Open Graph
@@ -884,8 +890,10 @@ alinhando navegação, hierarquia e ação principal.
 ### Procedimento
 
 Identifique a ação principal da página e o conteúdo necessário para sustentá-la.
-Componha a abertura e as seções com componentes existentes. Verifique os
-destinos e compare a leitura em celular e desktop.
+Componha a abertura e as seções com componentes existentes. Preserve o texto
+aprovado e não preencha áreas sem conteúdo. Se criar ou alterar copy, revise-a
+com `astrofy-editorial-review` antes de concluir. Verifique os destinos e
+compare a leitura em celular e desktop.
 
 ### Entrega e conferência
 
@@ -923,7 +931,9 @@ reutilizáveis e verificando destinos e estados do fluxo.
 ### Procedimento
 
 Defina a sequência de leitura conforme a ação esperada. Reutilize seções do
-projeto. Confira o destino do botão e, quando houver formulário, trate erros e
+projeto e preserve a copy aprovada. Não preencha lacunas com texto genérico.
+Se criar ou alterar copy, revise-a com `astrofy-editorial-review` antes de
+concluir. Confira o destino do botão e, quando houver formulário, trate erros e
 sucesso. Teste a página em larguras representativas.
 
 ### Entrega e conferência
@@ -1094,8 +1104,8 @@ astrofy check --rule blog.archives
 
 ## astrofy-editorial-review
 
-Revisa ortografia e nomenclatura em textos visíveis de sites Astro, preservando
-fatos, código e a direção editorial fornecida.
+Audita texto sem editar ou revisa linguagem, voz e alegações em conteúdo visível
+de sites Astro, sem presumir autoria por estilo.
 
 - **Entradas necessárias:** Texto atual, idioma e glossário do projeto.
 - **Quando usar:** Corrija o rótulo de um botão sem alterar o destino do link.
@@ -1104,15 +1114,19 @@ fatos, código e a direção editorial fornecida.
 
 ### Procedimento
 
-Leia a página completa e seu objetivo. Corrija ortografia no texto visível e
-preserve identificadores de código. Confira nomes próprios na fonte fornecida.
-Registre lacunas factuais separadas das correções de linguagem e confira a
-renderização final.
+Leia a página completa, seu objetivo, a voz registrada e as fontes factuais.
+Em modo de auditoria, relate os trechos, padrões, efeitos e ações sugeridas sem
+editar. Em modo de edição, corrija somente o necessário. Preserve fatos, código
+e escolhas de voz intencionais. Não invente detalhes. Compare o texto com
+amostras aprovadas e leia a página como um conjunto para encontrar estruturas
+repetidas. Confira a página renderizada e relate correções e informações que
+ainda precisam de confirmação.
 
 ### Entrega e conferência
 
-O texto está legível e mantém o significado confirmado. Nenhuma incerteza
-factual foi convertida em afirmação inventada.
+O texto está legível, mantém o significado confirmado e representa a voz
+aprovada. Alegações têm fonte e padrões genéricos foram avaliados no contexto.
+Nenhuma lacuna foi preenchida com informação inventada.
 
 A skill indica a seguinte verificação, complementada pelos testes e pela revisão
 do escopo descrito acima:
@@ -1122,7 +1136,8 @@ astrofy check --category editorial
 ```
 
 - **Limite ou erro recorrente:** Não mude números ou nomes de oferta por
-  parecerem incomuns. Consulte a fonte responsável.
+  parecerem incomuns. Consulte a fonte responsável. Não neutralize a voz nem
+  classifique autoria humana ou automática apenas pelo estilo.
 - **Instruções do agente:**
   [SKILL.md](../skills/astrofy-editorial-review/SKILL.md).
 - **Referências:**

@@ -24,6 +24,11 @@ Apresente três arquiteturas: atuação atual, história ou equipe. Leia a
 [referência institucional](references/technical.md) e os
 [casos](examples/cases.md).
 
+Use a direção de voz e a amostra aprovadas pelo planner. Se estiverem ausentes,
+colete essas informações antes de redigir. Marque qualquer proposta de copy
+como rascunho até a aprovação da pessoa. Preserve diferenças entre fato
+confirmado, posicionamento e opinião da organização.
+
 ## Saída
 
 Entregue fragmento `type: about` com identidade, atuação, história, pessoas,

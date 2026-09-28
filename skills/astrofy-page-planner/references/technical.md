@@ -73,6 +73,11 @@ Cada `section` possui `id`, `type`, `status`, `purpose`, `content`, `actions`,
 Uma lista de recursos, por exemplo, pode usar `items`; um hero pode usar
 `eyebrow`, `heading` e `body`.
 
+A direção de voz fica na seção `Voz e redação` do `page.md`, fora do JSON
+fechado. Registre o caminho da amostra aprovada, o tom confirmado e as
+expressões a preservar ou evitar. Não transforme essa referência em fatos nem
+copie frases dela para áreas com outra finalidade.
+
 ## Estados
 
 - `proposed`: área sugerida, ainda sem escolha da pessoa.

@@ -6,54 +6,47 @@
 - Um projeto Astro existente com `package.json`.
 - Permissão de escrita no diretório do projeto.
 
-## Instalação global
+## Instale o pacote e as skills
 
 ```bash
 npm install --global @promovaweb/astrofy
-astrofy --version
+cd /caminho/do/site
+astrofy skills install --agent codex
 ```
 
-Para manter a versão junto ao projeto:
+Troque `codex` por `claude` se esse for o agente usado no projeto. O comando
+coloca as skills em `.agents/skills/` ou `.claude/skills/`. Para conferir os
+arquivos antes de gravar, acrescente `--dry-run`.
 
-```bash
-npm install --save-dev @promovaweb/astrofy
-npx astrofy --version
-```
+## Diga o que quer fazer
 
-O Chromium é opcional e fica no cache do Playwright, fora do pacote npm:
+Na conversa aberta para o projeto, diga o que quer fazer. Por exemplo:
 
-```bash
-astrofy browser status
-astrofy browser install
-```
+> Quero criar uma página de produto. Use o Astrofy para entender o projeto,
+> conversar comigo sobre o conteúdo e mostrar o plano antes de implementar.
 
-Instale-o quando o projeto usar as verificações reais de renderização.
+Para uma adoção ampla do framework, peça ao agente que use `astrofy-setup`.
+Essa skill reconhece as convenções e integrações do site, inicializa os
+contratos ausentes e registra o estado para retomadas. Para uma página
+específica, explique o que quer fazer. O agente confere o que precisa preparar antes
+de chamar `astrofy-page-planner`.
 
-## Primeira execução
+O agente executa as operações do Astrofy necessárias ao trabalho. Você não
+precisa rodar `inspect`, `init`, `page create`, `page answer` ou `plan` por
+separado. Use esses comandos diretamente apenas quando quiser conduzir a
+mesma etapa pelo terminal. O [manual do CLI](../cli.md) descreve esses comandos.
 
-Comece pela skill `astrofy-setup`. Ela lê `package.json`, a configuração do
-Astro, as rotas, os componentes, as coleções de conteúdo e as integrações já
-instaladas. Antes de gravar arquivos, confira a leitura do CLI:
+## Resultado da instalação
 
-```bash
-astrofy inspect --root .
-astrofy init --root . --dry-run
-astrofy init --root .
-```
-
-O setup preserva convenções válidas do projeto. Diretórios personalizados,
-adaptadores e integrações detectadas entram no contexto usado pelas próximas
-skills.
-
-## Resultado esperado
-
-Ao terminar, o projeto possui `.astrofy/`, configuração válida e um registro
-inicial da checklist. Execute `git diff` para revisar os arquivos criados.
+Depois da instalação, as skills ficam disponíveis no projeto. A adoção cria
+`.astrofy/` e `astrofy.checklist.json` quando o trabalho solicitado precisar
+desses contratos. Confira os arquivos alterados antes de aprovar a
+implementação.
 
 ## Classificação
 
 | Campo | Valor |
 | --- | --- |
 | Natureza | Procedimental |
-| Escopo | Instalação e primeira leitura do projeto |
-| Autoridade | CLI e skill `astrofy-setup` |
+| Escopo | Instalação e início do trabalho em conversa |
+| Autoridade | CLI de instalação e skills Astrofy |

@@ -24,6 +24,13 @@ A estrutura foi aprovada, mas faltam screenshots e preços. Marque as áreas
 correspondentes como `content_pending`. Se o hero e o percurso principal também
 dependem desses dados, não encaminhe a página como pronta.
 
+## Referência de voz
+
+A pessoa fornece um artigo aprovado e pede uma página de produto. Registre o
+caminho da amostra e as características de voz que ela confirma. Não copie
+frases do artigo. Se a pessoa ainda não indicar uma preferência de tom, pergunte
+antes de redigir propostas e mantenha os textos sem aprovação como rascunho.
+
 ## Mudança após aprovação
 
 A pessoa remove a seção de preço e adiciona demonstração. Atualize os dois

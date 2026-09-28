@@ -1,5 +1,10 @@
 # Referência do CLI
 
+O CLI oferece comandos para instalar skills, consultar estado, executar checks
+e conduzir entrevistas pelo terminal. No uso conversacional, o agente escolhe
+e executa os comandos necessários. Consulte este manual quando quiser operar
+uma etapa diretamente.
+
 Os exemplos usam o executável `astrofy` instalado no ambiente. No checkout de
 desenvolvimento, substitua-o por `node dist/cli/index.js`. Caminhos e UUIDs
 dos exemplos devem corresponder ao site e a uma execução existente.

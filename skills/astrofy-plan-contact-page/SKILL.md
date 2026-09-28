@@ -12,7 +12,7 @@ formulário deve pedir somente dados usados pelo fluxo declarado.
 
 ## Entrevista
 
-1. Confirme motivo do contato e quem recebe cada tipo de mensagem.
+1. Confirme o motivo do contato e a equipe que recebe cada tipo de mensagem.
 2. Colete campos, obrigatoriedade, formato, ajuda e validação.
 3. Confirme consentimento, política de privacidade e retenção informada.
 4. Registre endpoint, Astro Action, serviço externo ou alternativa atual.
@@ -23,6 +23,11 @@ formulário deve pedir somente dados usados pelo fluxo declarado.
 Apresente três formatos: formulário único, seleção por assunto ou contato com
 agendamento. Leia a [referência de contato](references/technical.md) e os
 [casos](examples/cases.md).
+
+Use a direção de voz aprovada pelo planner nas instruções, rótulos e mensagens.
+Se estiver ausente, colete essa preferência antes de redigir. Marque propostas
+de texto como rascunho até a aprovação. Cada mensagem deve descrever o estado
+real do envio.
 
 ## Saída
 

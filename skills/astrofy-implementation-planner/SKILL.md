@@ -57,6 +57,10 @@ testing, documentation e outras especialistas conforme o trabalho real.
 Uma tarefa tem uma skill principal e pode listar skills de conferência. Não
 duplique a mesma alteração em fases diferentes.
 
+Quando `page.md` registrar `Voz e redação`, carregue essa orientação nas
+tarefas que exibem ou alteram texto. Inclua `astrofy-editorial-review` como
+skill de conferência sempre que a tarefa criar ou modificar copy visível.
+
 ## Saída e retomada
 
 Grave `.astrofy/plans/<slug>/implementation-plan.md` e

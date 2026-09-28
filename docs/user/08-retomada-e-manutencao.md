@@ -1,8 +1,10 @@
 # Retomada e manutenção
 
-Os arquivos em `.astrofy/` permitem continuar o trabalho em outra sessão. Ao
-retomar, execute o setup, leia a especificação e o plano, confira o Git e
-continue pela primeira tarefa pendente cujas dependências estejam concluídas.
+Os arquivos em `.astrofy/` permitem continuar o trabalho em outra sessão. Abra
+uma conversa no projeto e peça ao agente para retomar a página pelo slug. Ele
+confere a especificação, o plano, o Git e continua pela próxima tarefa cujas
+dependências estejam concluídas. Use `astrofy page status` e `astrofy apply`
+quando quiser retomar pelo terminal.
 
 Se o conteúdo mudar antes da implementação, volte à especialista da página,
 atualize a especificação e gere novamente as partes afetadas do plano. Se a

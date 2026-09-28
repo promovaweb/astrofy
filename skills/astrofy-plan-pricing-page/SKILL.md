@@ -26,6 +26,11 @@ regra puder ser expressa com dados confirmados. Leia a
 [referência de preços](references/technical.md) e os
 [casos](examples/cases.md).
 
+Use a direção de voz e a amostra aprovadas pelo planner. Se estiverem ausentes,
+colete essas informações antes de redigir. Marque qualquer proposta de copy
+como rascunho até a aprovação da pessoa. Descreva planos com os valores e
+limites confirmados, sem superlativos comerciais genéricos.
+
 ## Saída
 
 Entregue fragmento `type: pricing` com fonte, planos, comparação, cobrança,
