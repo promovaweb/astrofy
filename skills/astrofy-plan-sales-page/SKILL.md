@@ -27,6 +27,11 @@ Depois percorra cada área aceita e peça seus textos. Use a
 [referência de vendas](references/technical.md) para campos e condições de
 prontidão.
 
+Use a direção de voz e a amostra aprovadas pelo planner. Se estiverem ausentes,
+colete essas informações antes de redigir. Marque qualquer proposta de copy
+como rascunho até a aprovação da pessoa. Não use prova, urgência ou benefício
+sem fonte.
+
 ## Saída
 
 Entregue ao planner um fragmento com `type: sales`, dados comerciais, áreas,

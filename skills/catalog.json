@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "skills": [
     {
       "name": "astrofy-setup",
@@ -170,7 +170,7 @@
     {
       "name": "astrofy-editorial-review",
       "title": "Revisar texto visível",
-      "description": "Revisa ortografia e nomenclatura em textos visíveis de sites Astro, preservando fatos, código e a direção editorial fornecida."
+      "description": "Audita e revisa linguagem, voz e alegações em conteúdo visível de sites Astro, sem presumir autoria por estilo e preservando os fatos confirmados."
     },
     {
       "name": "astrofy-seo",

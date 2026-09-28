@@ -14,6 +14,11 @@ disponíveis. Use os caminhos definidos em `.astrofy/config/paths.json` quando
 diferirem dos exemplos. Confira a versão instalada no lockfile e em node_modules
 antes de aplicar APIs da documentação online.
 
+Preserve o texto aprovado. Não reescreva copy fornecida pela pessoa apenas
+para ajustá-la ao layout. Se faltar conteúdo, registre a lacuna em vez de criar
+texto de preenchimento. Copy criada durante a tarefa pode ser corrigida dentro
+da direção aprovada.
+
 ## Execução
 
 Relacione a abertura à ação principal e confirme seus destinos. Use conteúdo
@@ -32,6 +37,10 @@ destinos e compare a leitura em celular e desktop.
 4. Teste mobile, links de CTA, headings e primeira dobra.
 5. Confira conteúdo inicial antes da hidratação, mídia principal e falha de
    fontes secundárias. Use a seleção publicável ao exibir conteúdo de coleções.
+6. Se criar ou alterar texto, invoque `astrofy-editorial-review` em modo de
+   auditoria antes de concluir. Corrija os achados na copy criada durante a
+   tarefa e repita a auditoria. Não altere conteúdo fornecido e aprovado sem
+   autorização.
 
 ### Alteração de implementação existente
 

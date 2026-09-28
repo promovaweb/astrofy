@@ -1,7 +1,8 @@
 # Planejamento de uma página
 
-Chame `astrofy-page-planner` com o pedido em linguagem natural. A skill lê o
-contexto preparado pelo setup e escolhe uma especialista.
+Descreva a página ao agente na conversa. `astrofy-page-planner` examina a
+estrutura atual do site e escolhe uma especialista. O agente prepara os
+contratos necessários quando o projeto ainda não usa Astrofy.
 
 | Pedido | Especialista |
 | --- | --- |
@@ -13,18 +14,20 @@ contexto preparado pelo setup e escolhe uma especialista.
 | Página de contato | `astrofy-plan-contact-page` |
 | Página de preços | `astrofy-plan-pricing-page` |
 
-Se o pedido combinar dois formatos, a orquestradora define um tipo principal e
-registra as necessidades complementares. Uma página de produto com tabela de
+Se a solicitação combinar dois formatos, a orquestradora define um tipo
+principal e registra as necessidades complementares. Uma página de produto com tabela de
 planos, por exemplo, continua sendo produto e recebe requisitos de preços.
 
 ## Pontos de revisão
 
-A conversa avança por finalidade, público, arquitetura, conteúdo, mídia,
-comportamento e revisão integral. Cada etapa dependente de preferência oferece
-três opções materialmente diferentes, com uma recomendação fundamentada.
+Primeiro, o agente confirma a finalidade e o público e valida a arquitetura.
+Depois, organiza conteúdo e mídia e define os comportamentos da página. Você
+recebe a página completa para revisar. Quando precisa da sua escolha, o agente
+apresenta três opções diferentes e recomenda uma delas.
 
 A saída segue `packages/schemas/page-spec.schema.json`. A implementação ainda
-não começa: primeiro a pessoa revisa `page.md` e aprova a especificação.
+não começa: primeiro você revisa `page.md` e aprova a especificação. O agente
+registra as respostas e a página nos arquivos do projeto.
 
 ## Classificação
 

@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.7.0] - 2026-09-28
+
+### Adicionado
+
+- Amplia o fluxo retomável de planejamento de páginas e atualiza a matriz de
+  skills com entradas, saídas e dependências revisadas.
+- Atualiza o guia do usuário, diagramas e exemplos das skills editoriais e de
+  planejamento; recompila PDF e EPUB do ebook.
+
+### Validação
+
+- `npm run ebook`, `npm run ebook:verify` e `npm run release:check`.
+
 ## [0.6.0] - 2026-09-18
 
 ### Adicionado

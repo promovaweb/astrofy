@@ -1,32 +1,38 @@
 # Visão geral
 
-O Astrofy organiza a criação e a evolução de sites Astro em quatro fases:
+Você descreve o trabalho ao agente na conversa. O Astrofy examina o projeto,
+seleciona as skills necessárias e solicita as informações que faltam. Para criar
+uma página, a conversa aprova o conteúdo antes de passar ao plano técnico e à
+implementação.
 
-1. `astrofy-setup` lê o projeto, reconhece seus recursos e prepara o estado de
-   trabalho em `.astrofy/`.
-2. `astrofy-page-planner` identifica o tipo de página e encaminha a conversa
-   para uma especialista.
-3. `astrofy-implementation-planner` relaciona o conteúdo aprovado com rotas,
-   componentes, integrações, testes e documentação do projeto real.
-4. As skills técnicas implementam e conferem cada parte do plano.
+O percurso de uma página tem três etapas:
 
-![Fluxo do pedido ao checkup](assets/fluxo-astrofy.svg)
+1. `astrofy-page-planner` identifica o tipo de página e conduz a entrevista.
+2. `astrofy-implementation-planner` relaciona o conteúdo aprovado à estrutura
+   atual do projeto e apresenta um plano técnico.
+3. As skills selecionadas implementam e conferem as tarefas aprovadas.
 
-O Astrofy não exige um formulário completo no primeiro contato. A pessoa pode
-começar com uma frase, como “quero uma página para meu produto”. A
-orquestradora confirma o tipo, coleta o conteúdo por etapas e apresenta três
-alternativas quando uma escolha editorial depende do usuário.
+`astrofy-setup` organiza a adoção ampla ou a revisão inicial do site. Para uma
+página específica, explique o que quer fazer. O agente confere se precisa
+preparar o projeto antes de continuar.
+
+![Etapas de uma página Astro](assets/fluxo-astrofy.svg)
+
+Você pode começar com uma frase, como “quero uma página para meu produto”. O
+agente confirma o tipo, coleta o conteúdo por etapas e apresenta alternativas
+quando precisa da sua escolha. Você revisa a página completa e o plano antes
+da implementação.
 
 ## Artefatos do projeto
 
 | Caminho | Conteúdo |
 | --- | --- |
-| `.astrofy/config/project.json` | Configuração reconhecida pelo setup |
-| `.astrofy/pages/<slug>/page-spec.json` | Especificação estruturada da página |
-| `.astrofy/pages/<slug>/page.md` | Leitura humana do conteúdo coletado |
-| `.astrofy/plans/<slug>/implementation-plan.json` | Fases e tarefas |
-| `.astrofy/plans/<slug>/implementation-plan.md` | Plano técnico para revisão |
-| `astrofy.checklist.json` | Estado das verificações do site |
+| `.astrofy/config/project.json` | Configuração criada durante a adoção do Astrofy |
+| `.astrofy/pages/<slug>/page-spec.json` | Especificação estruturada da página aprovada |
+| `.astrofy/pages/<slug>/page.md` | Conteúdo completo para leitura e revisão |
+| `.astrofy/plans/<slug>/implementation-plan.json` | Estado técnico das tarefas |
+| `.astrofy/plans/<slug>/implementation-plan.md` | Plano técnico apresentado para revisão |
+| `astrofy.checklist.json` | Estado das verificações executadas no site |
 
 ![Relação entre orquestradoras, artefatos e skills](assets/artefatos-skills.svg)
 

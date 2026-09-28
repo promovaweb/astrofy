@@ -14,7 +14,49 @@ de propriedades, URLs e citações que exigem reprodução literal.
 ## Alteração compatível
 
 Revise texto antigo respeitando a voz registrada e o glossário do projeto.
-Alterações de oferta e números exigem confirmação na fonte correspondente.
+Não altere oferta, números, nomes ou promessas sem confirmar a fonte
+correspondente. Uma ocorrência isolada de um padrão não justifica mudar a voz
+nem rotular a origem do texto.
+
+## Sinais de texto genérico
+
+Use a leitura editorial para localizar alegações amplas sem fonte, vocabulário
+inflado, introduções que anunciam o assunto, transições vazias, finais
+genéricos, estruturas repetidas, exagero de ênfase, abstrações com ação humana,
+omissão de atores conhecidos e frases que não acrescentam informação. Esses
+sinais pedem avaliação contextual, não substituições automáticas. Confira se
+há um conjunto de ocorrências e se a voz aprovada as justifica.
+
+## Modo de auditoria e modo de edição
+
+Quando a pessoa pede diagnóstico, não altere arquivos. Apresente os trechos
+observados, o padrão, seu efeito e uma ação possível. Não use detectores nem
+atribua autoria com base em características de escrita. Quando a pessoa pede
+edição, faça a menor correção que resolva o problema e preserve o texto
+aprovado fora do escopo indicado.
+
+Preserve detalhes específicos confirmados, marcas de voz intencionais, humor,
+tensão, apartes e variações de ritmo. Não acrescente fatos, nomes, números,
+depoimentos, funções, fontes ou resultados. Se a reescrita depender de algo que
+não consta nas fontes, solicite confirmação ou mantenha o trecho delimitado ao
+que já foi informado.
+
+Leia a página inteira para reconhecer moldes repetidos em headings, aberturas,
+parágrafos e CTAs. Compare a edição com amostras aprovadas e preserve seus
+traços de vocabulário, formalidade, pessoa e cadência. Não aplique o mesmo
+formato a todas as seções só para obter consistência visual.
+
+## Ciclo de revisão anti-slop
+
+1. Leia o texto completo, o objetivo da página, a voz registrada e as fontes.
+2. Identifique os trechos e explique o efeito de leitura, sem atribuir origem
+   automática ao texto.
+3. Confirme alegações e nomes próprios. Marque separadamente os pontos sem
+   fonte.
+4. Reescreva os trechos necessários sem trocar a intenção ou os fatos.
+5. Confira a página renderizada e compare o conjunto com a voz aprovada. Leia
+   em voz alta para localizar frases artificiais e confira se a mudança de
+   ritmo ajuda o raciocínio, sem criar coloquialismos ou erros de propósito.
 
 ## Diagnóstico
 

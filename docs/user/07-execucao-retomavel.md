@@ -1,8 +1,9 @@
 # Execução retomável
 
-Cada tarefa do plano possui identificador estável, dependências, status,
-arquivos, passos e validações. O agente altera o status junto com o trabalho,
-para que a próxima sessão encontre o ponto correto de retomada.
+Cada tarefa do plano possui um status e uma condição de conclusão. O agente
+atualiza esse registro enquanto trabalha para que você retome em outra
+conversa. Este capítulo mostra os comandos do CLI para consultar e atualizar
+as tarefas pelo terminal.
 
 ## Estados da tarefa
 

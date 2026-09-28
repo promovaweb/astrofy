@@ -24,6 +24,11 @@ Apresente três arquiteturas com prioridades diferentes. Use a
 [referência da Home](references/technical.md) e os
 [casos](examples/cases.md).
 
+Use a direção de voz e a amostra aprovadas pelo planner. Se estiverem ausentes,
+colete essas informações antes de redigir. Marque qualquer proposta de copy
+como rascunho até a aprovação da pessoa. Resuma ofertas e destinos sem repetir
+o texto das páginas internas.
+
 ## Saída
 
 Entregue fragmento `type: homepage` com mensagem, públicos, destinos, áreas,

@@ -23,6 +23,11 @@ Apresente três arquiteturas adequadas ao modo de contratação. Leia a
 [referência de serviço](references/technical.md) e os
 [casos](examples/cases.md) antes de consolidar áreas e textos.
 
+Use a direção de voz e a amostra aprovadas pelo planner. Se estiverem ausentes,
+colete essas informações antes de redigir. Marque qualquer proposta de copy
+como rascunho até a aprovação da pessoa. Relacione cada benefício às entregas
+e aos limites confirmados do serviço.
+
 ## Saída
 
 Entregue fragmento `type: service` com escopo, entregas, processo,

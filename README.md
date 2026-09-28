@@ -1,15 +1,42 @@
 # Astrofy
 
-O Astrofy reúne 49 skills e um CLI Node.js para trabalhar em sites Astro.
-Comece por astrofy-setup para reconhecer o projeto e coordenar as especialistas.
-Use astrofy-markdown para formatar e validar a documentação com markdownlint.
-O CLI prepara a adoção em projetos existentes, gera CSS a partir de tokens e
-registra verificações por regra e escopo em uma checklist JSON.
+O Astrofy reúne skills para trabalhar em sites Astro por conversa com Codex ou
+Claude. Instale o pacote, disponibilize as skills no projeto e peça o trabalho
+em linguagem natural. O agente escolhe as especialistas, faz as perguntas
+necessárias e apresenta o plano antes de implementar.
+
+## Comece por uma conversa
+
+Instale o pacote e as skills para o agente que usa no projeto:
+
+```bash
+npm install --global @promovaweb/astrofy@0.7.0
+cd /caminho/do/site
+astrofy skills install --agent codex
+```
+
+Para Claude, troque `codex` por `claude`. Se quiser conferir os arquivos antes
+da instalação, acrescente `--dry-run` ao último comando.
+
+Depois, peça o trabalho ao agente. Por exemplo:
+
+> Quero criar uma página para meu produto. Use o Astrofy para entender este
+> projeto, conversar comigo sobre o conteúdo e apresentar um plano antes de
+> implementar.
+
+Para uma adoção ampla ou uma revisão do projeto, peça `astrofy-setup`. Para uma
+página, descreva o resultado esperado. O agente confere o que precisa preparar
+e conduz a entrevista com `astrofy-page-planner`. Você não precisa preencher a
+entrevista por meio de comandos do CLI.
+
+O CLI continua disponível para instalar skills, acompanhar estado, executar
+checks ou retomar uma página manualmente. Consulte a [referência do CLI](docs/cli.md)
+quando precisar desses comandos.
 
 As skills operam sobre projetos Astro existentes. O pacote não inclui um
 template de site.
 
-## Instalação
+## Desenvolvimento do pacote
 
 Use Node.js 22.12 ou posterior e instale as dependências registradas no lockfile.
 No diretório deste repositório, execute:
@@ -20,18 +47,11 @@ npm run build
 node dist/cli/index.js --help
 ```
 
-O pacote está disponível publicamente no npm. Instale ou atualize com:
-
-```bash
-npm install --global @promovaweb/astrofy@0.6.0
-astrofy --help
-astrofy --version
-```
-
-Depois da instalação, execute `astrofy tui --root /caminho/do/site` para
-abrir o painel em um projeto já inicializado com `astrofy init`.
-A versão 0.6.0 inclui planejamento conversacional e técnico para páginas de
-vendas, produto, serviço, Home, Sobre, Contato e Preços.
+O pacote está disponível publicamente no npm. A versão 0.7.0 inclui
+planejamento conversacional e técnico para páginas de vendas, produto, serviço,
+Home, Sobre, Contato e Preços. O painel opcional abre com
+`astrofy tui --root /caminho/do/site` depois que o projeto foi inicializado
+com `astrofy init`.
 
 O pacote conserva `UNLICENSED`, sem concessão de licença aberta. Para uma
 instalação a partir do checkout autorizado, `npm pack` gera o arquivo `.tgz`.
@@ -60,7 +80,9 @@ editorial continua pendente até receber uma avaliação identificada.
 Peça a página em linguagem natural, como "quero criar uma página para meu
 produto". `astrofy-page-planner` inspeciona o site, escolhe a entrevistadora
 adequada e coleta finalidade, público, áreas, textos, mídia e ações. A
-especificação aprovada fica em `.astrofy/pages/<slug>/`.
+especificação aprovada fica em `.astrofy/pages/<slug>/`. O agente conduz essa
+etapa na conversa. Os comandos abaixo servem para registrar cada resposta pelo
+terminal.
 
 Depois, `astrofy-implementation-planner` relaciona a especificação com rotas,
 componentes, checklist e scripts atuais. O plano em

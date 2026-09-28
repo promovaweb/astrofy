@@ -31,20 +31,31 @@ quando a etapa seguinte depender da escolha atual.
 1. **Finalidade:** objetivo, público, rota e ação principal.
 2. **Arquitetura:** apresente três composições realmente diferentes, com a
    recomendada primeiro, e permita uma composição escrita pela pessoa.
-3. **Conteúdo:** percorra cada área aprovada e colete heading, corpo, itens,
-   ações, destinos e fonte factual. Texto ausente permanece pendente.
-4. **Mídia:** registre ativo existente, origem, texto alternativo, proporção e
+3. **Voz e redação:** peça uma amostra aprovada ou consulte as referências
+   editoriais existentes. Registre o tom, as expressões a preservar e as que a
+   pessoa quer evitar. Não copie frases da amostra. Se não houver uma, pergunte
+   quais características ela prefere. A falta de amostra não impede o plano.
+4. **Conteúdo:** percorra cada área aprovada e colete heading, corpo, itens,
+   ações, destinos e fonte factual. Texto ausente permanece pendente. Marque
+   sugestões redigidas pelo agente como propostas até a aprovação da pessoa.
+5. **Mídia:** registre ativo existente, origem, texto alternativo, proporção e
    estado sem mídia. Não solicite upload por ferramenta limitada a texto.
-5. **Comportamento:** registre formulário, navegação, estados, responsividade,
+6. **Comportamento:** registre formulário, navegação, estados, responsividade,
    analytics e integrações que a página realmente usa.
-6. **Revisão:** apresente a página inteira na ordem de leitura, com pendências
-   explícitas, antes de marcar a especificação como aprovada.
+7. **Revisão:** apresente a página inteira na ordem de leitura. Se houver copy
+   proposta, use `astrofy-editorial-review` em modo de auditoria antes da
+   aprovação. Reescreva achados somente na copy criada pelo agente e repita a
+   auditoria. Registre pendências explícitas e aguarde a aprovação da página.
 
 Quando o CLI estiver disponível, use `astrofy page create` para iniciar o
 estado, `astrofy page answer` para registrar cada resposta e
 `astrofy page status` antes de formular a pergunta seguinte. O campo
-`nextQuestions` limita cada rodada a três assuntos e impede a repetição de
+`nextQuestions` limita cada interação a três assuntos e impede a repetição de
 entradas já preenchidas.
+
+O schema de entrevista do CLI não possui campo de voz. Nesse percurso, registre
+a direção confirmada em `page.md` durante a revisão, sem acrescentar campo ao
+JSON.
 
 Leia o [contrato da especificação](references/technical.md) durante a coleta e
 os [casos de entrevista](examples/cases.md) para tratar página existente,
@@ -58,7 +69,9 @@ Grave `.astrofy/pages/<slug>/page.md` e
 `.astrofy/pages/<slug>/page-spec.json` somente depois de confirmar slug e rota.
 O Markdown apresenta a leitura completa; o JSON conserva os campos usados pela
 próxima orquestradora. Use os estados `proposed`, `content_pending`, `approved`
-e `ready` conforme o contrato.
+e `ready` conforme o contrato. Registre no Markdown a seção `Voz e redação`,
+com a referência aprovada, as características escolhidas e as expressões a
+preservar ou evitar.
 
 O contrato pronto também registra `seo`, `integrations`, `accessibility` e
 `tests`. Não marque uma resposta ausente como texto vazio para encerrar a
