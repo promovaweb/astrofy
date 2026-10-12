@@ -1,6 +1,6 @@
 # Biblioteca de skills do Astrofy
 
-O Astrofy distribui 49 skills para agentes trabalharem em projetos Astro
+O Astrofy distribui 51 skills para agentes trabalharem em projetos Astro
 existentes. Cada skill reúne um procedimento, referências técnicas e casos
 práticos. O agente lê essas instruções e executa o trabalho solicitado sobre os
 arquivos do projeto. Instalar uma skill apenas disponibiliza esses arquivos; a
@@ -10,7 +10,7 @@ execução ocorre quando você solicita o trabalho ao agente.
 
 Execute os comandos na raiz do site ou informe `--root` com o caminho do
 projeto. Escolha `codex` ou `claude` em `--agent`. Sem `--skill`, a instalação
-inclui as 49 skills; para selecionar algumas, use nomes separados por vírgula.
+inclui as 51 skills; para selecionar algumas, use nomes separados por vírgula.
 
 ```bash
 astrofy skills list
@@ -148,7 +148,7 @@ a validação após ler o diff. Consulte as instruções e recursos distribuído
   [linter](../skills/astrofy-markdown/references/technical.md) e
   [casos](../skills/astrofy-markdown/examples/cases.md).
 
-## Índice das 49 skills
+## Índice das 51 skills
 
 - **[astrofy-setup](../skills/astrofy-setup/SKILL.md):** Entrada inicial e
   coordenação da biblioteca conforme os recursos presentes no projeto.
@@ -285,6 +285,12 @@ a validação após ler o diff. Consulte as instruções e recursos distribuído
 - **[astrofy-security](#astrofy-security):** Revisa entradas, segredos e
   execução de HTML ou MDX em projetos Astro, aplicando correções delimitadas e
   documentando o alcance.
+- **[astrofy-sitespec-create](#astrofy-sitespec-create):** Cria tarefas de
+  desenvolvimento do site em `.sitespec/`, derivando a checklist das skills de
+  revisão aplicáveis.
+- **[astrofy-sitespec-implement](#astrofy-sitespec-implement):** Executa uma
+  tarefa de `.sitespec/` com a skill principal declarada e atualiza o
+  `SITEPEC.md` a cada item concluído.
 
 ## astrofy-init
 
@@ -1741,3 +1747,90 @@ astrofy check --rule config.secrets
   [fontes técnicas](../skills/astrofy-security/references/technical.md).
 - **Exemplos:**
   [casos de execução](../skills/astrofy-security/examples/cases.md).
+
+## astrofy-sitespec-create
+
+Cria tarefas de desenvolvimento do site em `.sitespec/`, derivando a checklist
+das skills de revisão e atribuindo id, dependência e estimativa do contrato.
+
+- **Entradas necessárias:** `docs/sitespec.md`, o schema em
+  `packages/schemas/sitespec.schema.json` e a saída de
+  `astrofy sitespec list --json`.
+- **Quando usar:** Um pedido de trabalho no site ainda não tem tarefa
+  correspondente em `.sitespec/`.
+- **Adaptação de projeto existente:** Antes de criar, confira em `items` que
+  não existe tarefa equivalente; reaproveite ou referencie via `dependsOn`.
+
+### Procedimento
+
+Consulte `astrofy sitespec list --json` para o próximo id livre e o estado
+das tarefas existentes. Mapeie as skills relacionadas ao pedido com
+`astrofy skills list --json` antes de assumir que falta pergunta — o
+`SKILL.md` de uma skill relacionada já resolve boa parte das dúvidas.
+Pergunte apenas o que sobrar sem resposta e mudaria a tarefa, no máximo
+três perguntas; zero é o resultado mais comum. Escolha `primarySkill` e
+`reviewSkills` entre as skills do catálogo, leia as instruções de cada
+`reviewSkill` e derive a checklist com um `{#id}` próprio por item. Escreva
+`SITEPEC.md` com `status: draft` e as três seções do corpo.
+
+### Entrega e conferência
+
+A tarefa criada aparece em `items`, nunca em `errors`, na consulta seguinte.
+
+A skill indica a seguinte verificação, complementada pelos testes e pela
+revisão do escopo descrito acima:
+
+```bash
+astrofy sitespec list --json
+```
+
+- **Limite ou erro recorrente:** Não copie a lista inteira de uma
+  `reviewSkill` sem relação com a tarefa; cada item vem de um critério real.
+- **Instruções do agente:**
+  [SKILL.md](../skills/astrofy-sitespec-create/SKILL.md).
+- **Referências:**
+  [fontes técnicas](../skills/astrofy-sitespec-create/references/technical.md).
+- **Exemplos:**
+  [casos de execução](../skills/astrofy-sitespec-create/examples/cases.md).
+
+## astrofy-sitespec-implement
+
+Executa uma tarefa registrada em `.sitespec/` com a skill principal indicada
+e atualiza o `SITEPEC.md` a cada item concluído, nota ou mudança de estado.
+
+- **Entradas necessárias:** O `SITEPEC.md` da tarefa e a saída de
+  `astrofy sitespec list --json` para confirmar `blockedBy` antes de começar.
+- **Quando usar:** Uma tarefa em `draft` ou `in_progress` precisa avançar.
+- **Adaptação de projeto existente:** Uma tarefa com `blockedBy` não vazio
+  exige confirmação antes de prosseguir mesmo assim.
+
+### Procedimento
+
+Mude `status` para `in_progress` antes de começar. Execute cada item com a
+skill marcada nele (ou `primarySkill`), marque `[x]` pelo `{#id}` ao
+terminar e registre notas relevantes. Mude `status` para `done` somente com
+a checklist inteira marcada, para `blocked` com `blockedReason` em
+impedimento externo, ou para `archived` com `archivedReason` ao encerrar
+sem concluir.
+
+### Entrega e conferência
+
+A tarefa editada continua em `items` na consulta seguinte, com `progress`
+coerente com os itens de fato marcados.
+
+A skill indica a seguinte verificação, complementada pelos testes e pela
+revisão do escopo descrito acima:
+
+```bash
+astrofy sitespec list --json
+```
+
+- **Limite ou erro recorrente:** Não marque `status: done` com item
+  pendente; não desmarque um item concluído sem registrar o motivo em
+  `## Notas`.
+- **Instruções do agente:**
+  [SKILL.md](../skills/astrofy-sitespec-implement/SKILL.md).
+- **Referências:**
+  [fontes técnicas](../skills/astrofy-sitespec-implement/references/technical.md).
+- **Exemplos:**
+  [casos de execução](../skills/astrofy-sitespec-implement/examples/cases.md).

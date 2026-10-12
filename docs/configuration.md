@@ -9,7 +9,7 @@ do campo sem reproduzir seu valor.
 
 `astrofy setup` cria `.astrofy/setup-state.json` depois da adoção incremental.
 O arquivo registra a versão do workflow, hashes dos arquivos observados,
-`changedFiles`, o histórico recente em `runs` e as 49 etapas com `dependsOn`,
+`changedFiles`, o histórico recente em `runs` e as 51 etapas com `dependsOn`,
 `inputs`, `outputs`, `status` e `updatedAt`. Cada execução conserva início,
 fim, duração, retomada e arquivos alterados. O grafo canônico fica em
 `skills/astrofy-setup/references/workflow.json`.

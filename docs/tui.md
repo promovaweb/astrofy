@@ -20,6 +20,7 @@ ou consulta. Use a rolagem do painel em terminais com pouca altura.
 | --- | --- |
 | `Ctrl+H` | Visão geral. |
 | `Ctrl+L` | Itens da checklist. |
+| `Ctrl+S` | Specs: tarefas de `.sitespec/`. |
 | `Ctrl+O` | Sobre e sintaxe dos filtros. |
 | `Ctrl+U` | Recarregar o estado. |
 | `Tab` e `Shift+Tab` | Alternar o foco. |
@@ -69,6 +70,17 @@ e a quantidade de verificações concluídas. O total considera as rotas
 encontradas após o build. Ao terminar as verificações, o painel informa a
 gravação do relatório e da checklist. `Esc` continua disponível para cancelar;
 o progresso transitório não substitui o resultado persistido.
+
+## Specs
+
+A aba Specs lista as tarefas de `.sitespec/<id>-<slug>/SITEPEC.md`, uma por
+linha, com estado, identificador, progresso `concluídos/total` e título. O
+contrato do arquivo está em `docs/sitespec.md`. `Enter` abre o detalhe com
+descrição, checklist com a skill de cada item, arquivos relacionados e notas.
+A aba é somente leitura: não cria, edita nem reordena tarefas. Uma tarefa sem
+`SITEPEC.md` ou com front matter fora do schema aparece como erro isolado no
+detalhe; as demais tarefas continuam listadas. `Ctrl+U` recarrega junto da
+checklist.
 
 ## Terminal e validação
 

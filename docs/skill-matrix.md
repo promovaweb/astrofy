@@ -8,6 +8,8 @@ saídas e o comando que confere o domínio associado a cada skill.
 | `astrofy-setup` | Nenhum | `package.json`, `astro.config.*`, `lockfile` | `.astrofy/setup-state.json` | Revisão do artefato de saída |
 | `astrofy-init` | `astrofy-setup` | `inspeção do projeto` | `.astrofy/config/`, `astrofy.checklist.json` | `astrofy check --category project` |
 | `astrofy-architecture` | `astrofy-init` | `rotas`, `layouts`, `componentes` | `responsabilidades definidas` | `astrofy check --category architecture` |
+| `astrofy-sitespec-create` | `astrofy-architecture` | `pedido de tarefa`, `skills de revisão aplicáveis` | `.sitespec/<id>-<slug>/SITEPEC.md` | Revisão do artefato de saída |
+| `astrofy-sitespec-implement` | `astrofy-sitespec-create` | `SITEPEC.md existente`, `skill principal da tarefa` | `SITEPEC.md atualizado` | Revisão do artefato de saída |
 | `astrofy-config` | `astrofy-init`, `astrofy-architecture` | `configuração observada`, `variáveis de ambiente` | `fontes de configuração mapeadas` | `astrofy check --category config` |
 | `astrofy-documentation` | `astrofy-architecture`, `astrofy-config` | `estado observado`, `comandos reais` | `documentação operacional` | `astrofy check --category docs` |
 | `astrofy-page-planner` | `astrofy-architecture`, `astrofy-config`, `astrofy-documentation` | `pedido de página`, `rotas e componentes atuais`, `amostra de voz aprovada` | `especificação aprovada com direção de voz` | Revisão do artefato de saída |

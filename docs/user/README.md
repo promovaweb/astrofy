@@ -22,8 +22,9 @@ agente está fazendo ou operar o CLI manualmente.
   [execução e validação](05-execucao-e-validacao.md).
 - **Consultar exemplos:** [sete tipos de página](06-exemplos-por-tipo-de-pagina.md).
 - **Continuar depois:** [execução retomável](07-execucao-retomavel.md) e
-  [retomada e manutenção](08-retomada-e-manutencao.md).
-- **Resolver uma falha:** [solução de problemas](09-solucao-de-problemas.md).
+  [retomada e manutenção](09-retomada-e-manutencao.md).
+- **Registrar uma tarefa pontual do site:** [sitespec](08-sitespec-tarefas-do-site.md).
+- **Resolver uma falha:** [solução de problemas](10-solucao-de-problemas.md).
 
 O [manual do CLI](../cli.md) descreve os comandos opcionais para instalação de
 skills, estado, checks e entrevistas pelo terminal.

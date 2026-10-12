@@ -6,6 +6,8 @@
     {"skill":"astrofy-setup","dependsOn":[],"inputs":["package.json","astro.config.*","lockfile"],"outputs":[".astrofy/setup-state.json"]},
     {"skill":"astrofy-init","dependsOn":["astrofy-setup"],"inputs":["inspeção do projeto"],"outputs":[".astrofy/config/","astrofy.checklist.json"]},
     {"skill":"astrofy-architecture","dependsOn":["astrofy-init"],"inputs":["rotas","layouts","componentes"],"outputs":["responsabilidades definidas"]},
+    {"skill":"astrofy-sitespec-create","dependsOn":["astrofy-architecture"],"inputs":["pedido de tarefa","skills de revisão aplicáveis"],"outputs":[".sitespec/<id>-<slug>/SITEPEC.md"]},
+    {"skill":"astrofy-sitespec-implement","dependsOn":["astrofy-sitespec-create"],"inputs":["SITEPEC.md existente","skill principal da tarefa"],"outputs":["SITEPEC.md atualizado"]},
     {"skill":"astrofy-config","dependsOn":["astrofy-init","astrofy-architecture"],"inputs":["configuração observada","variáveis de ambiente"],"outputs":["fontes de configuração mapeadas"]},
     {"skill":"astrofy-documentation","dependsOn":["astrofy-architecture","astrofy-config"],"inputs":["estado observado","comandos reais"],"outputs":["documentação operacional"]},
     {"skill":"astrofy-page-planner","dependsOn":["astrofy-architecture","astrofy-config","astrofy-documentation"],"inputs":["pedido de página","rotas e componentes atuais","amostra de voz aprovada"],"outputs":["especificação aprovada com direção de voz"]},

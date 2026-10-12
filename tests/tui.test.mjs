@@ -2,7 +2,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {PassThrough} from 'node:stream';
-import {mkdtemp,writeFile,rm} from 'node:fs/promises';
+import {mkdtemp,mkdir,writeFile,rm} from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import blessed from 'neo-blessed';
@@ -34,7 +34,7 @@ test('detalhe apresenta entradas e revisão sem executar controles de terminal',
 function luminance(hex){const rgb=hex.slice(1).match(/../g).map(v=>parseInt(v,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return .2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2];}
 test('paleta preserva contraste e atalhos não colidem',()=>{
  for(const [fg,bg]of [['text','background'],['textMuted','background'],['focusText','focusBackground']]){const a=luminance(TUI_THEME[fg]),b=luminance(TUI_THEME[bg]);assert.ok((Math.max(a,b)+.05)/(Math.min(a,b)+.05)>=4.5);}
- assert.deepEqual(TUI_TABS.map(tab=>tab.id),['overview','items','about']);
+ assert.deepEqual(TUI_TABS.map(tab=>tab.id),['overview','items','sitespec','about']);
  assert.equal(TUI_BINDINGS['C-q'],'Sair');assert.equal(new Set(TUI_TABS.map(tab=>tab.key)).size,TUI_TABS.length);
 });
 for(const [columns,rows]of [[80,24],[129,44],[160,50]])test(`shell ${columns}x${rows} mostra conteúdo e responde ao teclado`,{timeout:10000},async t=>{
@@ -59,6 +59,34 @@ for(const [columns,rows]of [[80,24],[129,44],[160,50]])test(`shell ${columns}x${
  while(!screen.screenshot().includes('Referência 2/2')&&Date.now()<nextDeadline)await new Promise(resolve=>setTimeout(resolve,20));
  assert.match(screen.screenshot(),/Referência 2\/2/);
  screen.program.emit('keypress','',{name:'escape',full:'escape'});
+ screen.program.emit('keypress','q',{name:'q',full:'q'});await task;assert.equal(screen.destroyed,true);
+ input.destroy();output.destroy();
+});
+test('aba Specs lista tarefas de .sitespec e mostra o detalhe selecionado',{timeout:10000},async t=>{
+ const root=await mkdtemp(path.join(os.tmpdir(),'astrofy-tui-sitespec-'));t.after(()=>rm(root,{recursive:true,force:true}));
+ await writeFile(path.join(root,'package.json'),JSON.stringify({dependencies:{astro:'5.13.0'}}));await initialize(root);
+ await mkdir(path.join(root,'.sitespec/0001-corrigir-contraste-botao'),{recursive:true});
+ await writeFile(path.join(root,'.sitespec/0001-corrigir-contraste-botao/SITEPEC.md'),[
+  '---','schemaVersion: "1.0.0"','id: "0001"','slug: corrigir-contraste-botao',
+  'title: Corrigir contraste do botão primário','summary: Botão abaixo do contraste mínimo.',
+  'status: in_progress','createdAt: 2026-10-12T14:00:00.000Z','updatedAt: 2026-10-12T15:00:00.000Z',
+  'primarySkill: astrofy-design-system','reviewSkills:','  - astrofy-accessibility','relatedFiles: []','---','',
+  '## Descrição','','Texto da tarefa.','','## Checklist','','- [x] Medir o contraste atual `#astrofy-accessibility` {#a001}','',
+  '## Notas','',
+ ].join('\n'));
+ const input=new PassThrough(),output=new PassThrough();input.isTTY=true;input.setRawMode=()=>{};output.isTTY=true;output.columns=129;output.rows=44;
+ output.on('data',()=>{});
+ const screen=blessed.screen({input,output,terminal:'xterm-256color',smartCSR:false});
+ const task=startTui(root,{screen,noColor:true});
+ const deadline=Date.now()+5000;
+ while(!screen.screenshot().includes('consulta concluída')&&Date.now()<deadline)await new Promise(resolve=>setTimeout(resolve,20));
+ screen.program.emit('keypress','',{name:'s',ctrl:true,full:'C-s'});screen.render();
+ const specDeadline=Date.now()+2000;
+ while(!screen.screenshot().includes('corrigir-contraste-botao')&&Date.now()<specDeadline)await new Promise(resolve=>setTimeout(resolve,20));
+ const withSpecs=screen.screenshot();
+ assert.match(withSpecs,/Specs/);assert.match(withSpecs,/em andamento/);assert.match(withSpecs,/1\/1/);
+ screen.program.emit('keypress','',{name:'enter',full:'enter'});screen.render();
+ assert.match(screen.screenshot(),/Skill principal: astrofy-design-system/);
  screen.program.emit('keypress','q',{name:'q',full:'q'});await task;assert.equal(screen.destroyed,true);
  input.destroy();output.destroy();
 });

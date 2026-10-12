@@ -29,7 +29,7 @@ configurada preserva os relatórios citados pela checklist e pelo histórico.
 
 ## astrofy setup
 
-Inicia ou retoma a coordenação das 49 skills no projeto existente.
+Inicia ou retoma a coordenação das 51 skills no projeto existente.
 
 Sem argumentos posicionais. Aceita `--dry-run`.
 
@@ -409,7 +409,7 @@ astrofy migrate --check
 
 ## astrofy skills list
 
-Lista as 49 skills distribuídas com o pacote, incluindo astrofy-setup como
+Lista as 51 skills distribuídas com o pacote, incluindo astrofy-setup como
 entrada inicial e astrofy-markdown para formatação com linter.
 
 Sem argumentos posicionais. Não exige um projeto Astro.
@@ -424,6 +424,29 @@ astrofy skills list --json
 astrofy skills list --offline
 astrofy skills list --no-color
 astrofy skills list --ci
+```
+
+## astrofy sitespec list
+
+Lista as tarefas de `.sitespec/<id>-<slug>/SITEPEC.md`, com progresso da
+checklist e dependências resolvidas contra as demais tarefas lidas. O
+contrato do arquivo está em `docs/sitespec.md`.
+
+Sem argumentos posicionais.
+
+Retorna `items`, `errors` e `nextId` (próximo id de quatro dígitos livre,
+pela primeira lacuna entre os diretórios existentes), no mesmo formato lido
+pela aba Specs da TUI. Não grava arquivos. Uma tarefa inválida ou sem
+`SITEPEC.md` aparece em `errors` sem interromper a leitura das demais.
+
+### Exemplos
+
+```bash
+astrofy sitespec list
+astrofy sitespec list --json
+astrofy sitespec list --root apps/site
+astrofy sitespec list --offline
+astrofy sitespec list --no-color
 ```
 
 ## astrofy skills install

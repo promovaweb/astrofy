@@ -33,6 +33,7 @@ da implementação.
 | `.astrofy/plans/<slug>/implementation-plan.json` | Estado técnico das tarefas |
 | `.astrofy/plans/<slug>/implementation-plan.md` | Plano técnico apresentado para revisão |
 | `astrofy.checklist.json` | Estado das verificações executadas no site |
+| `.sitespec/<id>-<slug>/SITEPEC.md` | Tarefa pontual de desenvolvimento, fora do fluxo de página |
 
 ![Relação entre orquestradoras, artefatos e skills](assets/artefatos-skills.svg)
 

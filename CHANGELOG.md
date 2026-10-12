@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.8.0] - 2026-10-12
+
+### Adicionado
+
+- Contrato `SITEPEC.md` para tarefas pontuais de desenvolvimento do site em
+  `.sitespec/<id>-<slug>/`, com front matter fechado (`status`, `priority`,
+  `dependsOn`, `estimateMinutes`/`estimateBasis`) e checklist com `{#id}`
+  estável por item.
+- Comando `astrofy sitespec list`, somente leitura: valida o contrato,
+  resolve `blockedBy`/`missingDependencies` entre tarefas e informa o
+  próximo id livre.
+- Aba **Specs** (`Ctrl+S`) na TUI, para navegar `.sitespec/` e acompanhar
+  progresso, prioridade e dependências sem gravar nada.
+- Skills `astrofy-sitespec-create` e `astrofy-sitespec-implement`: a
+  primeira mapeia skills relacionadas ao pedido, esclarece dúvidas reais com
+  no máximo três perguntas e escreve a tarefa; a segunda executa os itens e
+  atualiza o arquivo até `done`, `blocked` ou `archived`.
+- Capítulo "Tarefas do site com sitespec" no guia do usuário, entre execução
+  retomável e retomada/manutenção; ebook recompilado em PDF e EPUB.
+
+### Validação
+
+- Suíte unitária, fixtures de compatibilidade e de projeto, matriz de
+  skills, manual, ebook e release.
+
 ## [0.7.1] - 2026-09-28
 
 ### Corrigido

@@ -16,16 +16,17 @@ import { installSkills, skillCatalog } from '../core/skills.js';
 import { exportReport, readReport, persistReport } from '../core/reports.js';
 import { importBrandfyFile } from '../core/branding.js';
 import {PAGE_TYPES,applyPlanState,answerPageInterview,createPageInterview,planPage,readPageInterview,type PageType} from '../core/page-workflow.js';
+import { listSitespecs, nextSitespecId } from '../core/sitespec.js';
 import {browserStatus,installBrowser,removeBrowser} from '../core/browser-manager.js';
 import { redactReport, redactText } from '../core/redaction.js';
 import { AstrofyError, VERSION, type Report, type RunOptions } from '../core/types.js';
-export const COMMANDS=['setup','init','inspect','check','status','tui','page create','page answer','page status','plan','apply','browser status','browser install','browser remove','tokens validate','tokens build','tokens check','tokens import-brandfy','docs check','links scan','report','migrate','skills list','skills install'] as const;
+export const COMMANDS=['setup','init','inspect','check','status','tui','page create','page answer','page status','plan','apply','browser status','browser install','browser remove','tokens validate','tokens build','tokens check','tokens import-brandfy','docs check','links scan','report','migrate','skills list','skills install','sitespec list'] as const;
 export const FLAGS={root:'string',json:'boolean',ci:'boolean',offline:'boolean','no-color':'boolean','dry-run':'boolean',category:'string',rule:'string',page:'string',component:'string',changed:'boolean',help:'boolean',version:'boolean',apply:'boolean',agent:'string',skill:'string',run:'string',output:'string',markdown:'boolean',source:'string',slug:'string',type:'string',field:'string',value:'string',task:'string',status:'string',browser:'boolean',check:'boolean'} as const;
 export const COMMAND_OPTIONS:Record<string,string[]>={
   setup:['dry-run'],init:['dry-run'],inspect:[],check:['dry-run','category','rule','page','component','changed','browser'],status:[],tui:[],
   'tokens validate':[],'tokens build':['dry-run'],'tokens check':[],'tokens import-brandfy':['source','dry-run'],
   'docs check':[],'links scan':[],report:['run','output','markdown','dry-run'],migrate:['apply','dry-run','check'],
-  'skills list':[],'skills install':['agent','skill','dry-run'],
+  'skills list':[],'skills install':['agent','skill','dry-run'],'sitespec list':[],
   'page create':['slug','type','dry-run'],'page answer':['slug','field','value','dry-run'],'page status':['slug'],
   plan:['slug','dry-run'],apply:['slug','task','status','dry-run'],
   'browser status':[],'browser install':[],'browser remove':[],
@@ -93,6 +94,7 @@ export async function run(argv:string[],signal?:AbortSignal):Promise<{report:Rep
     report.data=state;if(!options.dryRun)report.artifacts=[...state.written,`.astrofy/config/installed-${values.agent}.json`];
   }
   else if(command==='inspect')report.data=await inspect(root);
+  else if(command==='sitespec list')report.data={...await listSitespecs(root),nextId:await nextSitespecId(root)};
   else if(command==='tokens import-brandfy'){
     if(typeof values.source!=='string')throw new AstrofyError('Informe --source com o JSON exportado pelo Brandfy dentro do projeto.');
     report.data=await importBrandfyFile(root,values.source,!!options.dryRun);

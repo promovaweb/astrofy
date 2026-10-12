@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://astrofy.promovaweb.com/schemas/1.0.0/sitespec",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "slug",
+    "title",
+    "summary",
+    "status",
+    "createdAt",
+    "updatedAt",
+    "primarySkill",
+    "reviewSkills",
+    "relatedFiles"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "id": { "type": "string", "pattern": "^[0-9]{4}$" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "title": { "type": "string", "minLength": 1 },
+    "summary": { "type": "string", "minLength": 1 },
+    "status": {
+      "enum": ["draft", "in_progress", "blocked", "done", "archived"]
+    },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "primarySkill": { "type": "string", "pattern": "^astrofy-[a-z0-9-]+$" },
+    "reviewSkills": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^astrofy-[a-z0-9-]+$" }
+    },
+    "relatedFiles": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "source": { "type": "string", "minLength": 1 },
+    "blockedReason": { "type": "string", "minLength": 1 },
+    "archivedReason": { "type": "string", "minLength": 1 },
+    "dependsOn": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[0-9]{4}$" }
+    },
+    "priority": { "enum": ["low", "medium", "high"] },
+    "estimateMinutes": { "type": "integer", "minimum": 1 },
+    "estimateBasis": { "type": "string", "minLength": 1 }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "blocked" } } },
+      "then": { "required": ["blockedReason"], "properties": { "blockedReason": { "type": "string", "minLength": 1 } } }
+    },
+    {
+      "if": { "properties": { "status": { "const": "archived" } } },
+      "then": { "required": ["archivedReason"], "properties": { "archivedReason": { "type": "string", "minLength": 1 } } }
+    },
+    {
+      "if": { "properties": { "estimateMinutes": { "type": "integer" } }, "required": ["estimateMinutes"] },
+      "then": { "required": ["estimateBasis"], "properties": { "estimateBasis": { "type": "string", "minLength": 1 } } }
+    },
+    {
+      "if": { "properties": { "estimateBasis": { "type": "string" } }, "required": ["estimateBasis"] },
+      "then": { "required": ["estimateMinutes"], "properties": { "estimateMinutes": { "type": "integer", "minimum": 1 } } }
+    }
+  ]
+}

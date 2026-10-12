@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "skills": [
     {
       "name": "astrofy-setup",
@@ -246,6 +246,16 @@
       "name": "astrofy-security",
       "title": "Revisar fronteiras de execução",
       "description": "Revisa entradas, segredos e execução de HTML ou MDX em projetos Astro, aplicando correções delimitadas e documentando o alcance."
+    },
+    {
+      "name": "astrofy-sitespec-create",
+      "title": "Criar sitespec",
+      "description": "Cria tarefas de desenvolvimento do site em .sitespec/, derivando a checklist das skills de revisão e atribuindo id, dependência e estimativa do contrato."
+    },
+    {
+      "name": "astrofy-sitespec-implement",
+      "title": "Implementar sitespec",
+      "description": "Executa uma tarefa registrada em .sitespec/ com a skill principal indicada e atualiza o SITEPEC.md a cada item concluído, nota ou mudança de estado."
     }
   ]
 }

@@ -120,7 +120,7 @@ o CLI gera o contrato com conteúdo, SEO, integrações, acessibilidade e testes
 - **TUI:** [navegação e revisão manual](docs/tui.md).
 - **Arquitetura:** [pacotes e integridade de escrita](docs/architecture.md).
 - **Compatibilidade:** [faixas e validação](docs/compatibility.md).
-- **Skills:** [guia das 49 skills, instalação, fluxos e exemplos](docs/skills.md).
+- **Skills:** [guia das 51 skills, instalação, fluxos e exemplos](docs/skills.md).
 - **Verificação das skills:** [cenários executados e limites dos testes](docs/skills-validation.md).
 - **Gestão do projeto:** [backlog, timesheets e redistribuição de datas](docs/backlog-timesheets.md).
 
