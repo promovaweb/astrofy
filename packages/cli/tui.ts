@@ -6,9 +6,9 @@ import { discoverRoot } from '../core/discovery.js';
 import { persistReport } from '../core/reports.js';
 import { itemDetail } from './item-detail.js';
 import { overviewText } from './overview.js';
-import { sitespecLine, sitespecDetail } from './sitespec-view.js';
+import { sitespecLine, sitespecDetail, progressBar } from './sitespec-view.js';
 import { localReferences, readLocalReference } from '../core/references.js';
-import { listSitespecs, type Sitespec } from '../core/sitespec.js';
+import { listSitespecs, summarizeSitespecs, ratio, type Sitespec } from '../core/sitespec.js';
 import { type ChecklistItem, type RunOptions, VERSION } from '../core/types.js';
 export const TUI_THEME={background:'#000A0E',surface:'#001117',surfaceRaised:'#03212A',text:'#F2F8F9',textMuted:'#B2C6CE',border:'#5F7D8C',accent:'#C4B5FD',activeBackground:'#5EEDE1',activeText:'#001117',selectedBackground:'#6D28D9',selectedText:'#F2F8F9',primaryBackground:'#15626A',primaryText:'#F2F8F9',focusBackground:'#5EEDE1',focusText:'#001117',warning:'#FCD34D'};
 export const TUI_TABS=[{id:'overview',label:'Visão geral',key:'C-h'},{id:'items',label:'Itens',key:'C-l'},{id:'sitespec',label:'Specs',key:'C-s'},{id:'about',label:'Sobre',key:'C-o'}];
@@ -91,6 +91,8 @@ export async function startTui(initialRoot:string,options:TuiOptions={}):Promise
   async function refreshSpecs():Promise<void> {
     try {
       const result=await listSitespecs(root);specs=result.items;specErrors=result.errors;
+      const summary=summarizeSitespecs(specs),percent=ratio(summary.completedItems,summary.totalItems);
+      specList.setLabel(` Specs — ${progressBar(percent,10)} ${percent}% `);
       specList.setItems(specs.map(sitespecLine));showSpecDetail();screen.render();
     }catch(failure){error(failure);}
   }

@@ -1,9 +1,10 @@
 /** Entrevistas retomáveis, contratos de página e execução registrada dos planos. */
-import {readFile} from 'node:fs/promises';
+import {readFile,readdir} from 'node:fs/promises';
 import path from 'node:path';
 import {atomicWrite,exists,hash,jsonText,readJson,safePath,withLock} from './filesystem.js';
 import {validate} from '../schemas/index.js';
 import {AstrofyError} from './types.js';
+import {listSitespecs,renderSitespec,type Sitespec,type SitespecFrontmatter,type SitespecChecklistItem,type SitespecStatus} from './sitespec.js';
 
 export const PAGE_TYPES=['sales','product','service','homepage','about','contact','pricing'] as const;
 export type PageType=typeof PAGE_TYPES[number];
@@ -108,56 +109,102 @@ export async function answerPageInterview(root:string,slug:string,field:string,v
 }
 
 const routeFile=(route:string)=>`src/pages/${route.replace(/^\//,'').replace(/\/$/,'')||'index'}.astro`;
-function planMarkdown(plan:any):string{
-  const phases=plan.phases.map((phase:any)=>{
-    const tasks=phase.tasks.map((task:any)=>`### ${task.title}\n\n- ID: \`${task.id}\`\n- Estado: \`${task.status}\`\n- Skill: \`${task.primarySkill}\`\n- Estimativa: ${task.estimateMinutes} minutos\n- Arquivos: ${task.files.length?task.files.map((file:string)=>`\`${file}\``).join(', '):'nenhum'}\n- Validações: ${task.validations.map((command:string)=>`\`${command}\``).join(', ')}\n`).join('\n');
-    return `## ${phase.title}\n\nEstado: \`${phase.status}\`\n\n${tasks}`;
-  }).join('\n');
-  return `# Plano de implementação\n\n- Especificação: \`${plan.pageSpec}\`\n- Estado: \`${plan.status}\`\n- Gerado em: \`${plan.generatedAt}\`\n\n${phases}`;
+
+interface TaskTemplate {taskId:string;title:string;primarySkill:string;dependsOn:string[];files:string[];steps:string[]}
+const TASK_ORDER=['route','content','check'];
+/** Três tarefas fixas por página: rota, conteúdo e validação, nessa ordem de dependência. */
+function taskTemplates(route:string,contentSkill:string):TaskTemplate[] {
+  return [
+    {taskId:'route',title:`Criar a rota ${route}`,primarySkill:'astrofy-routing',dependsOn:[],files:[route],steps:['Criar a rota com o layout atual.']},
+    {taskId:'content',title:'Aplicar conteúdo e seções',primarySkill:contentSkill,dependsOn:['route'],files:[route],steps:['Implementar as seções na ordem aprovada.']},
+    {taskId:'check',title:'Validar a página',primarySkill:'astrofy-checkup',dependsOn:['content'],files:[],steps:['Executar npm run check.','Executar astrofy check --browser.']},
+  ];
 }
-/** Converte a especificação pronta em tarefas ligadas às skills e à checklist. */
-export async function planPage(root:string,slug:string,dryRun=false){
+/** Lê nomes de diretório para reservar ids sem colidir, antes de qualquer escrita. */
+async function allocateSitespecIds(root:string,count:number):Promise<string[]> {
+  const used=new Set<number>(),base=await safePath(root,'.sitespec');
+  if(await exists(base))for(const entry of await readdir(base,{withFileTypes:true})){const match=entry.name.match(/^([0-9]{4})-/);if(entry.isDirectory()&&match)used.add(Number(match[1]));}
+  const ids:string[]=[];let next=1;
+  while(ids.length<count){if(!used.has(next)){used.add(next);ids.push(String(next).padStart(4,'0'));}next++;}
+  return ids;
+}
+/** Hash curto e estável por conteúdo; um choque dentro do mesmo arquivo soma um sufixo. */
+function checklistId(seed:string,used:Set<string>):string {
+  let attempt=0;
+  while(true) {
+    const candidate=hash(`${seed}:${attempt}`).slice(0,4);
+    if(!used.has(candidate)){used.add(candidate);return candidate;}
+    attempt++;
+  }
+}
+/** Converte a especificação pronta em sitespecs ligadas à página; reexecutar reconcilia sem perder progresso. */
+export async function planPage(root:string,slug:string,dryRun=false) {
   const execute=async()=>{
     const relative=`${pageFile(slug)}/page-spec.json`,text=await readFile(await safePath(root,relative),'utf8');
     const spec:any=JSON.parse(text);validate<any>('page-spec',spec);if(spec.status!=='ready')throw new AstrofyError('A especificação precisa estar pronta antes do plano.');
-    const task=(id:string,title:string,status:TaskStatus,primarySkill:string,dependsOn:string[],files:string[],steps:string[],validations:string[])=>({id,title,status,primarySkill,reviewSkills:[],sourceItems:[relative],checklistItems:[],files,dependsOn,estimateMinutes:60,estimateBasis:'estimativa técnica inicial',steps,validations,manualChecks:[],completion:`${title} concluída e validada.`});
-    const route=routeFile(spec.route);
-    const contentSkill:Record<PageType,string>={sales:'astrofy-landing-pages',product:'astrofy-page-design',service:'astrofy-page-design',homepage:'astrofy-homepage',about:'astrofy-page-design',contact:'astrofy-forms',pricing:'astrofy-landing-pages'};
-    const plan={schemaVersion:'1.0.0',pageSpec:relative,pageSpecFingerprint:hash(text),status:'planned',generatedAt:new Date().toISOString(),phases:[
-      {id:'foundation',title:'Estrutura',status:'ready',dependsOn:[],tasks:[task('route',`Criar ${spec.route}`,'ready','astrofy-routing',[],[route],['Criar a rota com o layout atual.'],['npm run check'])]},
-      {id:'content',title:'Conteúdo e interface',status:'pending',dependsOn:['foundation'],tasks:[task('content','Aplicar conteúdo e seções','pending',contentSkill[spec.type as PageType],['route'],[route],['Implementar as seções na ordem aprovada.'],['npm run check'])]},
-      {id:'validation',title:'Validação',status:'pending',dependsOn:['content'],tasks:[task('check','Validar a página','pending','astrofy-checkup',['content'],[],['Executar verificações técnicas e de browser.'],['astrofy check --browser'])]},
-    ],openItems:[]};
-    validate('implementation-plan',plan);
-    if(!dryRun){
-      await atomicWrite(root,`.astrofy/plans/${slug}/implementation-plan.json`,jsonText(plan));
-      await atomicWrite(root,`.astrofy/plans/${slug}/implementation-plan.md`,planMarkdown(plan));
+    const contentSkillByType:Record<PageType,string>={sales:'astrofy-landing-pages',product:'astrofy-page-design',service:'astrofy-page-design',homepage:'astrofy-homepage',about:'astrofy-page-design',contact:'astrofy-forms',pricing:'astrofy-landing-pages'};
+    const templates=taskTemplates(routeFile(spec.route),contentSkillByType[spec.type as PageType]);
+    const {items:existingAll}=await listSitespecs(root);
+    const existingByTask=new Map(existingAll.filter(item=>item.frontmatter.page===slug).map(item=>[item.frontmatter.task,item]));
+    const allocated=await allocateSitespecIds(root,templates.filter(template=>!existingByTask.has(template.taskId)).length);
+    const idByTask=new Map(templates.map(template=>[template.taskId,existingByTask.get(template.taskId)?.frontmatter.id??allocated.shift()!]));
+    const now=new Date().toISOString(),written:{dir:string;id:string;slug:string;task:string;status:SitespecStatus}[]=[];
+    for(const template of templates) {
+      const existing=existingByTask.get(template.taskId),id=idByTask.get(template.taskId)!,sitespecSlug=`${slug}-${template.taskId}`;
+      const usedChecklistIds=new Set((existing?.checklist??[]).map(item=>item.id));
+      const checklist:SitespecChecklistItem[]=template.steps.map((stepText,index)=>{
+        const previous=existing?.checklist.find(item=>item.text===stepText);
+        return {id:previous?.id??checklistId(`${id}:${template.taskId}:${index}:${stepText}`,usedChecklistIds),text:stepText,done:previous?.done??false,skill:''};
+      });
+      const frontmatter={
+        schemaVersion:'1.0.0',id,slug:sitespecSlug,title:template.title,
+        summary:`Tarefa "${template.taskId}" do plano de implementação da página ${slug}.`,
+        status:existing?.frontmatter.status??'draft',
+        createdAt:existing?.frontmatter.createdAt??now,updatedAt:now,
+        primarySkill:template.primarySkill,reviewSkills:existing?.frontmatter.reviewSkills??[],
+        relatedFiles:template.files,dependsOn:template.dependsOn.map(dependency=>idByTask.get(dependency)!),
+        page:slug,task:template.taskId,source:`Gerado por astrofy plan a partir de ${relative}.`,
+        ...(existing?.frontmatter.status==='blocked'?{blockedReason:existing.frontmatter.blockedReason}:{}),
+        ...(existing?.frontmatter.status==='archived'?{archivedReason:existing.frontmatter.archivedReason}:{}),
+      } as SitespecFrontmatter;
+      validate<SitespecFrontmatter>('sitespec',frontmatter);
+      const dir=existing?.dir??`${id}-${sitespecSlug}`;
+      const description=existing?.description??`Tarefa gerada automaticamente a partir do plano de implementação da página **${slug}**.`;
+      if(!dryRun)await atomicWrite(root,`.sitespec/${dir}/SITEPEC.md`,renderSitespec(frontmatter,description,checklist,existing?.notes??''));
+      written.push({dir,id,slug:sitespecSlug,task:template.taskId,status:frontmatter.status});
     }
-    return plan;
+    return {page:slug,pageSpec:relative,pageSpecFingerprint:hash(text),tasks:written};
   };
   return dryRun?execute():withLock(root,execute);
 }
 
-/** Avança uma tarefa elegível ou registra seu resultado para permitir retomada. */
-export async function applyPlanState(root:string,slug:string,taskId?:string,status?:TaskStatus,dryRun=false){
+const STATUS_FROM_TASK:Record<TaskStatus,SitespecStatus>={pending:'draft',ready:'draft',in_progress:'in_progress',completed:'done',failed:'blocked',skipped:'archived'};
+/** Avança a tarefa elegível da página (sitespec com `page` e `task`) ou registra seu resultado. */
+export async function applyPlanState(root:string,slug:string,taskId?:string,status?:TaskStatus,dryRun=false) {
   const execute=async()=>{
-    const file=`.astrofy/plans/${slug}/implementation-plan.json`,plan=await readJson<any>(root,file);validate<any>('implementation-plan',plan);
-    const tasks=plan.phases.flatMap((phase:any)=>phase.tasks);
-    let task=taskId?tasks.find((candidate:any)=>candidate.id===taskId):tasks.find((candidate:any)=>candidate.status==='in_progress')??tasks.find((candidate:any)=>candidate.status==='ready');
+    const {items}=await listSitespecs(root);
+    const tasks=items.filter(item=>item.frontmatter.page===slug).sort((a,b)=>TASK_ORDER.indexOf(a.frontmatter.task!)-TASK_ORDER.indexOf(b.frontmatter.task!));
+    if(!tasks.length)throw new AstrofyError('Nenhuma tarefa de plano encontrada para esta página. Execute astrofy plan.');
+    const task=taskId?tasks.find(candidate=>candidate.frontmatter.task===taskId):tasks.find(candidate=>candidate.frontmatter.status==='in_progress')??tasks.find(candidate=>candidate.frontmatter.status==='draft'&&!candidate.blockedBy.length);
     if(!task)throw new AstrofyError('Nenhuma tarefa pronta ou em execução foi encontrada.');
     const target=status??'in_progress';
     if(!['in_progress','completed','failed','skipped'].includes(target))throw new AstrofyError(`Estado inválido para apply: ${target}.`);
-    if(target==='in_progress'&&!['ready','failed'].includes(task.status))throw new AstrofyError(`A tarefa ${task.id} não pode iniciar a partir de ${task.status}.`);
-    task.status=target;
-    for(const phase of plan.phases){
-      if(phase.tasks.every((item:any)=>['completed','skipped'].includes(item.status)))phase.status='completed';
-      else if(phase.tasks.some((item:any)=>item.status==='in_progress'))phase.status='in_progress';
-      else if(phase.tasks.some((item:any)=>item.status==='ready'))phase.status='ready';
-      else phase.status='pending';
+    if(target==='in_progress') {
+      if(!['draft','blocked'].includes(task.frontmatter.status))throw new AstrofyError(`A tarefa ${task.frontmatter.task} não pode iniciar a partir de ${task.frontmatter.status}.`);
+      if(task.blockedBy.length)throw new AstrofyError(`A tarefa ${task.frontmatter.task} depende de outra ainda não concluída: ${task.blockedBy.join(', ')}.`);
     }
-    for(const candidate of tasks.filter((item:any)=>item.status==='pending'))if(candidate.dependsOn.every((dependency:string)=>['completed','skipped'].includes(tasks.find((item:any)=>item.id===dependency)?.status)))candidate.status='ready';
-    plan.status=tasks.every((item:any)=>['completed','skipped'].includes(item.status))?'completed':tasks.some((item:any)=>item.status==='in_progress')?'in_progress':'planned';
-    validate<any>('implementation-plan',plan);if(!dryRun)await atomicWrite(root,file,jsonText(plan));return {task:task.id,status:task.status,planStatus:plan.status,plan};
+    const nextStatus=STATUS_FROM_TASK[target];
+    const frontmatter={...task.frontmatter,status:nextStatus,updatedAt:new Date().toISOString()} as SitespecFrontmatter;
+    delete frontmatter.blockedReason;delete frontmatter.archivedReason;
+    if(nextStatus==='blocked')frontmatter.blockedReason='Falha registrada via astrofy apply.';
+    if(nextStatus==='archived')frontmatter.archivedReason='Tarefa marcada como skipped via astrofy apply.';
+    validate<SitespecFrontmatter>('sitespec',frontmatter);
+    // O contrato de sitespec exige checklist completa para status done; completar a tarefa marca os itens.
+    const checklist=nextStatus==='done'?task.checklist.map(item=>({...item,done:true})):task.checklist;
+    if(!dryRun)await atomicWrite(root,`.sitespec/${task.dir}/SITEPEC.md`,renderSitespec(frontmatter,task.description,checklist,task.notes));
+    const pageTasks:Sitespec[]=dryRun?tasks.map(candidate=>candidate===task?{...candidate,frontmatter}:candidate):(await listSitespecs(root)).items.filter(item=>item.frontmatter.page===slug);
+    const planStatus=pageTasks.every(item=>['done','archived'].includes(item.frontmatter.status))?'completed':pageTasks.some(item=>item.frontmatter.status==='in_progress')?'in_progress':'planned';
+    return {task:task.frontmatter.task,status:target,planStatus,tasks:pageTasks};
   };
   return dryRun?execute():withLock(root,execute);
 }

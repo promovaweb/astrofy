@@ -1,30 +1,29 @@
 # Contrato técnico do plano de implementação
 
-> Base técnica conferida para Astro 7.3.3 em 18/09/2026. Revise as APIs quando
+> Base técnica conferida para Astro 7.3.3 em 12/10/2026. Revise as APIs quando
 > a versão instalada do Astro ou das integrações mudar.
 
 ## Formato
 
-```json
-{
-  "schemaVersion": "1.0.0",
-  "pageSpec": ".astrofy/pages/produto/page-spec.json",
-  "pageSpecFingerprint": "sha256",
-  "status": "planned",
-  "generatedAt": "2026-09-18T12:00:00.000Z",
-  "phases": [],
-  "openItems": []
-}
+Cada tarefa de página é uma sitespec comum (contrato completo em
+`docs/sitespec.md`, schema em `packages/schemas/sitespec.schema.json`), só
+que com dois campos extras no front matter:
+
+```yaml
+page: produto
+task: product-route-config
 ```
 
-Cada fase possui `id`, `title`, `status`, `dependsOn` e `tasks`. Cada tarefa
-possui `id`, `title`, `status`, `primarySkill`, `reviewSkills`, `sourceItems`,
-`checklistItems`, `files`, `dependsOn`, `estimateMinutes`, `steps`,
-`validations`, `manualChecks` e `completion`.
+`page` é o slug da página em `.astrofy/pages/<page>/`. `task` é o
+identificador estável da tarefa dentro da página — use slug descritivo, como
+`product-route-config` ou `contact-form-errors`, não posição numérica. As
+três tarefas mecânicas que `astrofy plan` já grava usam `task: route`,
+`task: content` e `task: check`; uma tarefa adicional criada por você usa
+qualquer outro `task` que não colida com essas três.
 
-IDs são estáveis dentro da página. Use slug descritivo, como
-`product-route-config` ou `contact-form-errors`; não use posição numérica como
-identidade persistente.
+`id` (o prefixo numérico de quatro dígitos do diretório) é só identidade de
+arquivo, atribuído por ordem de criação; `task` é a identidade estável da
+tarefa dentro do plano da página.
 
 ## Ordem de análise
 
@@ -45,10 +44,13 @@ configuração da rota, mas não precisam esperar o CSS. Teste visual depende da
 composição e dos ativos. A conferência de formulário depende do endpoint ou da
 Action e dos estados visíveis.
 
-Antes de marcar uma tarefa como `ready`, confirme que todas as tarefas listadas
-em `dependsOn` estão `completed`. `in_progress` exige arquivos ou atividade
-identificada. `completed` exige a condição de conclusão e as validações
-registradas, com resultado atual.
+`dependsOn` lista os `id`s (não os `task`s) das tarefas predecessoras da
+mesma página. `astrofy sitespec list`/`progress` calculam `blockedBy` a
+partir disso; `astrofy apply` recusa iniciar (`in_progress`) uma tarefa com
+`blockedBy` não vazio. `status: done` exige a checklist inteira marcada —
+`astrofy apply --status completed` já marca todos os itens ao concluir uma
+das três tarefas mecânicas; uma tarefa adicional criada por você precisa
+ter cada item marcado de fato antes de chegar em `done`.
 
 ## Relação com a checklist
 

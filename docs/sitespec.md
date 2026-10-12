@@ -6,11 +6,19 @@ O contrato existe para que uma tarefa seja editável por uma pessoa no editor
 e, ao mesmo tempo, lida de forma confiável por `astrofy sitespec list` e pela
 aba Specs da TUI.
 
-`.sitespec/` não substitui `.astrofy/pages/<slug>/` nem `.astrofy/plans/<slug>/`.
-Esses dois ficam reservados ao fluxo de entrevista e plano de implementação de
-uma página completa. Um SITEPEC cobre qualquer tarefa pontual de
-desenvolvimento do site — ajuste de componente, correção, melhoria técnica,
-tarefa de SEO ou acessibilidade — sem exigir a entrevista inteira.
+`.sitespec/` não substitui `.astrofy/pages/<slug>/`: a entrevista e o
+conteúdo aprovado de uma página continuam lá, em `interview.json` e
+`page-spec.json`. O que muda é a tarefa técnica derivada desse conteúdo —
+`.astrofy/plans/<slug>/implementation-plan.json` não existe mais.
+`astrofy-implementation-planner` (via `astrofy plan`) gera, para cada
+página, três sitespecs — `route`, `content`, `check` — com `page` e `task`
+no front matter apontando de volta para a página. `astrofy apply` avança
+essas tarefas pelo mesmo mecanismo de `status` e `dependsOn`/`blockedBy`
+usado por qualquer sitespec. Uma tarefa pontual (ajuste de componente,
+correção, melhoria técnica, SEO, acessibilidade) continua sendo criada
+diretamente por `astrofy-sitespec-create`, sem `page`/`task` e sem exigir a
+entrevista inteira. `astrofy sitespec progress` e a aba Specs da TUI mostram
+os dois tipos juntos, no mesmo resumo.
 
 Criação e execução são skills, não comandos de escrita do CLI: a skill
 `astrofy-sitespec-create` escreve o arquivo seguindo este contrato e a skill
@@ -69,6 +77,8 @@ progresso.
 | `dependsOn` | array de `id` | Não | Outras sitespecs que precisam estar `done` antes desta começar. |
 | `estimateMinutes` | integer ≥ 1 | Somente junto de `estimateBasis` | Estimativa de esforço. |
 | `estimateBasis` | string | Somente junto de `estimateMinutes` | Como a estimativa foi calculada. |
+| `page` | string (slug) | Somente em tarefa gerada por `astrofy plan` | Página de `.astrofy/pages/<page>/` que esta tarefa implementa. |
+| `task` | string | Somente junto de `page` | Papel da tarefa no plano da página: `route`, `content` ou `check`. |
 
 As datas aceitam tanto string entre aspas quanto o escalar ISO que o YAML
 converte para data na leitura; a leitura normaliza os dois formatos antes de
@@ -148,10 +158,9 @@ trabalho é a skill ou a pessoa executando.
 ## Relação com as skills do Astrofy
 
 `primarySkill` e `reviewSkills` apontam para nomes do catálogo em
-`skills/catalog.json`, no mesmo padrão `astrofy-*` usado por
-`implementation-plan.schema.json`. Um nome ausente do catálogo recusa a
-leitura do arquivo, do mesmo jeito que o catálogo de skills já recusa nomes
-desconhecidos na seleção de instalação.
+`skills/catalog.json`, no padrão `astrofy-*`. Um nome ausente do catálogo
+recusa a leitura do arquivo, do mesmo jeito que o catálogo de skills já
+recusa nomes desconhecidos na seleção de instalação.
 
 `astrofy-sitespec-create` consulta `SKILL.md` e `references/technical.md` das
 skills listadas em `reviewSkills` para derivar os itens da checklist — por
@@ -159,6 +168,24 @@ exemplo, uma tarefa que toca acessibilidade consulta `astrofy-accessibility`
 antes de escrever os itens, em vez de inventar critérios soltos.
 `astrofy-sitespec-implement` executa o trabalho descrito na `## Descrição`
 usando `primarySkill` e atualiza o arquivo a cada item concluído.
+
+## Tarefas de página (`page` e `task`)
+
+`astrofy plan --slug <page>` lê `.astrofy/pages/<page>/page-spec.json` e
+escreve (ou reconcilia) três sitespecs com `page: <page>` e, respectivamente,
+`task: route`, `task: content` e `task: check`. `content` depende de `route`
+e `check` depende de `content`, declarado em `dependsOn` com os `id`s reais.
+
+Reexecutar `astrofy plan` depois de uma mudança no `page-spec.json` não
+recria as tarefas do zero: o `id`, o `status` e os itens de checklist já
+marcados `[x]` são preservados; título, skill e dependências são
+atualizados a partir da especificação atual.
+
+`astrofy apply --slug <page> [--task <route|content|check>] --status <completed|failed|skipped|in_progress>`
+avança essas tarefas: `completed` grava `status: done` com a checklist
+inteira marcada; `failed` grava `status: blocked`; `skipped` grava
+`status: archived`. Iniciar uma tarefa (`in_progress`) sem `--task` escolhe
+a primeira cujo `blockedBy` já está vazio.
 
 ## Exemplo completo
 

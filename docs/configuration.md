@@ -29,10 +29,11 @@ de outra máquina, a próxima execução o reconstrói sem interromper o setup.
 As entrevistas e definições de páginas ficam em `.astrofy/pages/<slug>/`.
 `astrofy page create` inicia a entrevista, `page answer` registra cada resposta
 e `page status` mostra as próximas perguntas. Quando todos os campos
-obrigatórios estão preenchidos, o CLI cria `page-spec.json` e `page.md`. Os
-planos técnicos ficam em `.astrofy/plans/<slug>/` e são criados por
-`astrofy plan`. O comando `setup` registra as etapas gerais no grafo, mas não
-cria uma página nem aprova conteúdo.
+obrigatórios estão preenchidos, o CLI cria `page-spec.json` e `page.md`.
+`astrofy plan` converte essa especificação em sitespecs ligadas à página
+(`page` e `task` no front matter, em `.sitespec/`, não em `.astrofy/plans/`);
+`astrofy apply` avança essas tarefas. O comando `setup` registra as etapas
+gerais no grafo, mas não cria uma página nem aprova conteúdo.
 
 ## Arquivos editáveis
 
@@ -51,8 +52,9 @@ Os schemas distribuídos ficam em `packages/schemas/`. Consulte o arquivo
 correspondente para os tipos e limites completos. A validação funciona offline.
 `page-interview.schema.json` valida perguntas, respostas, pendências e estado
 da entrevista; `page-spec.schema.json` valida a definição de uma página;
-`implementation-plan.schema.json` valida fases, tarefas, dependências,
-estimativas e conferências da implementação.
+`sitespec.schema.json` valida tanto as tarefas pontuais em `.sitespec/`
+quanto as tarefas de página geradas por `astrofy plan` (identificadas por
+`page` e `task`), descrito em `docs/sitespec.md`.
 
 ## Seleção e instalação de skills
 

@@ -155,9 +155,12 @@ retornadas por vez, e respostas anteriores permanecem disponíveis na retomada.
 
 Quando a entrevista fica pronta, `page-spec.json` registra conteúdo, ações,
 mídia, comportamentos, SEO, integrações, acessibilidade e testes. `plan`
-transforma esse contrato em `.astrofy/plans/<slug>/implementation-plan.json`.
-`apply` atualiza a tarefa atual e libera dependentes concluídas, sem substituir
-a execução técnica da skill associada.
+transforma esse contrato em sitespecs (`route`, `content`, `check`) no
+mesmo diretório `.sitespec/` das tarefas pontuais, com `page` e `task` no
+front matter ligando cada uma de volta à página; reexecutar reconcilia sem
+perder `status` nem itens de checklist já marcados. `apply` atualiza a
+tarefa atual e libera dependentes concluídas (via `blockedBy`, calculado a
+partir de `dependsOn`), sem substituir a execução técnica da skill associada.
 
 ## Migração de contratos
 

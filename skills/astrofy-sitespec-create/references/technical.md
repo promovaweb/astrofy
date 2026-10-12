@@ -117,6 +117,16 @@ uma dependência, confirme em `items` (do `astrofy sitespec list --json`) que
 o `id` referido existe; um id inexistente aparece em `missingDependencies` da
 tarefa nova, sinalizando referência quebrada em vez de bloqueio real.
 
+## Tarefa pontual ou tarefa de página
+
+Uma tarefa pontual não leva `page` nem `task` — esses dois campos marcam uma
+tarefa gerada ou complementada a partir de um pagespec. `astrofy plan` já
+grava as três tarefas mecânicas de uma página (`route`, `content`, `check`);
+use `page`/`task` nesta skill só quando `astrofy-implementation-planner`
+pedir uma tarefa adicional para a mesma página, com um `task` que não colida
+com as três mecânicas. Confira em `astrofy sitespec list --json` se já existe
+uma tarefa com o mesmo `page` antes de criar outra.
+
 ## Entrega da tarefa criada
 
 Informe à pessoa ou ao processo que pediu a tarefa: o `id` e o `slug`

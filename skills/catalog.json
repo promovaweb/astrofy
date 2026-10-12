@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "skills": [
     {
       "name": "astrofy-setup",
@@ -15,7 +15,7 @@
     {
       "name": "astrofy-implementation-planner",
       "title": "Planejar implementação",
-      "description": "Converte uma especificação de página aprovada em fases e tarefas técnicas retomáveis, ligadas às skills Astrofy, aos arquivos reais e às validações."
+      "description": "Converte uma especificação de página aprovada em tarefas técnicas retomáveis em .sitespec/, ligadas às skills, aos arquivos reais e às validações."
     },
     {
       "name": "astrofy-plan-sales-page",

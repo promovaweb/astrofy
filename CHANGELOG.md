@@ -1,5 +1,41 @@
 # Changelog
 
+## [0.10.0] - 2026-10-12
+
+### Alterado (ruptura)
+
+- `astrofy plan` não grava mais `.astrofy/plans/<slug>/implementation-plan.json`
+  nem `.md`. Em vez disso, cria/reconcilia três sitespecs por página
+  (`route`, `content`, `check`) em `.sitespec/`, com `page` e `task` no
+  front matter apontando de volta para a página. `astrofy apply` passa a
+  operar sobre essas sitespecs: `completed` grava `status: done` com a
+  checklist inteira marcada, `failed` grava `blocked`, `skipped` grava
+  `archived`; a flag `--status` e o comportamento sem `--task` continuam
+  os mesmos. `astrofy sitespec progress` e a aba Specs da TUI mostram as
+  tarefas de página junto das tarefas pontuais, no mesmo resumo — pedido
+  explícito de unificação entre sitespec, pagespec e o planner.
+- O schema `implementation-plan.schema.json` foi removido; `sitespec.schema.json`
+  ganhou os campos opcionais `page` e `task`.
+- Projetos com `.astrofy/plans/` de uma versão anterior precisam rodar
+  `astrofy plan --slug <slug>` de novo após atualizar, para cada página com
+  plano pendente; os arquivos antigos não são lidos nem migrados automaticamente.
+
+### Adicionado
+
+- Comando `astrofy sitespec progress`, com `--watch`/`--interval`: resumo
+  por status, progresso de checklist e barra textual (`█`/`░`), no mesmo
+  formato usado pelo Specsfy. Sem `--watch`, uma consulta única; com
+  `--watch`, reimprime a cada mudança detectada e só termina com `Ctrl+C`.
+- Barra de progresso na aba Specs da TUI (label da lista) e em cada linha
+  de `astrofy sitespec list`.
+
+### Validação
+
+- Suíte unitária (99 testes), incluindo o percurso completo de
+  `page create` → `page answer` → `plan` → `apply` sobre sitespecs, e a
+  reconciliação de um replano sem perda de progresso.
+- Documentação, ebook e release.
+
 ## [0.9.0] - 2026-10-12
 
 ### Adicionado

@@ -116,7 +116,8 @@ Preços. Elas não implementam componentes nem publicam conteúdo. Depois da
 aprovação, `astrofy-implementation-planner` relaciona a especificação com os
 arquivos atuais, a checklist e as skills técnicas. A direção de voz acompanha
 as tarefas que exibem texto, com revisão de `astrofy-editorial-review` quando a
-copy for criada ou alterada. O plano retomável fica em `.astrofy/plans/<slug>/`.
+copy for criada ou alterada. As tarefas retomáveis ficam em `.sitespec/`, com
+`page` e `task` apontando de volta para a página.
 
 Um pedido pode começar sem comandos ou formulários:
 
@@ -155,7 +156,7 @@ a validação após ler o diff. Consulte as instruções e recursos distribuído
 - **[astrofy-page-planner](../skills/astrofy-page-planner/SKILL.md):** Entrevista
   modular, direção de voz e especificação aprovada da página.
 - **[astrofy-implementation-planner](../skills/astrofy-implementation-planner/SKILL.md):**
-  Fases e tarefas técnicas retomáveis para a página aprovada.
+  Tarefas técnicas retomáveis (sitespecs ligadas à página) para a página aprovada.
 - **[astrofy-plan-sales-page](../skills/astrofy-plan-sales-page/SKILL.md):**
   Oferta, prova, preço, objeções e conversão.
 - **[astrofy-plan-product-page](../skills/astrofy-plan-product-page/SKILL.md):**

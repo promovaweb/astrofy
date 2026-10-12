@@ -118,9 +118,9 @@ test('nextSitespecId preenche a primeira lacuna considerando diretórios, mesmo 
 
 test('sitespecLine e sitespecDetail apresentam progresso, prioridade, ids e skills sem controles de terminal', () => {
   const spec = parseSitespec('0001-corrigir-contraste-botao', VALID);
-  assert.equal(sitespecLine(spec), 'em andamento | alta | 0001-corrigir-contraste-botao | 1/3 | Corrigir contraste do botão primário');
+  assert.equal(sitespecLine(spec), 'em andamento | alta | 0001-corrigir-contraste-botao | ███░░░░░ 1/3 | Corrigir contraste do botão primário');
   const detail = sitespecDetail({ ...spec, notes: 'Nota\x1b[2Jpreservada' });
-  for (const text of ['Progresso: 1/3', 'Prioridade: alta', 'Estimativa: 30 min', 'Skill principal: astrofy-design-system', 'astrofy-accessibility', '[x] Medir o contraste atual', '[ ] Sem skill própria', '{#a003}']) {
+  for (const text of ['Progresso: ███░░░░░░░ 1/3 (33%)', 'Prioridade: alta', 'Estimativa: 30 min', 'Skill principal: astrofy-design-system', 'astrofy-accessibility', '[x] Medir o contraste atual', '[ ] Sem skill própria', '{#a003}']) {
     assert.ok(detail.includes(text), text);
   }
   assert.ok(!detail.includes('\x1b'));

@@ -20,7 +20,7 @@ saídas e o comando que confere o domínio associado a cada skill.
 | `astrofy-plan-about-page` | `astrofy-page-planner` | `entidade`, `história`, `pessoas`, `direção de voz` | `definição da página Sobre` | Revisão do artefato de saída |
 | `astrofy-plan-contact-page` | `astrofy-page-planner` | `finalidade`, `campos`, `destino do envio`, `direção de voz` | `definição da página de contato` | Revisão do artefato de saída |
 | `astrofy-plan-pricing-page` | `astrofy-page-planner` | `planos`, `preços`, `cobrança`, `direção de voz` | `definição da página de preços` | Revisão do artefato de saída |
-| `astrofy-implementation-planner` | `astrofy-page-planner` | `page.md com direção de voz`, `especificação aprovada`, `checklist atual` | `plano retomável com revisão editorial` | Revisão do artefato de saída |
+| `astrofy-implementation-planner` | `astrofy-page-planner` | `page.md com direção de voz`, `especificação aprovada`, `checklist atual` | `sitespecs da página (route, content, check), retomáveis, com revisão editorial` | Revisão do artefato de saída |
 | `astrofy-branding` | `astrofy-config` | `ativos e origem da marca` | `identidade registrada` | `astrofy check --category brand` |
 | `astrofy-design-system` | `astrofy-branding` | `tokens da marca` | `tokens validados`, `CSS gerado` | `astrofy check --category design-system` |
 | `astrofy-tailwind` | `astrofy-design-system`, `astrofy-config` | `CSS de entrada`, `versões resolvidas` | `integração Tailwind conferida` | Revisão do artefato de saída |

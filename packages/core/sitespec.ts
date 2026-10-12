@@ -1,7 +1,8 @@
 /** Leitura das tarefas em `.sitespec/<id>-<slug>/SITEPEC.md`; a escrita é feita por quem edita o Markdown. */
 import { readFile, readdir } from 'node:fs/promises';
 import matter from 'gray-matter';
-import { safePath, exists } from './filesystem.js';
+import { stringify } from 'yaml';
+import { safePath, exists, hash } from './filesystem.js';
 import { validate } from '../schemas/index.js';
 import { AstrofyError } from './types.js';
 
@@ -14,6 +15,7 @@ export interface SitespecFrontmatter {
   primarySkill: string; reviewSkills: string[]; relatedFiles: string[];
   tags?: string[]; source?: string; blockedReason?: string; archivedReason?: string;
   dependsOn?: string[]; priority?: SitespecPriority; estimateMinutes?: number; estimateBasis?: string;
+  page?: string; task?: string;
 }
 
 export interface SitespecChecklistItem { id: string; text: string; done: boolean; skill: string }
@@ -25,6 +27,11 @@ export interface Sitespec {
 }
 
 export interface SitespecLoadError { dir: string; message: string }
+
+export interface SitespecSummary {
+  total: number; byStatus: Record<SitespecStatus, number>;
+  completedItems: number; pendingItems: number; totalItems: number; percent: number;
+}
 
 const HEADING = /^##\s+(.+?)\s*$/;
 const CHECKLIST_LINE = /^-\s\[([ xX])\]\s+(.*)$/;
@@ -115,6 +122,15 @@ export async function listSitespecs(root: string): Promise<{ items: Sitespec[]; 
   return { items, errors };
 }
 
+/** Serializa no mesmo contrato lido por `parseSitespec`; usada por geração automática (planPage). */
+export function renderSitespec(frontmatter: SitespecFrontmatter, description: string, checklist: SitespecChecklistItem[], notes = ''): string {
+  const lines = checklist.map(item => {
+    const skillTag = item.skill && item.skill !== frontmatter.primarySkill ? ` \`#${item.skill}\`` : '';
+    return `- [${item.done ? 'x' : ' '}] ${item.text}${skillTag} {#${item.id}}`;
+  });
+  return `---\n${stringify(frontmatter).trimEnd()}\n---\n\n## Descrição\n\n${description.trim()}\n\n## Checklist\n\n${lines.join('\n')}\n\n## Notas\n\n${notes.trim()}\n`;
+}
+
 /** Considera nomes de diretório, não só tarefas lidas com sucesso, para não colidir com um id em uso. */
 export async function nextSitespecId(root: string): Promise<string> {
   const base = await safePath(root, '.sitespec');
@@ -127,4 +143,30 @@ export async function nextSitespecId(root: string): Promise<string> {
   }
   let next = 1; while (used.has(next)) next++;
   return String(next).padStart(4, '0');
+}
+
+/** Arredondamento bancário (0,5 vai para o par mais próximo), igual ao usado pelo Specsfy. */
+export function ratio(completed: number, total: number): number {
+  if (!total) return 0;
+  const value = (completed * 100) / total;
+  const floor = Math.floor(value), fraction = value - floor;
+  if (fraction !== 0.5) return Math.round(value);
+  return floor % 2 === 0 ? floor : floor + 1;
+}
+
+/** Consolida contagem por status e progresso de checklist entre todas as tarefas carregadas. */
+export function summarizeSitespecs(items: Sitespec[]): SitespecSummary {
+  const byStatus: Record<SitespecStatus, number> = { draft: 0, in_progress: 0, blocked: 0, done: 0, archived: 0 };
+  let completedItems = 0, totalItems = 0;
+  for (const item of items) {
+    byStatus[item.frontmatter.status]++;
+    completedItems += item.progress.done; totalItems += item.progress.total;
+  }
+  return { total: items.length, byStatus, completedItems, pendingItems: totalItems - completedItems, totalItems, percent: ratio(completedItems, totalItems) };
+}
+
+/** Hash determinístico do conjunto lido; usado para só reimprimir quando algo de fato mudou. */
+export async function sitespecsFingerprint(root: string): Promise<string> {
+  const { items, errors } = await listSitespecs(root);
+  return hash(JSON.stringify({ items, errors }));
 }

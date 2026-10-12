@@ -215,8 +215,11 @@ astrofy page status --slug inicio --ci
 
 ## astrofy plan
 
-Converte um `page-spec.json` pronto em fases e tarefas retomáveis. Cada tarefa
-registra skill principal, arquivos, dependências, estimativa e validações.
+Converte um `page-spec.json` pronto em três tarefas retomáveis (`route`,
+`content`, `check`), cada uma uma sitespec em `.sitespec/<id>-<slug>-<tarefa>/`
+com `page` e `task` apontando para a página. Reexecutar reconcilia: tarefas
+existentes mantêm `id`, `status` e itens de checklist já marcados; o texto e
+as dependências são atualizados a partir do `page-spec.json` atual.
 
 ```bash
 astrofy plan --slug produto
@@ -228,9 +231,12 @@ astrofy plan --slug planos --offline
 
 ## astrofy apply
 
-Inicia uma tarefa pronta ou registra `completed`, `failed` ou `skipped` em uma
-tarefa indicada. O comando atualiza somente o plano; a skill informada na
-tarefa executa a alteração correspondente no site.
+Inicia a tarefa pronta da página (sem `--task`) ou registra `completed`,
+`failed` ou `skipped` na tarefa indicada por `--task route`, `--task content`
+ou `--task check`. Opera sobre a sitespec correspondente: `completed` marca
+`status: done` e todos os itens da checklist como concluídos; `failed` marca
+`status: blocked`; `skipped` marca `status: archived`. Uma tarefa com
+dependência (`blockedBy`) ainda não concluída recusa iniciar.
 
 ```bash
 astrofy apply --slug produto
@@ -472,6 +478,31 @@ astrofy sitespec list --json
 astrofy sitespec list --root apps/site
 astrofy sitespec list --offline
 astrofy sitespec list --no-color
+```
+
+## astrofy sitespec progress
+
+Resume o progresso de todas as tarefas de `.sitespec/`: contagem por
+`status`, itens de checklist concluídos e uma barra textual (`█`/`░`),
+no mesmo formato usado pelo Specsfy.
+
+Sem `--watch`, uma única consulta: em `--json`, devolve `{summary, items}`
+dentro de `data`; no modo texto padrão da saída, o mesmo bloco aparece como
+JSON (consistente com `sitespec list`). Com `--watch`, o comando nunca
+retorna por conta própria: a cada mudança detectada em `.sitespec/`
+(comparando um hash do conteúdo lido), imprime um novo resumo e uma linha
+por tarefa diretamente no terminal, verifica de novo após `--interval`
+segundos (padrão 5), e continua até `Ctrl+C` — que encerra com
+"Execução cancelada." e código 130, sem imprimir duplicado.
+
+### Exemplos
+
+```bash
+astrofy sitespec progress
+astrofy sitespec progress --json
+astrofy sitespec progress --watch
+astrofy sitespec progress --watch --interval 10
+astrofy sitespec progress --watch --json --root apps/site
 ```
 
 ## astrofy skills install
@@ -863,7 +894,8 @@ astrofy page answer --slug planos --field plans --value "Inicial, Pro"
 
 ## --task
 
-Tipo: `string`. Seleciona uma tarefa existente do plano em `apply`.
+Tipo: `string`. Seleciona, em `apply`, a sitespec da página com esse `task`
+(`route`, `content` ou `check`).
 
 ```bash
 astrofy apply --slug produto --task route --status completed
@@ -936,4 +968,32 @@ astrofy migrate --check --json
 astrofy migrate --check --root apps/site
 astrofy migrate --check --offline
 astrofy migrate --check --ci
+```
+
+## --watch
+
+Tipo: `boolean`. Em `sitespec progress`, mantém o comando imprimindo um
+novo resumo a cada mudança detectada em `.sitespec/`, em vez de uma única
+consulta. `Ctrl+C` encerra com código 130.
+
+```bash
+astrofy sitespec progress --watch
+astrofy sitespec progress --watch --json
+astrofy sitespec progress --watch --interval 10
+astrofy sitespec progress --watch --root apps/site
+astrofy sitespec progress --watch --no-color
+```
+
+## --interval
+
+Tipo: `string`, convertido para número de segundos maior que zero. Em
+`sitespec progress --watch`, define o intervalo entre verificações.
+Padrão: 5 segundos quando omitido.
+
+```bash
+astrofy sitespec progress --watch --interval 5
+astrofy sitespec progress --watch --interval 10
+astrofy sitespec progress --watch --interval 30 --json
+astrofy sitespec progress --watch --interval 2 --root apps/site
+astrofy sitespec progress --watch --interval 1 --no-color
 ```

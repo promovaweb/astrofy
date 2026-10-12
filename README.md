@@ -85,10 +85,11 @@ etapa na conversa. Os comandos abaixo servem para registrar cada resposta pelo
 terminal.
 
 Depois, `astrofy-implementation-planner` relaciona a especificação com rotas,
-componentes, checklist e scripts atuais. O plano em
-`.astrofy/plans/<slug>/` registra fases, tarefas, skills, arquivos,
-dependências, estimativas e validações. Nenhuma das duas orquestradoras altera
-ou publica o site sem uma solicitação posterior.
+componentes, checklist e scripts atuais, e registra uma sitespec por tarefa
+(rota, conteúdo, validação) em `.sitespec/<id>-<slug>-<tarefa>/SITEPEC.md`,
+com `page` e `task` apontando de volta para a página. Reexecutar o plano
+reconcilia essas tarefas sem perder progresso. Nenhuma das duas
+orquestradoras altera ou publica o site sem uma solicitação posterior.
 
 O CLI conserva a mesma sequência em arquivos retomáveis:
 
@@ -102,8 +103,10 @@ astrofy apply --slug produto
 
 Cada resposta atualiza `interview.json`. Quando não há lacunas obrigatórias,
 o CLI gera o contrato com conteúdo, SEO, integrações, acessibilidade e testes.
-`apply` registra a passagem das tarefas por `ready`, `in_progress`,
-`completed`, `failed` e `skipped`; a skill indicada executa a alteração no site.
+`apply` registra a passagem das tarefas (sitespecs ligadas à página) por
+`in_progress`, `completed`, `failed` e `skipped`; a skill indicada em cada
+uma executa a alteração no site. `astrofy sitespec progress` e a aba Specs
+da TUI mostram essas tarefas junto das tarefas pontuais, no mesmo resumo.
 
 ## Registrar uma tarefa pontual do site
 

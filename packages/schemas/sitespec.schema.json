@@ -53,7 +53,9 @@
     },
     "priority": { "enum": ["low", "medium", "high"] },
     "estimateMinutes": { "type": "integer", "minimum": 1 },
-    "estimateBasis": { "type": "string", "minLength": 1 }
+    "estimateBasis": { "type": "string", "minLength": 1 },
+    "page": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "task": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" }
   },
   "allOf": [
     {
@@ -71,6 +73,10 @@
     {
       "if": { "properties": { "estimateBasis": { "type": "string" } }, "required": ["estimateBasis"] },
       "then": { "required": ["estimateMinutes"], "properties": { "estimateMinutes": { "type": "integer", "minimum": 1 } } }
+    },
+    {
+      "if": { "properties": { "task": { "type": "string" } }, "required": ["task"] },
+      "then": { "required": ["page"], "properties": { "page": { "type": "string", "minLength": 1 } } }
     }
   ]
 }

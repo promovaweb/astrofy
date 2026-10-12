@@ -15,18 +15,19 @@ import { installSkills, skillCatalog } from '../core/skills.js';
 import { exportReport, readReport, persistReport } from '../core/reports.js';
 import { importBrandfyFile } from '../core/branding.js';
 import {PAGE_TYPES,applyPlanState,answerPageInterview,createPageInterview,planPage,readPageInterview,type PageType} from '../core/page-workflow.js';
-import { listSitespecs, nextSitespecId } from '../core/sitespec.js';
+import { listSitespecs, nextSitespecId, summarizeSitespecs, sitespecsFingerprint } from '../core/sitespec.js';
+import { setTimeout as delay } from 'node:timers/promises';
 import {browserStatus,installBrowser,removeBrowser} from '../core/browser-manager.js';
 import { redactReport, redactText } from '../core/redaction.js';
 import { AstrofyError, VERSION, type Report, type RunOptions } from '../core/types.js';
-export const COMMANDS=['setup','init','inspect','check','status','review','tui','page create','page answer','page status','plan','apply','browser status','browser install','browser remove','tokens validate','tokens build','tokens check','tokens import-brandfy','docs check','links scan','report','migrate','skills list','skills install','sitespec list'] as const;
-export const FLAGS={root:'string',json:'boolean',ci:'boolean',offline:'boolean','no-color':'boolean','dry-run':'boolean',category:'string',rule:'string',page:'string',component:'string',changed:'boolean',help:'boolean',version:'boolean',apply:'boolean',agent:'string',skill:'string',run:'string',output:'string',markdown:'boolean',source:'string',slug:'string',type:'string',field:'string',value:'string',task:'string',status:'string',browser:'boolean',check:'boolean',reviewer:'string',reason:'string'} as const;
+export const COMMANDS=['setup','init','inspect','check','status','review','tui','page create','page answer','page status','plan','apply','browser status','browser install','browser remove','tokens validate','tokens build','tokens check','tokens import-brandfy','docs check','links scan','report','migrate','skills list','skills install','sitespec list','sitespec progress'] as const;
+export const FLAGS={root:'string',json:'boolean',ci:'boolean',offline:'boolean','no-color':'boolean','dry-run':'boolean',category:'string',rule:'string',page:'string',component:'string',changed:'boolean',help:'boolean',version:'boolean',apply:'boolean',agent:'string',skill:'string',run:'string',output:'string',markdown:'boolean',source:'string',slug:'string',type:'string',field:'string',value:'string',task:'string',status:'string',browser:'boolean',check:'boolean',reviewer:'string',reason:'string',watch:'boolean',interval:'string'} as const;
 export const COMMAND_OPTIONS:Record<string,string[]>={
   setup:['dry-run'],init:['dry-run'],inspect:[],check:['dry-run','category','rule','page','component','changed','browser'],status:[],
   review:['rule','page','component','status','reviewer','reason'],tui:[],
   'tokens validate':[],'tokens build':['dry-run'],'tokens check':[],'tokens import-brandfy':['source','dry-run'],
   'docs check':[],'links scan':[],report:['run','output','markdown','dry-run'],migrate:['apply','dry-run','check'],
-  'skills list':[],'skills install':['agent','skill','dry-run'],'sitespec list':[],
+  'skills list':[],'skills install':['agent','skill','dry-run'],'sitespec list':[],'sitespec progress':['watch','interval'],
   'page create':['slug','type','dry-run'],'page answer':['slug','field','value','dry-run'],'page status':['slug'],
   plan:['slug','dry-run'],apply:['slug','task','status','dry-run'],
   'browser status':[],'browser install':[],'browser remove':[],
@@ -69,6 +70,26 @@ export async function run(argv:string[],signal?:AbortSignal):Promise<{report:Rep
     const report=await reviewItem(root,{rule:values.rule,page:options.page,component:options.component},values.status as 'passed'|'failed'|'not_applicable',values.reviewer,values.reason);
     return {report,code:0};
   }
+  if(command==='sitespec progress'){
+    const interval=values.interval!==undefined?Number(values.interval):5;
+    if(!Number.isFinite(interval)||interval<=0)throw new AstrofyError('--interval deve ser maior que zero.');
+    if(!values.watch){
+      const {items}=await listSitespecs(root);
+      const report=createReport(command,options);report.data={summary:summarizeSitespecs(items),items};finishReport(report);
+      return {report,code:0};
+    }
+    const {sitespecProgressText}=await import('./sitespec-view.js');
+    let previous='';
+    while(true) {
+      const fingerprint=await sitespecsFingerprint(root);
+      if(fingerprint!==previous) {
+        const {items}=await listSitespecs(root),summary=summarizeSitespecs(items);
+        process.stdout.write((options.json?JSON.stringify({summary,items}):sitespecProgressText(summary,items))+'\n');
+        previous=fingerprint;
+      }
+      await delay(interval*1000,undefined,{signal});
+    }
+  }
   const report=createReport(command,options);
   let code=0;
   if(command==='setup'){
@@ -87,10 +108,14 @@ export async function run(argv:string[],signal?:AbortSignal):Promise<{report:Rep
     if(typeof values.slug!=='string')throw new AstrofyError('Informe --slug.');report.data=await readPageInterview(root,values.slug);
   }
   else if(command==='plan'){
-    if(typeof values.slug!=='string')throw new AstrofyError('Informe --slug.');report.data=await planPage(root,values.slug,!!options.dryRun);if(!options.dryRun)report.artifacts=[`.astrofy/plans/${values.slug}/implementation-plan.json`,`.astrofy/plans/${values.slug}/implementation-plan.md`];
+    if(typeof values.slug!=='string')throw new AstrofyError('Informe --slug.');
+    const plan=await planPage(root,values.slug,!!options.dryRun);report.data=plan;
+    if(!options.dryRun)report.artifacts=plan.tasks.map(task=>`.sitespec/${task.dir}/SITEPEC.md`);
   }
   else if(command==='apply'){
-    if(typeof values.slug!=='string')throw new AstrofyError('Informe --slug.');report.data=await applyPlanState(root,values.slug,values.task as string|undefined,values.status as any,!!options.dryRun);if(!options.dryRun)report.artifacts=[`.astrofy/plans/${values.slug}/implementation-plan.json`];
+    if(typeof values.slug!=='string')throw new AstrofyError('Informe --slug.');
+    const applied=await applyPlanState(root,values.slug,values.task as string|undefined,values.status as any,!!options.dryRun);report.data=applied;
+    if(!options.dryRun){const task=applied.tasks.find((candidate:any)=>candidate.frontmatter.task===applied.task);if(task)report.artifacts=[`.sitespec/${task.dir}/SITEPEC.md`];}
   }
   else if(command==='init'){
     const state=await initialize(root,options);report.data=state;

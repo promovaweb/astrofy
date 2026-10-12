@@ -30,10 +30,9 @@ da implementação.
 | `.astrofy/config/project.json` | Configuração criada durante a adoção do Astrofy |
 | `.astrofy/pages/<slug>/page-spec.json` | Especificação estruturada da página aprovada |
 | `.astrofy/pages/<slug>/page.md` | Conteúdo completo para leitura e revisão |
-| `.astrofy/plans/<slug>/implementation-plan.json` | Estado técnico das tarefas |
-| `.astrofy/plans/<slug>/implementation-plan.md` | Plano técnico apresentado para revisão |
 | `astrofy.checklist.json` | Estado das verificações executadas no site |
-| `.sitespec/<id>-<slug>/SITEPEC.md` | Tarefa pontual de desenvolvimento, fora do fluxo de página |
+| `.sitespec/<id>-<slug>/SITEPEC.md` | Tarefa pontual de desenvolvimento |
+| `.sitespec/<id>-<slug>-<task>/SITEPEC.md` | Tarefa técnica da página (`route`, `content`, `check`), com `page` e `task` |
 
 ![Relação entre orquestradoras, artefatos e skills](assets/artefatos-skills.svg)
 

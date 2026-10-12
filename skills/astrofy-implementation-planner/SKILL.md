@@ -1,8 +1,9 @@
 ---
 name: astrofy-implementation-planner
 description:
-  Converte uma especificação de página aprovada em fases e tarefas técnicas
-  retomáveis, ligadas às skills Astrofy, aos arquivos reais e às validações.
+  Converte uma especificação de página aprovada em tarefas técnicas
+  retomáveis em .sitespec/, ligadas às skills Astrofy, aos arquivos reais e
+  às validações.
 ---
 
 # Planejar a implementação da página
@@ -24,24 +25,25 @@ página nem executa publicação.
 
 ## Decomposição
 
-Leia o [modelo de implementação](references/technical.md). Produza fases por
-dependência real, não por uma sequência fixa. Reuse componentes e configuração
-existentes quando seus contratos atendem a especificação.
-O contrato fechado distribuído pelo pacote fica em
-`packages/schemas/implementation-plan.schema.json` no checkout do Astrofy.
+Leia o [modelo de implementação](references/technical.md) e o contrato em
+`docs/sitespec.md` no checkout do Astrofy; o schema fechado fica em
+`packages/schemas/sitespec.schema.json`. `astrofy plan` já grava três tarefas
+mecânicas (`route`, `content`, `check`) como sitespecs; use este processo
+para decidir se a página precisa de tarefas adicionais além dessas três.
 
-Para cada tarefa, registre:
+Para cada tarefa adicional, registre com `astrofy-sitespec-create` (passando
+`page: <slug>` e um `task` próprio, kebab-case, diferente de `route`,
+`content` e `check`):
 
-- entrega observável;
-- skill executora;
-- itens da especificação e da checklist que originaram o trabalho;
-- arquivos existentes e arquivos previstos;
-- dependências;
-- estimativa em minutos, marcada como estimativa quando não houver histórico;
-- passos técnicos delimitados;
-- comandos e verificações manuais;
-- condição objetiva para concluir;
-- estado `pending`, `ready`, `in_progress`, `completed`, `failed` ou `skipped`.
+- entrega observável, na `## Descrição`;
+- skill executora (`primarySkill`) e skills de revisão (`reviewSkills`);
+- arquivos existentes e previstos (`relatedFiles`);
+- dependências reais, não uma sequência fixa (`dependsOn`, com os `id`s das
+  tarefas da mesma página);
+- estimativa em minutos com a base do cálculo, quando houver histórico
+  (`estimateMinutes`/`estimateBasis`);
+- passos técnicos delimitados e comandos de validação, como itens da
+  checklist, cada um com `{#id}` próprio.
 
 Não crie tarefa genérica como "fazer responsivo". Nomeie a rota, a região, o
 estado e a conferência. Não transforme cada item da checklist em tarefa isolada
@@ -63,20 +65,27 @@ skill de conferência sempre que a tarefa criar ou modificar copy visível.
 
 ## Saída e retomada
 
-Grave `.astrofy/plans/<slug>/implementation-plan.md` e
-`implementation-plan.json`.
-O JSON é a fonte do estado; o Markdown apresenta a ordem, as dependências, os
-comandos e as pendências para leitura humana.
+As tarefas vivem em `.sitespec/<id>-<slug>-<task>/SITEPEC.md`, uma por
+tarefa, com `page: <slug>` e `task` no front matter. Não há mais
+`.astrofy/plans/` nem `implementation-plan.json` — o Markdown da sitespec é
+a única fonte, lida tanto por `astrofy sitespec list`/`progress` quanto pela
+aba Specs da TUI, junto das tarefas pontuais de outras páginas e do resto do
+site.
 
-Ao retomar, compare hash ou data da especificação, Git e arquivos listados. Se
-a origem mudou, reabra tarefas consumidoras. Preserve tarefas concluídas sem
+Ao retomar, rode `astrofy plan --slug <slug>` de novo: ele reconcilia as três
+tarefas mecânicas sem perder `status` nem itens de checklist já marcados, e
+atualiza texto e dependências a partir do `page-spec.json` atual. Revise as
+tarefas adicionais que você mesmo criou à mão da mesma forma — se a origem
+mudou, reabra as que dependiam do que mudou; preserve as concluídas sem
 relação com a mudança. Consulte os [casos de decomposição](examples/cases.md).
 
-Use `astrofy plan --slug <slug>` para gerar o JSON validado. Durante a
-execução, `astrofy apply --slug <slug>` inicia a próxima tarefa pronta;
-`--task` e `--status` registram conclusão, falha ou retirada consciente. Uma
-dependente passa a `ready` somente depois que todas as predecessoras terminam
-como `completed` ou `skipped`.
+`astrofy plan --slug <slug>` grava as três tarefas mecânicas. Durante a
+execução, `astrofy apply --slug <slug>` inicia a próxima tarefa pronta (sem
+dependência pendente); `--task` e `--status` registram conclusão, falha ou
+retirada consciente. Uma dependente só perde o `blockedBy` depois que todas
+as predecessoras terminam como `completed` ou `skipped`. Tarefas adicionais
+que você criou com `astrofy-sitespec-create` são executadas e atualizadas
+por `astrofy-sitespec-implement`, não por `apply`.
 
 Apresente o plano antes de executar. A aprovação do plano autoriza somente o
 trabalho pedido; push, publicação, compra e alteração externa continuam

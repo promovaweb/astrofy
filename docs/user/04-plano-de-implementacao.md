@@ -17,8 +17,11 @@ O plano registra:
 - documentação afetada;
 - dependências, ordem e estimativa de cada tarefa.
 
-O JSON segue `packages/schemas/implementation-plan.schema.json`. O Markdown
-equivalente permite revisar o plano sem ferramentas adicionais.
+Cada tarefa é uma sitespec comum (contrato em `docs/sitespec.md`, schema em
+`packages/schemas/sitespec.schema.json`), com `page` e `task` no front
+matter apontando de volta para a página. Não existe mais um arquivo de plano
+separado: `astrofy sitespec list`/`progress` e a aba Specs da TUI leem essas
+tarefas junto de qualquer outra tarefa do site.
 
 O agente gera o plano estruturado depois que a entrevista estiver pronta. Se
 quiser fazer essa etapa pelo terminal, use:
@@ -27,8 +30,12 @@ quiser fazer essa etapa pelo terminal, use:
 astrofy plan --slug atlas
 ```
 
-As tarefas começam como `pending` ou `ready`. Dependências concluídas liberam
-a próxima tarefa sem apagar o histórico do plano.
+O comando grava três tarefas mecânicas (`route`, `content`, `check`) em
+`.sitespec/`. `astrofy-implementation-planner` pode acrescentar outras,
+sempre com o mesmo `page` e um `task` próprio, quando a página exigir mais
+decomposição. As tarefas começam em `draft`; `blockedBy` (calculado a partir
+de `dependsOn`) mostra quais ainda esperam uma predecessora. Reexecutar
+`astrofy plan` reconcilia sem apagar progresso ou itens já marcados.
 
 ## Aprovação
 
@@ -43,4 +50,4 @@ fase.
 | --- | --- |
 | Natureza | Normativo |
 | Escopo | Conversão da página aprovada em trabalho técnico |
-| Autoridade | `astrofy-implementation-planner` e schema do plano |
+| Autoridade | `astrofy-implementation-planner` e o contrato de sitespec |

@@ -14,9 +14,10 @@ SEO ou composição quando essas partes forem independentes.
 
 ## Checklist com falha de overflow
 
-A nova página e uma falha existente apontam para a mesma grade. Crie uma tarefa
-que corrige a composição e inclui a regra da checklist em `checklistItems`.
-Valide texto longo, celular e zoom antes de concluir.
+A nova página e uma falha existente apontam para a mesma grade. Crie uma
+tarefa (`astrofy-sitespec-create`, com `page` e um `task` próprio) que
+corrige a composição e inclua a regra da checklist como item, com `{#id}`
+próprio. Valide texto longo, celular e zoom antes de concluir.
 
 ## Especificação alterada
 

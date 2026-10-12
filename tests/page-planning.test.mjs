@@ -2,7 +2,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {createHash} from 'node:crypto';
 import {validate} from '../dist/schemas/index.js';
 import {skillCatalog} from '../dist/core/skills.js';
 import {VERSION} from '../dist/core/types.js';
@@ -18,13 +17,13 @@ const specification={
   accessibility:{landmarks:true,keyboard:true,mediaAlternatives:true},tests:['renderização da rota']
 };
 
-test('especificação e plano aceitam o percurso completo e recusam estados desconhecidos',()=>{
+test('especificação aceita o percurso completo e a tarefa de plano usa o contrato de sitespec',()=>{
   validate('page-spec',specification);
-  const fingerprint=createHash('sha256').update(JSON.stringify(specification)).digest('hex');
-  const plan={schemaVersion:'1.0.0',pageSpec:'.astrofy/pages/produto-exemplo/page-spec.json',pageSpecFingerprint:fingerprint,status:'planned',generatedAt:'2026-09-18T12:10:00.000Z',phases:[{id:'foundation',title:'Fundação',status:'ready',dependsOn:[],tasks:[{id:'product-route',title:'Criar rota do produto',status:'ready',primarySkill:'astrofy-routing',reviewSkills:['astrofy-page-design'],sourceItems:['route'],checklistItems:[],files:['src/pages/produtos/exemplo.astro'],dependsOn:[],estimateMinutes:60,estimateBasis:'expectativa técnica',steps:['Criar a rota com o layout existente.'],validations:['npm run check'],manualChecks:['Abrir a rota no navegador.'],completion:'A rota responde e apresenta o conteúdo aprovado.'}]}],openItems:[]};
-  validate('implementation-plan',plan);
+  const task={schemaVersion:'1.0.0',id:'0001',slug:'produto-exemplo-route',title:'Criar a rota do produto',summary:'Tarefa "route" do plano de implementação da página produto-exemplo.',status:'draft',createdAt:'2026-09-18T12:10:00.000Z',updatedAt:'2026-09-18T12:10:00.000Z',primarySkill:'astrofy-routing',reviewSkills:[],relatedFiles:['src/pages/produtos/exemplo.astro'],dependsOn:[],page:'produto-exemplo',task:'route',source:'Gerado por astrofy plan a partir de .astrofy/pages/produto-exemplo/page-spec.json.'};
+  validate('sitespec',task);
   assert.throws(()=>validate('page-spec',{...specification,status:'done'}),/page-spec/);
-  assert.throws(()=>validate('implementation-plan',{...plan,phases:[{...plan.phases[0],tasks:[{...plan.phases[0].tasks[0],primarySkill:'routing'}]}]}),/implementation-plan/);
+  assert.throws(()=>validate('sitespec',{...task,primarySkill:'routing'}),/sitespec/);
+  assert.throws(()=>validate('sitespec',{...task,task:'route',page:undefined}),/sitespec/);
 });
 
 test('orquestradora documenta todas as especialistas registradas no catálogo',async()=>{
