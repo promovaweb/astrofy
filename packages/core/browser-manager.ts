@@ -1,6 +1,5 @@
 /** Gerencia o Chromium do Playwright sem instalar navegador durante o npm install. */
 import {exists} from './filesystem.js';
-import {chromium} from 'playwright';
 import {spawn} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 
@@ -8,6 +7,8 @@ export interface BrowserState {installed:boolean;executable:string;version:strin
 
 /** Consulta a instalação e abre o browser somente para obter sua versão real. */
 export async function browserStatus():Promise<BrowserState>{
+  // Carregado sob demanda: evita a inicialização do Playwright fora dos comandos `browser *`.
+  const {chromium}=await import('playwright');
   const executable=chromium.executablePath(),installed=await exists(executable);
   if(!installed)return {installed:false,executable,version:null};
   const browser=await chromium.launch({headless:true});

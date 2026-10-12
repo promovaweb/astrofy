@@ -39,6 +39,16 @@ O agente executa os checks aplicáveis e informa o que ainda precisa de revisão
 manual. Revise a página no navegador em larguras de celular e desktop.
 Formulários, menus, foco, links e mensagens de erro exigem interação real.
 
+Registre o resultado da revisão manual com `astrofy tui` (tecla `m`) ou, sem
+terminal interativo, com `astrofy review`:
+
+```bash
+astrofy review --rule accessibility.alternatives --page /produtos/atlas/ --status passed --reviewer "QA" --reason "Alt text confere com a imagem publicada."
+```
+
+Uma regra `automatic` não aceita esse registro; ela só é aprovada pelo
+próprio verificador em `astrofy check`.
+
 ## Classificação
 
 | Campo | Valor |

@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.9.0] - 2026-10-12
+
+### Adicionado
+
+- `astrofy` sem nenhum comando abre a TUI (antes abria `status`); sem TTY ou
+  com `--json`/`--ci`, continua devolvendo a mesma consulta de `status`, sem
+  mudança para automação existente.
+- Comando `astrofy review --rule --status --reviewer --reason [--page|--component]`
+  para registrar revisão manual ou híbrida sem abrir o painel — a mesma
+  operação da tecla `m` da TUI, disponível para scripts e para um agente de
+  IA sem terminal interativo.
+
+### Corrigido
+
+- O Playwright e a cadeia de Markdown/MDX usada por `docs check` eram
+  importados no topo do CLI e carregavam em toda invocação, inclusive
+  `--help`. Passam a ser importados sob demanda, só quando o comando
+  realmente precisa deles; `--help` caiu de ~570ms para ~235ms.
+
+### Validação
+
+- Suíte unitária, com teste novo para o comando padrão sem argumentos e para
+  `review` (regra automática recusada, campos obrigatórios, registro e
+  leitura de volta pela checklist).
+- Documentação, ebook e release.
+
 ## [0.8.2] - 2026-10-12
 
 ### Corrigido

@@ -37,6 +37,12 @@ precisa rodar `astrofy inspect`, `astrofy init`, `astrofy page create`,
 diretamente apenas quando quiser conduzir a mesma etapa pelo terminal. O
 [manual do CLI](../cli.md) descreve esses comandos.
 
+Depois de instalado, `astrofy` sem nenhum comando abre o painel interativo
+(capítulo [execução retomável](07-execucao-retomavel.md) explica a aba de
+itens; o painel também cobre tarefas de `.sitespec/`). Em script ou CI, sem
+terminal interativo, o mesmo comando devolve a consulta equivalente a
+`astrofy status`.
+
 ## Resultado da instalação
 
 Depois da instalação, as skills ficam disponíveis no projeto. A adoção cria

@@ -7,9 +7,8 @@ import { discoverRoot, inspect } from '../core/discovery.js';
 import { initialize } from '../core/init.js';
 import { setupProject } from '../core/setup.js';
 import { loadConfig } from '../core/config.js';
-import { createReport, finishReport, checkProject, projectStatus } from '../core/runner.js';
+import { createReport, finishReport, checkProject, projectStatus, reviewItem } from '../core/runner.js';
 import { tokensCommand } from '../design-system/index.js';
-import { checkDocs } from '../checks/markdown.js';
 import { readPages, brokenLinks, meta } from '../checks/html.js';
 import { migrate } from '../core/migrate.js';
 import { installSkills, skillCatalog } from '../core/skills.js';
@@ -20,10 +19,11 @@ import { listSitespecs, nextSitespecId } from '../core/sitespec.js';
 import {browserStatus,installBrowser,removeBrowser} from '../core/browser-manager.js';
 import { redactReport, redactText } from '../core/redaction.js';
 import { AstrofyError, VERSION, type Report, type RunOptions } from '../core/types.js';
-export const COMMANDS=['setup','init','inspect','check','status','tui','page create','page answer','page status','plan','apply','browser status','browser install','browser remove','tokens validate','tokens build','tokens check','tokens import-brandfy','docs check','links scan','report','migrate','skills list','skills install','sitespec list'] as const;
-export const FLAGS={root:'string',json:'boolean',ci:'boolean',offline:'boolean','no-color':'boolean','dry-run':'boolean',category:'string',rule:'string',page:'string',component:'string',changed:'boolean',help:'boolean',version:'boolean',apply:'boolean',agent:'string',skill:'string',run:'string',output:'string',markdown:'boolean',source:'string',slug:'string',type:'string',field:'string',value:'string',task:'string',status:'string',browser:'boolean',check:'boolean'} as const;
+export const COMMANDS=['setup','init','inspect','check','status','review','tui','page create','page answer','page status','plan','apply','browser status','browser install','browser remove','tokens validate','tokens build','tokens check','tokens import-brandfy','docs check','links scan','report','migrate','skills list','skills install','sitespec list'] as const;
+export const FLAGS={root:'string',json:'boolean',ci:'boolean',offline:'boolean','no-color':'boolean','dry-run':'boolean',category:'string',rule:'string',page:'string',component:'string',changed:'boolean',help:'boolean',version:'boolean',apply:'boolean',agent:'string',skill:'string',run:'string',output:'string',markdown:'boolean',source:'string',slug:'string',type:'string',field:'string',value:'string',task:'string',status:'string',browser:'boolean',check:'boolean',reviewer:'string',reason:'string'} as const;
 export const COMMAND_OPTIONS:Record<string,string[]>={
-  setup:['dry-run'],init:['dry-run'],inspect:[],check:['dry-run','category','rule','page','component','changed','browser'],status:[],tui:[],
+  setup:['dry-run'],init:['dry-run'],inspect:[],check:['dry-run','category','rule','page','component','changed','browser'],status:[],
+  review:['rule','page','component','status','reviewer','reason'],tui:[],
   'tokens validate':[],'tokens build':['dry-run'],'tokens check':[],'tokens import-brandfy':['source','dry-run'],
   'docs check':[],'links scan':[],report:['run','output','markdown','dry-run'],migrate:['apply','dry-run','check'],
   'skills list':[],'skills install':['agent','skill','dry-run'],'sitespec list':[],
@@ -37,7 +37,8 @@ export async function run(argv:string[],signal?:AbortSignal):Promise<{report:Rep
   try {parsed=parseArgs({args:argv,allowPositionals:true,strict:true,options:Object.fromEntries(Object.entries(FLAGS).map(([name,type])=>[name,{type}]))});}
   catch {throw new AstrofyError('Argumentos inválidos. Consulte --help para nomes e tipos aceitos.');}
   const values=parsed.values as Record<string,string|boolean|undefined>;
-  const command=parsed.positionals.join(' ')||'status';
+  // Sem comando, abre o painel; sem TTY, --json ou --ci, tui já cai no mesmo retorno de status.
+  const command=parsed.positionals.join(' ')||'tui';
   if(values.help||values.version){const report=createReport(values.help?'help':'version');report.data=values.help?{commands:COMMANDS,flags:FLAGS,version:VERSION}:VERSION;return {report,code:0};}
   if(!COMMANDS.includes(command as typeof COMMANDS[number]))throw new AstrofyError(`Comando desconhecido: ${command}. Use --help.`);
   const common=['root','json','ci','offline','no-color','help','version'];
@@ -59,6 +60,13 @@ export async function run(argv:string[],signal?:AbortSignal):Promise<{report:Rep
     const report=command==='report'&&values.run?await readReport(root,String(values.run)):(await projectStatus(root)).report;
     if(command==='report'&&!values.run)report.command='report';
     if(values.output)await exportReport(root,report,String(values.output),!!values.markdown,!!options.dryRun);
+    return {report,code:0};
+  }
+  if(command==='review'){
+    if(typeof values.rule!=='string')throw new AstrofyError('Informe --rule.');
+    if(!['passed','failed','not_applicable'].includes(String(values.status)))throw new AstrofyError('Informe --status com passed, failed ou not_applicable.');
+    if(typeof values.reviewer!=='string'||typeof values.reason!=='string')throw new AstrofyError('Informe --reviewer e --reason.');
+    const report=await reviewItem(root,{rule:values.rule,page:options.page,component:options.component},values.status as 'passed'|'failed'|'not_applicable',values.reviewer,values.reason);
     return {report,code:0};
   }
   const report=createReport(command,options);
@@ -112,6 +120,7 @@ export async function run(argv:string[],signal?:AbortSignal):Promise<{report:Rep
     report.data={synchronized:state.synchronized};report.artifacts=state.artifacts;
     if(command==='tokens check'&&!state.synchronized)code=1;
   } else if(command==='docs check') {
+    const {checkDocs}=await import('../checks/markdown.js');
     report.data=await checkDocs(root);code=(report.data as {problems:string[]}).problems.length?1:0;
   } else if(command==='links scan') {
     const config=await loadConfig(root),pages=await readPages(root,config);

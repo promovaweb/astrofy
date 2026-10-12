@@ -2,7 +2,9 @@
 
 `astrofy tui` abre uma consulta interativa da checklist. A abertura não executa
 checks e não grava revisões. Sem TTY, o comando retorna o estado textual ou JSON
-para permitir uso em pipelines.
+para permitir uso em pipelines. Sem nenhum comando informado, `astrofy` já abre
+este painel; a mesma condição de TTY e `--json`/`--ci` decide entre a tela
+interativa e a consulta equivalente a `status`.
 
 O painel segue o contrato visual de TUI da Promovaweb: cabeçalho roxo, campo de
 projeto, atualização, abas e três linhas de rodapé. A visão geral reúne quatro
@@ -60,6 +62,16 @@ Selecione um item manual ou híbrido e pressione `m`. Informe o responsável,
 escolha `passed`, `failed` ou `not_applicable` e escreva a justificativa. O
 relatório conserva esses campos junto dos arquivos usados no fingerprint.
 Uma regra automática precisa ser executada pelo seu verificador.
+
+`astrofy review` registra a mesma revisão sem abrir o painel — útil para
+automação e para um agente de IA sem terminal interativo:
+
+```bash
+astrofy review --rule brand.provenance --status passed --reviewer "Equipe" --reason "Conferido no manual da marca."
+```
+
+`--page` ou `--component` desambiguam quando a regra tem mais de uma
+instância. Veja [a referência do comando](cli.md#astrofy-review).
 
 Durante a edição de campos, as letras de atalhos não disparam ações globais.
 A TUI informa erros no rodapé e permite retornar à consulta. Cores acompanham

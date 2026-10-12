@@ -133,6 +133,27 @@ test('checkup conserva revisão pendente e exporta relatório com as flags docum
   assert.match(await readFile(path.join(root,'.astrofy/reports/resumo.md'),'utf8'),/^#/);
 });
 
+test('sem comando abre o equivalente a status e review registra fora da TUI',async t=>{
+  const root=await project(t);
+  const exec=(...args)=>run([...args,'--root',root,'--json']);
+  await exec('init');
+  const bare=await run(['--root',root,'--json']);
+  assert.equal(bare.report.command,'tui');
+  assert.ok(Array.isArray(bare.report.data.items)&&bare.report.data.items.length>0);
+  const list=JSON.parse(await readFile(path.join(root,'astrofy.checklist.json'),'utf8'));
+  const manual=list.items.find(item=>item.method==='manual'&&item.scope.type==='project');
+  const automatic=list.items.find(item=>item.method==='automatic');
+  await assert.rejects(exec('review','--rule',automatic.ruleId,'--status','passed','--reviewer','Equipe','--reason','Teste.'),/automática/);
+  await assert.rejects(exec('review','--rule',manual.ruleId,'--status','passed','--reason','Teste.'),/Informe --reviewer/);
+  await assert.rejects(exec('review','--rule',manual.ruleId,'--status','passed','--reviewer','Equipe','--reason','  '),/obrigatórios/);
+  const reviewed=await exec('review','--rule',manual.ruleId,'--status','passed','--reviewer','Equipe de conteúdo','--reason','Conferido no manual da marca.');
+  assert.equal(reviewed.code,0);
+  assert.equal(reviewed.report.findings[0].status,'passed');
+  const after=JSON.parse(await readFile(path.join(root,'astrofy.checklist.json'),'utf8'));
+  const updated=after.items.find(item=>item.ruleId===manual.ruleId);
+  assert.equal(updated.status,'passed');assert.equal(updated.evidence[0].reviewer,'Equipe de conteúdo');
+});
+
 test('as 51 skills instaladas resolvem todas as referências locais nos dois agentes',async t=>{
   const root=await project(t);
   for(const agent of ['codex','claude']) {

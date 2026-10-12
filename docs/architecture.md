@@ -58,6 +58,16 @@ reler e recalcular hash de todo o projeto a cada execução quando a maioria
 dos arquivos não mudou desde a última. O cache não participa de nenhum
 schema fechado; uma leitura corrompida apenas reconstrói os hashes afetados.
 
+## Importação sob demanda
+
+O Playwright (`checks/browser.ts`, `core/browser-manager.ts`) e a cadeia de
+Markdown/MDX usada por `docs check` (`checks/markdown.ts`, via
+`checks/evaluate.ts`) são importados dinamicamente, só quando o comando
+executado de fato precisa deles. Um `import` estático no topo de
+`packages/cli/index.ts` ou `packages/core/runner.ts` carrega esse peso em
+toda invocação do CLI, inclusive `--help` e o painel padrão; mantenha essas
+duas dependências atrás de `await import(...)` dentro da função que as usa.
+
 ## Processos e rede
 
 A opção `checks.trustedExecution` autoriza executar scripts do site durante os

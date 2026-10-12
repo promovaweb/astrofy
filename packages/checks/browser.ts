@@ -1,5 +1,4 @@
 /** Verificações de comportamento em preview autorizado, com rede limitada à origem configurada. */
-import { chromium } from 'playwright';
 import { AstrofyError, type Configuration } from '../core/types.js';
 export interface BrowserResult {ok:boolean;reason:string}
 /** Executa somente leitura e escolha de tema, nunca submissão de formulário ou navegação externa. */
@@ -11,6 +10,8 @@ export async function browserCheck(config:Configuration,route:string,rule:string
   const target=new URL(route,base);
   if(target.origin!==base.origin)throw new AstrofyError('A rota não pertence à origem configurada.');
   signal?.throwIfAborted();
+  // Carregado sob demanda: evita a inicialização do Playwright em comandos sem verificação de navegador.
+  const {chromium}=await import('playwright');
   const browser=await chromium.launch({headless:true});
   const abort=()=>void browser.close();signal?.addEventListener('abort',abort,{once:true});
   try {

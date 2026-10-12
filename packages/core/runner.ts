@@ -6,7 +6,7 @@ import { loadConfig } from './config.js';
 import { atomicWrite, jsonText, withLock, walk } from './filesystem.js';
 import { CATALOG, fingerprint, invalidate, loadChecklist, policyCode, reconcile, snapshot, summarize } from './checklist.js';
 import { readPages } from '../checks/html.js';
-import { evaluate, type CheckContext } from '../checks/evaluate.js';
+import type { CheckContext } from '../checks/evaluate.js';
 import { projectScript, SCRIPT_RULES } from '../checks/execute.js';
 import { validate } from '../schemas/index.js';
 import { retainReports } from './reports.js';
@@ -41,6 +41,8 @@ const browserRules=new Set(['theme.system','theme.persistence','theme.initial-pa
 /** Reavalia o filtro; o observador opcional recebe etapas síncronas sem alterar a saída JSON. */
 export async function checkProject(root:string,options:RunOptions={},onProgress?:(progress:CheckProgress)=>void):Promise<{report:Report;code:number}> {
   const run=async()=>{
+    // Carregado sob demanda: markdown, navegador e scripts de build só pesam a importação quando um check roda.
+    const {evaluate}=await import('../checks/evaluate.js');
     const config=await loadConfig(root);
     let info=await inspect(root),pages=await readPages(root,config);
     const scopesFor=():Scope[]=>[...pages.map(page=>({type:'page' as const,target:page.route})),...info.files.filter(file=>file.startsWith(config.paths.components+'/')&&/\.(astro|tsx|jsx)$/.test(file)).map(file=>({type:'component' as const,target:file}))];
@@ -163,4 +165,11 @@ export async function recordReview(root:string,id:string,status:'passed'|'failed
     redactReport(report);validate('report',report);validate('checklist',checklist);
     await atomicWrite(root,reportPath,jsonText(report));await atomicWrite(root,config.paths.checklist,jsonText(checklist));return report;
   });
+}
+/** Resolve o item citado por --rule e --page/--component para automação sem a TUI. */
+export async function reviewItem(root:string,filter:{rule:string;page?:string;component?:string},status:'passed'|'failed'|'not_applicable',reviewer:string,reason:string):Promise<Report> {
+  const {items}=await projectStatus(root);
+  const candidates=items.filter(item=>!item.retired&&item.ruleId===filter.rule&&(!filter.page||sameScope(item.scope,{type:'page',target:filter.page}))&&(!filter.component||sameScope(item.scope,{type:'component',target:filter.component})));
+  if(candidates.length!==1)throw new AstrofyError(candidates.length?'Mais de um item corresponde a --rule; informe --page ou --component.':'Nenhum item corresponde a --rule, --page ou --component informados.');
+  return recordReview(root,candidates[0]!.id,status,reviewer,reason);
 }

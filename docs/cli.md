@@ -130,9 +130,34 @@ astrofy status --offline
 astrofy status --ci --no-color
 ```
 
+## astrofy review
+
+Registra revisão manual ou híbrida identificada, sem abrir a TUI.
+
+`--rule` é obrigatório. `--page` ou `--component` desambiguam quando a regra
+tem mais de uma instância; uma regra de escopo `project` não precisa de
+nenhum dos dois. `--status` aceita `passed`, `failed` ou `not_applicable`.
+`--reviewer` e `--reason` são obrigatórios e não podem ser vazios.
+
+Grava relatório e checklist, como a revisão feita pela TUI com a tecla `m`.
+Uma regra `automatic` ou um item fora do catálogo atual são recusados antes
+da escrita. Mais de um item correspondente a `--rule` sem `--page`/`--component`
+também é recusado. Confira a saída do comando e use `status` depois.
+
+### Exemplos
+
+```bash
+astrofy review --rule brand.provenance --status passed --reviewer "Equipe de conteúdo" --reason "Marca confirmada no manual da marca."
+astrofy review --rule seo.title --page /blog/exemplo/ --status failed --reviewer "Revisão SEO" --reason "Título genérico, repetido em outras rotas."
+astrofy review --rule accessibility.alternatives --component src/components/Hero.astro --status passed --reviewer "QA" --reason "Alt text confere com a imagem publicada."
+astrofy review --rule config.secrets --status not_applicable --reviewer "Segurança" --reason "Projeto não usa credenciais em configuração pública." --json
+astrofy review --root apps/site --rule structured.valid --page /precos/ --status passed --reviewer "SEO" --reason "JSON-LD corresponde à oferta publicada."
+```
+
 ## astrofy tui
 
-Abre o painel interativo de consulta e revisão.
+Abre o painel interativo de consulta e revisão. Sem nenhum comando
+informado, `astrofy` já abre este painel.
 
 Sem argumentos posicionais. Aceita --no-color.
 
@@ -851,14 +876,41 @@ astrofy apply --slug produto --task check --status completed
 ## --status
 
 Tipo: `string`. Em `apply`, aceita `in_progress`, `completed`, `failed` ou
-`skipped` conforme a transição da tarefa.
+`skipped` conforme a transição da tarefa. Em `review`, aceita `passed`,
+`failed` ou `not_applicable`.
 
 ```bash
 astrofy apply --slug produto --task route --status in_progress
 astrofy apply --slug produto --task route --status completed
 astrofy apply --slug produto --task content --status failed
 astrofy apply --slug produto --task content --status skipped
-astrofy apply --slug produto --task check --status completed
+astrofy review --rule brand.provenance --status passed --reviewer "Equipe" --reason "Conferido no manual da marca."
+```
+
+## --reviewer
+
+Tipo: `string`. Obrigatório em `review`. Identifica quem avaliou o item;
+não pode ser vazio.
+
+```bash
+astrofy review --rule brand.provenance --status passed --reviewer "Equipe de conteúdo" --reason "Conferido no manual da marca."
+astrofy review --rule seo.title --page /blog/exemplo/ --status failed --reviewer "Revisão SEO" --reason "Título genérico."
+astrofy review --rule config.secrets --status not_applicable --reviewer "Segurança" --reason "Projeto não usa credenciais públicas."
+astrofy review --rule accessibility.alternatives --component src/components/Hero.astro --status passed --reviewer "QA" --reason "Alt text confere."
+astrofy review --root apps/site --rule structured.valid --page /precos/ --status passed --reviewer "SEO" --reason "JSON-LD corresponde à oferta."
+```
+
+## --reason
+
+Tipo: `string`. Obrigatório em `review`. Justificativa específica da
+avaliação; não pode ser vazia e não deve repetir o resumo da regra.
+
+```bash
+astrofy review --rule brand.provenance --status passed --reviewer "Equipe" --reason "Conferido no manual da marca em 10/10/2026."
+astrofy review --rule seo.title --page /blog/exemplo/ --status failed --reviewer "Revisão SEO" --reason "Título genérico, repetido em outras rotas."
+astrofy review --rule config.secrets --status not_applicable --reviewer "Segurança" --reason "Projeto não usa credenciais em configuração pública."
+astrofy review --rule accessibility.alternatives --component src/components/Hero.astro --status passed --reviewer "QA" --reason "Alt text confere com a imagem publicada."
+astrofy review --rule structured.valid --page /precos/ --status passed --reviewer "SEO" --reason "JSON-LD corresponde à oferta publicada." --json
 ```
 
 ## --browser
