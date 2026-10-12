@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.8.2] - 2026-10-12
+
+### Corrigido
+
+- `astrofy setup` recalculava hash de todos os arquivos do projeto a cada
+  execução, lendo o conteúdo inteiro mesmo sem mudança. Passa a comparar
+  `mtime` e tamanho contra um cache em `.astrofy/cache/file-hashes.json` e
+  só relê e recalcula o que de fato mudou; a leitura dos demais arquivos
+  também passa a ser concorrente, em lotes de 32.
+
+### Validação
+
+- Suíte unitária, com asserção nova de que o cache reaproveita hash de
+  arquivo inalterado e recalcula o de um arquivo editado.
+
 ## [0.8.1] - 2026-10-12
 
 ### Corrigido

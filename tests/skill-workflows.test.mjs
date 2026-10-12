@@ -44,6 +44,7 @@ test('setup registra o workflow completo e retoma a partir dos arquivos alterado
   const preview=await exec('setup','--dry-run');
   assert.equal(preview.report.data.steps.length,51);
   await assert.rejects(access(path.join(root,'.astrofy/setup-state.json')));
+  await assert.rejects(access(path.join(root,'.astrofy/cache/file-hashes.json')));
   const first=await exec('setup');
   assert.equal(first.code,0);
   assert.equal(first.report.data.steps.length,51);
@@ -51,6 +52,10 @@ test('setup registra o workflow completo e retoma a partir dos arquivos alterado
   assert.equal(first.report.data.steps.find(step=>step.skill==='astrofy-setup').status,'completed');
   assert.equal(first.report.data.steps.find(step=>step.skill==='astrofy-init').status,'completed');
   assert.equal(first.report.data.changedFiles.length,0);
+  const cacheFile=path.join(root,'.astrofy/cache/file-hashes.json');
+  const cache=JSON.parse(await readFile(cacheFile,'utf8'));
+  assert.equal(cache['src/pages/index.astro'].hash,first.report.data.files['src/pages/index.astro']);
+  assert.equal(typeof cache['src/pages/index.astro'].mtimeMs,'number');
   const state=path.join(root,'.astrofy/setup-state.json');
   const created=JSON.parse(await readFile(state,'utf8'));
   created.steps.find(step=>step.skill==='astrofy-architecture').status='completed';
@@ -60,6 +65,10 @@ test('setup registra o workflow completo e retoma a partir dos arquivos alterado
   const resumed=await exec('setup');
   assert.deepEqual(resumed.report.data.changedFiles,['src/pages/index.astro']);
   assert.equal(resumed.report.data.steps.find(step=>step.skill==='astrofy-architecture').status,'completed');
+  const updatedCache=JSON.parse(await readFile(cacheFile,'utf8'));
+  assert.equal(updatedCache['src/pages/index.astro'].hash,resumed.report.data.files['src/pages/index.astro']);
+  assert.notEqual(updatedCache['src/pages/index.astro'].hash,cache['src/pages/index.astro'].hash);
+  assert.equal(updatedCache['package.json'].hash,cache['package.json'].hash);
   const invalid=JSON.parse(await readFile(state,'utf8'));
   invalid.steps[0].status='approved';
   await writeFile(state,JSON.stringify(invalid));

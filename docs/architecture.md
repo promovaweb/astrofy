@@ -52,6 +52,12 @@ Um lock ilegível ou pertencente a outro host exige inspeção operacional. Conf
 o PID e o host registrados e só remova o arquivo após comprovar que a execução
 terminou. Não remova o lock de um processo vivo.
 
+`astrofy setup` lê e grava `.astrofy/cache/file-hashes.json`, um cache
+descartável de hash por arquivo indexado por `mtime` e tamanho. Isso evita
+reler e recalcular hash de todo o projeto a cada execução quando a maioria
+dos arquivos não mudou desde a última. O cache não participa de nenhum
+schema fechado; uma leitura corrompida apenas reconstrói os hashes afetados.
+
 ## Processos e rede
 
 A opção `checks.trustedExecution` autoriza executar scripts do site durante os

@@ -20,6 +20,12 @@ Uma segunda execução conserva os marcos já registrados e compara os hashes.
 O agente relaciona `changedFiles` aos consumidores do grafo antes de repetir
 uma etapa. `--dry-run` calcula o mesmo estado sem criar arquivos.
 
+`.astrofy/cache/file-hashes.json` guarda, por arquivo, o `mtime` e o tamanho
+observados na última leitura junto do hash calculado. Uma execução seguinte
+reaproveita o hash quando os dois valores não mudaram, em vez de reler e
+recalcular o arquivo inteiro. O cache é descartável: ausente, corrompido ou
+de outra máquina, a próxima execução o reconstrói sem interromper o setup.
+
 As entrevistas e definições de páginas ficam em `.astrofy/pages/<slug>/`.
 `astrofy page create` inicia a entrevista, `page answer` registra cada resposta
 e `page status` mostra as próximas perguntas. Quando todos os campos

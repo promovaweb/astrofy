@@ -1,6 +1,6 @@
 /** Mantém o estado retomável da coordenação das skills sem executar código do projeto. */
 import {createHash} from 'node:crypto';
-import {readFile} from 'node:fs/promises';
+import {readFile,stat} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {inspect} from './discovery.js';
 import {initialize} from './init.js';
@@ -16,8 +16,16 @@ interface SetupRun {startedAt:string;completedAt:string;durationMs:number;resume
 interface SetupState {schemaVersion:string;workflowVersion:string;createdAt:string;updatedAt:string;files:Record<string,string>;changedFiles:string[];steps:SetupStep[];runs?:SetupRun[]}
 
 const stateFile='.astrofy/setup-state.json';
+const cacheFile='.astrofy/cache/file-hashes.json';
 const workflowFile=fileURLToPath(new URL('../../skills/astrofy-setup/references/workflow.json',import.meta.url));
 const hash=(value:string)=>createHash('sha256').update(value).digest('hex');
+interface CacheEntry {mtimeMs:number;size:number;hash:string}
+type FileHashCache=Record<string,CacheEntry>;
+/** Cache descartável: uma leitura corrompida ou ausente apenas reconstrói os hashes. */
+async function readCache(root:string):Promise<FileHashCache>{
+  try {return JSON.parse(await readFile(await safePath(root,cacheFile),'utf8')) as FileHashCache;}
+  catch {return {};}
+}
 
 /** Lê o grafo distribuído e recusa dependências ausentes ou ciclos. */
 export async function readWorkflow():Promise<Workflow>{
@@ -31,14 +39,20 @@ export async function readWorkflow():Promise<Workflow>{
   return workflow;
 }
 
-/** Gera hashes apenas de arquivos observados pela inspeção estática. */
-async function snapshot(root:string,files:string[]):Promise<Record<string,string>>{
-  const result:Record<string,string>={};
-  for(const relative of files.sort()){
-    const target=await safePath(root,relative);
-    if(await exists(target))result[relative]=hash(await readFile(target,'utf8'));
+/** Hash em lotes concorrentes; reaproveita o valor quando mtime e tamanho não mudaram. */
+async function snapshot(root:string,files:string[],cache:FileHashCache):Promise<{files:Record<string,string>;cache:FileHashCache}>{
+  const result:Record<string,string>={},nextCache:FileHashCache={},batchSize=32,sorted=[...files].sort();
+  for(let index=0;index<sorted.length;index+=batchSize){
+    await Promise.all(sorted.slice(index,index+batchSize).map(async relative=>{
+      const target=await safePath(root,relative);
+      if(!(await exists(target)))return;
+      const info=await stat(target),cached=cache[relative];
+      if(cached&&cached.mtimeMs===info.mtimeMs&&cached.size===info.size){result[relative]=cached.hash;nextCache[relative]=cached;return;}
+      const digest=hash(await readFile(target,'utf8'));
+      result[relative]=digest;nextCache[relative]={mtimeMs:info.mtimeMs,size:info.size,hash:digest};
+    }));
   }
-  return result;
+  return {files:result,cache:nextCache};
 }
 
 const applicable=(skill:string,features:Record<string,boolean>):boolean=>{
@@ -55,7 +69,8 @@ export async function setupProject(root:string,options:RunOptions={}):Promise<Se
   const execute=async()=>{
     const startedAt=new Date().toISOString();
     const info=await inspect(root),workflow=await readWorkflow();
-    const files=await snapshot(root,info.files.filter(file=>!file.startsWith('.astrofy/')));
+    const previousCache=await readCache(root);
+    const {files,cache:nextCache}=await snapshot(root,info.files.filter(file=>!file.startsWith('.astrofy/')),previousCache);
     const target=await safePath(root,stateFile);
     const previous=await exists(target)?await readJson<SetupState>(root,stateFile):null;
     if(previous)validate<SetupState>('setup-state',previous);
@@ -71,7 +86,10 @@ export async function setupProject(root:string,options:RunOptions={}):Promise<Se
     const runs=[...(previous?.runs??[]),{startedAt,completedAt,durationMs:Math.max(0,Date.parse(completedAt)-Date.parse(startedAt)),resumed:!!previous,changedFiles}].slice(-50);
     const state:SetupState={schemaVersion:'1.0.0',workflowVersion:workflow.schemaVersion,createdAt:previous?.createdAt??now,updatedAt:now,files,changedFiles,steps,runs};
     validate<SetupState>('setup-state',state);
-    if(!options.dryRun)await atomicWrite(root,stateFile,jsonText(state),{signal:options.signal});
+    if(!options.dryRun){
+      await atomicWrite(root,stateFile,jsonText(state),{signal:options.signal});
+      await atomicWrite(root,cacheFile,jsonText(nextCache),{signal:options.signal});
+    }
     return state;
   };
   return options.dryRun?execute():withLock(root,execute);
