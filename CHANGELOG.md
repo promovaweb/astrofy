@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.8.1] - 2026-10-12
+
+### Corrigido
+
+- Atualiza o `README.md` da raiz para a versão 0.8.0 do pacote e documenta o
+  fluxo de tarefas pontuais (`astrofy-sitespec-create`,
+  `astrofy-sitespec-implement`, `astrofy sitespec list` e a aba Specs da
+  TUI), que ainda não apareciam ali.
+
+### Validação
+
+- Suíte unitária, documentação, ebook e release.
+
 ## [0.8.0] - 2026-10-12
 
 ### Adicionado

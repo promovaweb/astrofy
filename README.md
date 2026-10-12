@@ -10,7 +10,7 @@ necessárias e apresenta o plano antes de implementar.
 Instale o pacote e as skills para o agente que usa no projeto:
 
 ```bash
-npm install --global @promovaweb/astrofy@0.7.1
+npm install --global @promovaweb/astrofy@0.8.0
 cd /caminho/do/site
 astrofy skills install --agent codex
 ```
@@ -47,11 +47,11 @@ npm run build
 node dist/cli/index.js --help
 ```
 
-O pacote está disponível publicamente no npm. A versão 0.7.1 inclui
+O pacote está disponível publicamente no npm. A versão 0.8.0 inclui
 planejamento conversacional e técnico para páginas de vendas, produto, serviço,
-Home, Sobre, Contato e Preços. O painel opcional abre com
-`astrofy tui --root /caminho/do/site` depois que o projeto foi inicializado
-com `astrofy init`.
+Home, Sobre, Contato e Preços, além de tarefas pontuais em `.sitespec/`. O
+painel opcional abre com `astrofy tui --root /caminho/do/site` depois que o
+projeto foi inicializado com `astrofy init`.
 
 O pacote conserva `UNLICENSED`, sem concessão de licença aberta. Para uma
 instalação a partir do checkout autorizado, `npm pack` gera o arquivo `.tgz`.
@@ -105,6 +105,25 @@ o CLI gera o contrato com conteúdo, SEO, integrações, acessibilidade e testes
 `apply` registra a passagem das tarefas por `ready`, `in_progress`,
 `completed`, `failed` e `skipped`; a skill indicada executa a alteração no site.
 
+## Registrar uma tarefa pontual do site
+
+Nem toda mudança é uma página nova. Um ajuste de componente, uma correção,
+uma pendência de SEO — descreva o pedido ao agente e `astrofy-sitespec-create`
+cria a tarefa em `.sitespec/<id>-<slug>/SITEPEC.md`. A skill mapeia as skills
+relacionadas ao pedido antes de perguntar; a maioria dos pedidos não gera
+pergunta nenhuma, e no máximo três quando o pedido é ambíguo. Depois,
+`astrofy-sitespec-implement` executa os itens da checklist e atualiza o
+arquivo até `done`, `blocked` ou `archived`.
+
+```bash
+astrofy sitespec list --json
+```
+
+O comando é só leitura: mostra o progresso, o próximo id livre e as
+dependências (`blockedBy`) entre tarefas. Pelo terminal interativo,
+`astrofy tui` abre a aba **Specs** (`Ctrl+S`) para navegar e acompanhar sem
+gravar nada. O contrato completo do arquivo está em [docs/sitespec.md](docs/sitespec.md).
+
 ## Documentação
 
 - [Guia do usuário](docs/user/README.md)
@@ -113,6 +132,7 @@ o CLI gera o contrato com conteúdo, SEO, integrações, acessibilidade e testes
 - [Matriz operacional das skills](docs/skill-matrix.md)
 - [CLI](docs/cli.md)
 - [Configuração](docs/configuration.md)
+- [Contrato do SITEPEC.md](docs/sitespec.md)
 
 - **Uso do CLI:** [comandos e opções](docs/cli.md).
 - **Contratos:** [configuração e estado](docs/configuration.md).
@@ -122,6 +142,7 @@ o CLI gera o contrato com conteúdo, SEO, integrações, acessibilidade e testes
 - **Compatibilidade:** [faixas e validação](docs/compatibility.md).
 - **Skills:** [guia das 51 skills, instalação, fluxos e exemplos](docs/skills.md).
 - **Verificação das skills:** [cenários executados e limites dos testes](docs/skills-validation.md).
+- **Tarefas pontuais:** [contrato do SITEPEC.md](docs/sitespec.md).
 - **Gestão do projeto:** [backlog, timesheets e redistribuição de datas](docs/backlog-timesheets.md).
 
 ## Desenvolvimento
