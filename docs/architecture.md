@@ -168,3 +168,41 @@ partir de `dependsOn`), sem substituir a execução técnica da skill associada.
 atualização e não grava arquivos. O modo padrão apresenta o plano; `--apply`
 continua sendo a única forma de aplicar a migração. Versões sem percurso
 registrado são recusadas antes da escrita.
+
+## Conteúdo do manual do usuário
+
+Cada capítulo de `docs/user/` precisa ser explicativo, não uma lista de
+bullets reduzida ao mínimo. Isso é regra, não preferência pontual de uma
+edição: toda alteração que crie ou reescreva um capítulo do manual aplica os
+pontos abaixo antes de considerar o trabalho concluído.
+
+- Explique o porquê do mecanismo, não só o passo. Diga por que o Astrofy
+  separa entrevista de plano, por que `blockedBy` é calculado e não gravado,
+  por que uma skill pergunta ou deixa de perguntar — a pessoa que lê o
+  manual pela primeira vez precisa entender a intenção, não só reproduzir
+  comandos.
+- Inclua pelo menos um percurso completo e concreto por capítulo central
+  (instalação, planejamento, entrevista, plano, execução, sitespec,
+  execução retomável): um pedido real, a sequência de comandos ou decisões,
+  e o resultado observável nos arquivos do projeto. Um capítulo sem nenhum
+  percurso de ponta a ponta está incompleto.
+- Cubra o caminho feliz e pelo menos um desvio real: o que acontece quando
+  a entrevista fica ambígua, quando uma validação falha, quando a
+  especificação muda depois do plano gerado, quando um comando é chamado
+  sem o contexto esperado. Não descreva só o cenário em que tudo funciona
+  de primeira.
+- Mantenha as tabelas de estado, contrato e comando — elas são a referência
+  rápida —, mas acompanhe cada uma de prosa que explique a transição ou o
+  campo, não deixe a tabela sozinha como única explicação.
+- Use exemplos com valores reais do domínio do Astrofy (slugs, rotas,
+  rule IDs, nomes de skill existentes no catálogo), nunca um placeholder
+  genérico como `<valor>` quando um exemplo concreto comunica melhor.
+- Depois de reescrever um capítulo, releia como alguém que nunca usou o
+  Astrofy: se uma frase faz sentido só para quem já sabe o resultado, ela
+  precisa de mais contexto, não de corte.
+
+Um capítulo curto porque o assunto é genuinamente pequeno (por exemplo, uma
+etapa de duas linhas de comando sem decisão nenhuma) não precisa de
+enchimento artificial. A regra é contra superficialidade, não a favor de
+tamanho por si só — mas a maioria dos capítulos deste manual tem decisão,
+estado e consequência o suficiente para merecer o tratamento completo acima.

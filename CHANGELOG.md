@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.10.1] - 2026-10-13
+
+### Alterado
+
+- Reescreve os 12 capítulos do guia do usuário com muito mais
+  profundidade: cada um explica o porquê do mecanismo, não só o passo,
+  cobre pelo menos um percurso completo e um desvio real (falha,
+  ambiguidade, mudança de especificação), e usa exemplos concretos do
+  domínio do Astrofy. O manual passa de 764 para 1365 linhas de conteúdo
+  real. `docs/architecture.md` ganha a seção "Conteúdo do manual do
+  usuário", que formaliza isso como regra para futuras edições.
+
+### Validação
+
+- Suíte unitária (99 testes), incluindo os testes que conferem a
+  cobertura dos sete tipos de página, dos seis estados de tarefa e dos
+  comandos públicos citados no manual.
+- Ebook recompilado e verificado.
+
 ## [0.10.0] - 2026-10-12
 
 ### Alterado (ruptura)

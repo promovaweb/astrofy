@@ -1,7 +1,12 @@
 # Exemplos por tipo de página
 
-Os exemplos abaixo mostram o pedido, as respostas centrais, a arquitetura
-aprovada e o foco do plano técnico. Nomes e textos são ilustrativos.
+Os exemplos abaixo mostram, para cada um dos sete tipos de página do
+capítulo 2, o pedido inicial, as respostas que de fato mudam a
+arquitetura, a arquitetura aprovada e o foco do plano técnico que sai
+disso. Nomes e textos são ilustrativos, mas a estrutura de cada seção —
+o que a entrevistadora pergunta, o que ela produz — é real. Use estes
+exemplos para prever, antes de começar sua própria conversa, que tipo de
+pergunta esperar e o que vai sair no fim de cada etapa.
 
 ## Landing page de vendas
 
@@ -97,9 +102,25 @@ dados estruturados compatíveis com o conteúdo e testes das combinações.
 
 ## Resultado comum
 
-Cada exemplo termina com `page-spec.json`, `page.md` e as sitespecs da página
-(`route`, `content`, `check`) em `.sitespec/`. A implementação somente usa
-fatos e textos aprovados na entrevista.
+Independente do tipo, os sete exemplos terminam no mesmo conjunto de
+arquivos, porque o formato de saída não varia por tipo de página — só o
+conteúdo da entrevista varia:
+
+- `.astrofy/pages/<slug>/page-spec.json` e `page.md`, com o conteúdo
+  aprovado (capítulos 2 e 3);
+- três sitespecs em `.sitespec/` — `route`, `content` e `check` —, cada
+  uma apontando de volta para `<slug>` pelos campos `page` e `task`
+  (capítulo 4);
+- o progresso dessas três tarefas visível em `astrofy sitespec progress`
+  e na aba Specs da TUI, junto de qualquer outra tarefa do site.
+
+A implementação somente usa fatos e textos aprovados na entrevista — uma
+skill técnica não inventa um número de prova, um nome de integração ou
+uma frase de oferta que não apareceu na conversa. Se um exemplo acima
+parece faltar detalhe (um preço, uma integração específica), é porque a
+entrevista real cobriria isso explicitamente antes do plano ser gerado;
+os exemplos aqui são resumidos para mostrar o formato, não o conteúdo
+completo de uma conversa real.
 
 ## Classificação
 
