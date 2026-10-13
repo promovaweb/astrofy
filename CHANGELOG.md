@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.10.2] - 2026-10-13
+
+### Corrigido
+
+- O manual mais extenso (0.10.1) deixou o tarball com 983,5 kB, acima do
+  limite de 900 kB verificado por `scripts/validate-package.mjs`; a
+  publicação de 0.10.1 falhou no CI antes de chegar ao npm. Sobe o
+  limite para 1,2 MB, com margem para o crescimento esperado do manual.
+
+### Validação
+
+- `npm pack` seguido de `package:verify` contra o tarball real.
+- Suíte unitária e release.
+
 ## [0.10.1] - 2026-10-13
 
 ### Alterado

@@ -7,7 +7,7 @@ import {spawnSync} from 'node:child_process';
 
 const tarball=resolve(process.argv[2]??'');
 if(!process.argv[2])throw new Error('Uso: node scripts/validate-package.mjs <pacote.tgz>');
-const maximumBytes=900_000;
+const maximumBytes=1_200_000;
 const size=(await stat(tarball)).size;
 if(size>maximumBytes)throw new Error(`Pacote possui ${size} bytes; limite: ${maximumBytes}.`);
 function run(command,args,cwd){const result=spawnSync(command,args,{cwd,encoding:'utf8',maxBuffer:32*1024*1024});if(result.status!==0)throw new Error(`${command} falhou: ${(result.stderr||result.stdout).trim()}`);return result.stdout;}
