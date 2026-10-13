@@ -1,6 +1,6 @@
 # Validação dos procedimentos das skills
 
-As 51 skills usam arquivos do projeto, APIs identificadas, regras do catálogo
+As 53 skills usam arquivos do projeto, APIs identificadas, regras do catálogo
 e resultados observáveis para orientar a execução. A validação combina
 inspeção das instruções, instalação em agentes e execução de cenários locais.
 Nenhum teste garante funcionamento em todos os projetos ou substitui a revisão
@@ -22,7 +22,7 @@ A suíte inclui `tests/skill-workflows.test.mjs`, que exercita:
   anterior preservado e geração determinística após corrigir a entrada.
 - **Check-up:** status sem escrita, regra manual sem aprovação automática e
   exportação Markdown com as flags aceitas pelo CLI.
-- **Instalação:** referências locais das 51 skills acessíveis nos diretórios
+- **Instalação:** referências locais das 53 skills acessíveis nos diretórios
   Codex e Claude, com reexecução sem reescrita de arquivos idênticos.
   Os testes conferem também as âncoras Markdown e os IDs de regras e
   categorias usados nos exemplos contra o catálogo instalado.
@@ -30,7 +30,7 @@ A suíte inclui `tests/skill-workflows.test.mjs`, que exercita:
   marcos e detecção de arquivos alterados.
 - **Markdown:** configuração herdada, correção, preservação de frontmatter,
   URL, código e MDX, além de segunda execução sem mudança.
-- **Referências:** versão e data de conferência presentes nas 51 bases técnicas.
+- **Referências:** versão e data de conferência presentes nas 53 bases técnicas.
 - **Planejamento de páginas:** duas orquestradoras, sete tipos de página,
   checkpoints da entrevista, contratos de saída e encaminhamento para skills
   técnicas presentes nas instruções distribuídas.
@@ -80,7 +80,7 @@ de formulário, endpoint SSR com autorização por cookie, Content Layer e MDX,
 paginação determinística, pares i18n e o ciclo de navegação do `ClientRouter`.
 
 Essa execução amplia a comprovação para a combinação instalada, sem afirmar
-cobertura de todas as APIs Astro 7 ou de todos os procedimentos das 51 skills.
+cobertura de todas as APIs Astro 7 ou de todos os procedimentos das 53 skills.
 A fixture permanente permite repetir a mesma combinação sem reconstruir um
 projeto temporário manualmente.
 

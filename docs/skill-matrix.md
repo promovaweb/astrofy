@@ -54,8 +54,10 @@ saídas e o comando que confere o domínio associado a cada skill.
 | `astrofy-security` | `astrofy-architecture`, `astrofy-config` | `pontos de entrada`, `segredos e sessão` | `acessos revisados` | Revisão do artefato de saída |
 | `astrofy-testing` | `astrofy-code-quality` | `comportamento alterado`, `falha reproduzível` | `testes do fluxo` | `astrofy check --category quality` |
 | `astrofy-build-deploy` | `astrofy-testing`, `astrofy-config` | `adaptador`, `ambiente e scripts` | `build e operação conferidos` | Revisão do artefato de saída |
+| `astrofy-cloudflare` | `astrofy-build-deploy`, `astrofy-config` | `manifesto, adaptador e wrangler`, `scripts e ambiente` | `configuração do Cloudflare validada` | Revisão do artefato de saída |
+| `astrofy-cloudflare-deploy` | `astrofy-cloudflare` | `cloudflare.config.ts ou wrangler.jsonc`, `modo e credenciais` | `comandos de publicação e operação conferidos` | Revisão do artefato de saída |
 | `astrofy-markdown` | `astrofy-documentation`, `astrofy-component-docs`, `astrofy-editorial-review` | `Markdown alterado`, `configuração do linter` | `Markdown formatado e validado` | Revisão do artefato de saída |
-| `astrofy-checkup` | `astrofy-build-deploy`, `astrofy-markdown`, `astrofy-accessibility` | `escopo alterado`, `artefatos atuais` | `checklist e relatório final` | Revisão do artefato de saída |
+| `astrofy-checkup` | `astrofy-build-deploy`, `astrofy-cloudflare-deploy`, `astrofy-markdown`, `astrofy-accessibility` | `escopo alterado`, `artefatos atuais` | `checklist e relatório final` | Revisão do artefato de saída |
 
 ## Entrada e encerramento
 

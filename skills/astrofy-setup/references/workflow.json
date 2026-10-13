@@ -52,7 +52,9 @@
     {"skill":"astrofy-security","dependsOn":["astrofy-architecture","astrofy-config"],"inputs":["pontos de entrada","segredos e sessão"],"outputs":["acessos revisados"]},
     {"skill":"astrofy-testing","dependsOn":["astrofy-code-quality"],"inputs":["comportamento alterado","falha reproduzível"],"outputs":["testes do fluxo"]},
     {"skill":"astrofy-build-deploy","dependsOn":["astrofy-testing","astrofy-config"],"inputs":["adaptador","ambiente e scripts"],"outputs":["build e operação conferidos"]},
+    {"skill":"astrofy-cloudflare","dependsOn":["astrofy-build-deploy","astrofy-config"],"inputs":["manifesto, adaptador e wrangler","scripts e ambiente"],"outputs":["configuração do Cloudflare validada"]},
+    {"skill":"astrofy-cloudflare-deploy","dependsOn":["astrofy-cloudflare"],"inputs":["cloudflare.config.ts ou wrangler.jsonc","modo e credenciais"],"outputs":["comandos de publicação e operação conferidos"]},
     {"skill":"astrofy-markdown","dependsOn":["astrofy-documentation","astrofy-component-docs","astrofy-editorial-review"],"inputs":["Markdown alterado","configuração do linter"],"outputs":["Markdown formatado e validado"]},
-    {"skill":"astrofy-checkup","dependsOn":["astrofy-build-deploy","astrofy-markdown","astrofy-accessibility"],"inputs":["escopo alterado","artefatos atuais"],"outputs":["checklist e relatório final"]}
+    {"skill":"astrofy-checkup","dependsOn":["astrofy-build-deploy","astrofy-cloudflare-deploy","astrofy-markdown","astrofy-accessibility"],"inputs":["escopo alterado","artefatos atuais"],"outputs":["checklist e relatório final"]}
   ]
 }

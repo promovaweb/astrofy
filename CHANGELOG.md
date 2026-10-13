@@ -1,5 +1,32 @@
 # Changelog
 
+## [0.11.0] - 2026-10-13
+
+### Adicionado
+
+- `astrofy-cloudflare` configura e valida o Cloudflare em um projeto Astro:
+  classifica o alvo de publicação, confere os pré-requisitos do `cf`, escolhe
+  o caminho de build e registra a configuração de `cloudflare.config.ts`,
+  `.gitignore`, `tsconfig.json` e scripts sem trocar o adaptador nem o modo em
+  uso.
+- `astrofy-cloudflare-deploy` define e valida os comandos de publicação e
+  operação no Cloudflare: scripts por caminho, modos, build prebuilt,
+  previews, credenciais por token em CI e conferência da URL pública.
+- As duas skills documentam o beta do `cf`, a remoção do suporte a Cloudflare
+  Pages no adaptador Astro v13 e o caminho `astro build` mais
+  `wrangler deploy` enquanto o Astro 6 e posteriores não fazem build com a
+  CLI.
+
+### Alterado
+
+- O catálogo passa de 51 para 53 skills, com a matriz operacional, o guia das
+  skills e o `workflow.json` sincronizados.
+
+### Validação
+
+- Suíte unitária, `skills:matrix:check`, `docs:verify`, `ebook:verify` e
+  `release:check`.
+
 ## [0.10.2] - 2026-10-13
 
 ### Corrigido

@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "version": "0.10.2",
-  "edition": "v0.10.2",
-  "generated_at": "2026-10-13T07:45:48Z",
-  "source_sha256": "f29df92f48e0dff940a6232ffb5f310d3485dcf4238e5928a832bd7cf7231f1c",
+  "version": "0.11.0",
+  "edition": "v0.11.0",
+  "generated_at": "2026-10-13T19:57:31Z",
+  "source_sha256": "3438d5b7969c2c5a4611a10817f789519299703c2ab19cca800da25ac5f51d23",
   "sources": [
     ".ebook/assets/logo.svg",
     ".ebook/build-ebook.mjs",
@@ -31,12 +31,12 @@
   ],
   "artifacts": {
     "pdf": {
-      "file": "Astrofy-Guia-do-Usuario-v0.10.2.pdf",
-      "sha256": "67d5b3f9487a7724839190019ac2a0f49990b7f21916ffdf48045fe3fa314e69"
+      "file": "Astrofy-Guia-do-Usuario-v0.11.0.pdf",
+      "sha256": "fbb390e148cd5f124ce19008f8fede60495ad91682ad4a3af54074e0d1f71d01"
     },
     "epub": {
-      "file": "Astrofy-Guia-do-Usuario-v0.10.2.epub",
-      "sha256": "acf3d05c110de3fcdbca21217335f19288daf8fa85a76811ab950aecff937ba0"
+      "file": "Astrofy-Guia-do-Usuario-v0.11.0.epub",
+      "sha256": "ef67b8cd83135115a705402a7d26fb8c3da1ff11c9ea33342fa0fc961a197f4c"
     }
   }
 }

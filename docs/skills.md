@@ -1,6 +1,6 @@
 # Biblioteca de skills do Astrofy
 
-O Astrofy distribui 51 skills para agentes trabalharem em projetos Astro
+O Astrofy distribui 53 skills para agentes trabalharem em projetos Astro
 existentes. Cada skill reúne um procedimento, referências técnicas e casos
 práticos. O agente lê essas instruções e executa o trabalho solicitado sobre os
 arquivos do projeto. Instalar uma skill apenas disponibiliza esses arquivos; a
@@ -10,7 +10,7 @@ execução ocorre quando você solicita o trabalho ao agente.
 
 Execute os comandos na raiz do site ou informe `--root` com o caminho do
 projeto. Escolha `codex` ou `claude` em `--agent`. Sem `--skill`, a instalação
-inclui as 51 skills; para selecionar algumas, use nomes separados por vírgula.
+inclui as 53 skills; para selecionar algumas, use nomes separados por vírgula.
 
 ```bash
 astrofy skills list
@@ -149,7 +149,7 @@ a validação após ler o diff. Consulte as instruções e recursos distribuído
   [linter](../skills/astrofy-markdown/references/technical.md) e
   [casos](../skills/astrofy-markdown/examples/cases.md).
 
-## Índice das 51 skills
+## Índice das 53 skills
 
 - **[astrofy-setup](../skills/astrofy-setup/SKILL.md):** Entrada inicial e
   coordenação da biblioteca conforme os recursos presentes no projeto.
@@ -283,6 +283,12 @@ a validação após ler o diff. Consulte as instruções e recursos distribuído
 - **[astrofy-build-deploy](#astrofy-build-deploy):** Prepara build e operação de
   publicação em projetos Astro, respeitando o adaptador e o provedor existentes
   e validando o ambiente.
+- **[astrofy-cloudflare](#astrofy-cloudflare):** Configura e valida o Cloudflare
+  em projetos Astro, escolhendo o caminho aceito pelo `cf` e preservando o
+  provedor existente.
+- **[astrofy-cloudflare-deploy](#astrofy-cloudflare-deploy):** Define e valida
+  os comandos de publicação e operação no Cloudflare, com modos, prebuilt e
+  credenciais.
 - **[astrofy-security](#astrofy-security):** Revisa entradas, segredos e
   execução de HTML ou MDX em projetos Astro, aplicando correções delimitadas e
   documentando o alcance.
@@ -1710,6 +1716,90 @@ astrofy check --rule quality.build
   [fontes técnicas](../skills/astrofy-build-deploy/references/technical.md).
 - **Exemplos:**
   [casos de execução](../skills/astrofy-build-deploy/examples/cases.md).
+
+## astrofy-cloudflare
+
+Configura e valida o Cloudflare em projetos Astro, escolhendo o caminho de build
+aceito pelo `cf` e preservando o provedor de publicação existente.
+
+- **Entradas necessárias:** Manifesto, adaptador, wrangler.*, scripts e
+  ambiente.
+- **Quando usar:** Um site usa @astrojs/cloudflare e precisa dos pré-requisitos
+  e dos arquivos de configuração do Cloudflare.
+- **Adaptação de projeto existente:** Um projeto tem wrangler.jsonc. Migre com
+  `cf migrate` antes de rodar qualquer comando `cf` que faça build.
+
+### Procedimento
+
+Classifique o alvo de publicação e confirme os pré-requisitos do `cf`. Escolha
+o caminho de build e registre a escolha, porque o Astro 6 e posteriores ainda
+não fazem build com a CLI durante o beta. Configure cloudflare.config.ts,
+.gitignore, tsconfig.json e scripts sem trocar o adaptador nem o modo em uso.
+Preserve o provedor existente e teste as rotas representativas numa migração.
+
+### Entrega e conferência
+
+A configuração existe e é a que o projeto usa. O dry-run descreve o Worker, as
+bindings e o modo sem enviar requisição à API.
+
+A skill indica a seguinte verificação, complementada pelos testes e pela revisão
+do escopo descrito acima:
+
+```bash
+astrofy check --rule quality.build
+```
+
+- **Limite ou erro recorrente:** Não rode `cf dev`, `cf build` nem `cf deploy`
+  num projeto Wrangler sem migração. A configuração gerada ignora o
+  wrangler.jsonc.
+- **Instruções do agente:**
+  [SKILL.md](../skills/astrofy-cloudflare/SKILL.md).
+- **Referências:**
+  [fontes técnicas](../skills/astrofy-cloudflare/references/technical.md).
+- **Exemplos:**
+  [casos de execução](../skills/astrofy-cloudflare/examples/cases.md).
+
+## astrofy-cloudflare-deploy
+
+Define e valida os comandos de publicação e operação no Cloudflare, com modos,
+build prebuilt e credenciais, sem publicar sem autorização.
+
+- **Entradas necessárias:** cloudflare.config.ts ou wrangler.jsonc, modo,
+  bindings e ambiente de CI.
+- **Quando usar:** Um projeto conferido precisa dos scripts de build, deploy e
+  preview e da cadência de publicação.
+- **Adaptação de projeto existente:** Um projeto publica por Wrangler. Preserve
+  `astro build` e `wrangler deploy` enquanto a versão do Astro não buildar com
+  o `cf`.
+
+### Procedimento
+
+Monte os scripts conforme o caminho e trate o modo registrado no Build Output.
+Valide com `cf deploy --dry-run` antes de publicar. Em CI, use token e conta por
+variável, um build por execução e `--prebuilt`. Publique somente com
+autorização, registre a versão e confira a URL pública, uma rota dinâmica, um
+ativo e um 404.
+
+### Entrega e conferência
+
+O comando de publicação é o mesmo que passou no dry-run, com o modo registrado
+no Build Output. O relatório informa ambiente, modo, versão e rotas testadas.
+
+A skill indica a seguinte verificação, complementada pelos testes e pela revisão
+do escopo descrito acima:
+
+```bash
+astrofy check --rule quality.build
+```
+
+- **Limite ou erro recorrente:** Não publique um build prebuilt com modo
+  diferente do registrado. O comando para antes de enviar e informa o modo.
+- **Instruções do agente:**
+  [SKILL.md](../skills/astrofy-cloudflare-deploy/SKILL.md).
+- **Referências:**
+  [fontes técnicas](../skills/astrofy-cloudflare-deploy/references/technical.md).
+- **Exemplos:**
+  [casos de execução](../skills/astrofy-cloudflare-deploy/examples/cases.md).
 
 ## astrofy-security
 

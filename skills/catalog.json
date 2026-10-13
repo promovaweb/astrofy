@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "version": "0.10.2",
+  "version": "0.11.0",
   "skills": [
     {
       "name": "astrofy-setup",
@@ -241,6 +241,16 @@
       "name": "astrofy-build-deploy",
       "title": "Preparar build e publicação",
       "description": "Prepara build e operação de publicação em projetos Astro, respeitando o adaptador e o provedor existentes e validando o ambiente."
+    },
+    {
+      "name": "astrofy-cloudflare",
+      "title": "Configurar o Cloudflare",
+      "description": "Configura e valida o Cloudflare em projetos Astro, escolhendo o caminho aceito pelo cf e preservando o provedor de publicação existente."
+    },
+    {
+      "name": "astrofy-cloudflare-deploy",
+      "title": "Publicar no Cloudflare",
+      "description": "Define e valida os comandos de publicação e operação no Cloudflare, com modos, build prebuilt e credenciais, sem publicar sem autorização."
     },
     {
       "name": "astrofy-security",
