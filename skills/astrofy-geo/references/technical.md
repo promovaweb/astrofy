@@ -12,8 +12,10 @@ cada sugestão ao trecho observado e à fonte consultada.
 
 ## Alteração compatível
 
-Preserve llms.txt quando existente, mas documente seu uso local sem impor o
-arquivo a todos os sites.
+Preserve `llms.txt` e `llms-full.txt` quando existentes e sincronize-os com
+as páginas canônicas em vez de reescrevê-los à mão. Não imponha os arquivos
+a todos os sites; documente o uso local e se o projeto publica ou não o
+conteúdo integral.
 
 ## Diagnóstico
 
@@ -26,11 +28,13 @@ As regras abaixo pertencem ao catálogo distribuído com o Astrofy. `automatic`
 executa um verificador; `manual` exige revisão identificada; `hybrid` combina
 checagem automática e revisão. A saída do comando não comprova itens manuais.
 
-| Regra            | Método   | Escopo | Verificação                                                   |
-| ---------------- | -------- | ------ | ------------------------------------------------------------- |
-| `geo.authorship` | `manual` | `page` | Autoria e responsabilidade identificáveis quando pertinentes. |
-| `geo.sources`    | `manual` | `page` | Fontes e afirmações relevantes revisadas.                     |
-| `geo.access`     | `hybrid` | `page` | Conteúdo principal acessível no modo de renderização adotado. |
+| Regra            | Método      | Escopo    | Verificação                                                              |
+| ---------------- | ----------- | --------- | ------------------------------------------------------------------------ |
+| `geo.authorship` | `manual`    | `page`    | Autoria e responsabilidade identificáveis quando pertinentes.            |
+| `geo.sources`    | `manual`    | `page`    | Fontes e afirmações relevantes revisadas.                                |
+| `geo.access`     | `hybrid`    | `page`    | Conteúdo principal acessível no modo de renderização adotado.            |
+| `geo.llms`       | `automatic` | `project` | Resumo presente em `public/` com URLs absolutas e apontamento integral.  |
+| `geo.llms-full`  | `hybrid`    | `project` | Integral deriva das páginas canônicas, sem rascunhos ou dados privados.  |
 
 ## Conteúdo legível por agentes
 
@@ -41,6 +45,39 @@ visível.
 
 Não trate comportamento de mecanismo externo como garantia. Verifique somente
 HTML, metadados, disponibilidade e dados fornecidos pelo site.
+
+## llms.txt e llms-full.txt
+
+`public/llms.txt` é o resumo para agentes: nome do site, resumo curto,
+recursos principais com URLs absolutas do domínio de produção e apontamento
+para `/llms-full.txt` quando o integral é publicado. `public/llms-full.txt`
+é o conteúdo integral derivado da mesma fonte das páginas canônicas, com
+URL absoluta por seção.
+
+Regras de conteúdo:
+
+- Inclua só rotas publicadas e conteúdo com status publicado. Exclua
+  rascunhos, datas futuras, conteúdo privado, credenciais e dados pessoais
+  não publicados.
+- Cada seção do integral informa a URL absoluta da página correspondente.
+  Links internos usam URL absoluta; link relativo reprova `geo.llms` e
+  `geo.llms-full`.
+- O resumo aponta para o integral quando ele existe. Resumo que anuncia
+  `llms-full.txt` ausente reprova a sincronia.
+- Não inclua no integral dado que a página canônica não exibe. Resumo
+  técnico não contradiz a página nem expõe dado privado porque o
+  destinatário é uma ferramenta automatizada.
+
+Regras de geração:
+
+- Gere os dois arquivos por script determinístico versionado no projeto,
+  com modo `--check` que falha quando o arquivo gravado diverge do esperado
+  (modelo em `templates/llms/generate-llms.mjs`). Ordenação estável,
+  mesma fonte das páginas e mesma normalização de URLs a cada execução.
+- Rode o gerador após alterar rotas ou coleções, confira o diff e publique
+  os arquivos pela raiz (`public/` sai na raiz do build Astro por padrão).
+- Não edite os arquivos gerados à mão para corrigir conteúdo editorial;
+  corrija a fonte (página ou coleção) e regenere.
 
 ## Plataforma e finalidade
 

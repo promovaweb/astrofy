@@ -72,7 +72,7 @@ Configurações, checklist, relatórios e documentação da adoção são gerado
 `init` e pelos checks. Eles são ignorados no Git destas fixtures. Os lockfiles,
 as fontes, o JSON de tokens, o manifesto de geração e `designsystem.css`
 permanecem versionáveis. Estes projetos não têm assets de marca completos;
-não foram aprovados como sites por todas as 90 regras do Astrofy.
+não foram aprovados como sites por todas as 92 regras do Astrofy.
 
 A suíte padrão `npm test` não instala nem recompila estas dependências
 adicionais. Execute este fluxo ao alterar adapters, geração CSS, dependências

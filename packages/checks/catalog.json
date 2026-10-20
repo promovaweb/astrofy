@@ -695,6 +695,26 @@
       "version": "1.0.0"
     },
     {
+      "id": "geo.llms",
+      "category": "geo",
+      "skill": "astrofy-geo",
+      "summary": "llms.txt presente em public/ com URLs absolutas e apontamento para o conteúdo integral.",
+      "method": "automatic",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
+      "id": "geo.llms-full",
+      "category": "geo",
+      "skill": "astrofy-geo",
+      "summary": "llms-full.txt deriva da mesma fonte das páginas canônicas, sem rascunhos ou dados privados.",
+      "method": "hybrid",
+      "severity": "warning",
+      "scope": "project",
+      "version": "1.0.0"
+    },
+    {
       "id": "links.broken",
       "category": "links",
       "skill": "astrofy-internal-links",

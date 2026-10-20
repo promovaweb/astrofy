@@ -43,7 +43,7 @@
     {"skill":"astrofy-seo","dependsOn":["astrofy-routing","astrofy-config"],"inputs":["HTML renderizado","URL pública"],"outputs":["metadados e indexação"]},
     {"skill":"astrofy-open-graph","dependsOn":["astrofy-seo","astrofy-images"],"inputs":["metadados","imagem pública"],"outputs":["Open Graph conferido"]},
     {"skill":"astrofy-structured-data","dependsOn":["astrofy-seo"],"inputs":["entidades visíveis","URLs canônicas"],"outputs":["JSON-LD validado"]},
-    {"skill":"astrofy-geo","dependsOn":["astrofy-seo","astrofy-structured-data"],"inputs":["HTML inicial","autoria e fontes"],"outputs":["descoberta por IA revisada"]},
+    {"skill":"astrofy-geo","dependsOn":["astrofy-seo","astrofy-structured-data"],"inputs":["HTML inicial","autoria e fontes","public/llms.txt","public/llms-full.txt","coleções publicadas"],"outputs":["descoberta por IA revisada","llms.txt e llms-full.txt sincronizados"]},
     {"skill":"astrofy-images","dependsOn":["astrofy-config"],"inputs":["origem e dimensões dos ativos"],"outputs":["imagens responsivas"]},
     {"skill":"astrofy-react","dependsOn":["astrofy-components","astrofy-config"],"inputs":["interação necessária","framework instalado"],"outputs":["ilhas hidratadas"]},
     {"skill":"astrofy-forms","dependsOn":["astrofy-security","astrofy-config"],"inputs":["campos","endpoint ou Action"],"outputs":["envio validado"]},

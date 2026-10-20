@@ -45,7 +45,7 @@ saídas e o comando que confere o domínio associado a cada skill.
 | `astrofy-seo` | `astrofy-routing`, `astrofy-config` | `HTML renderizado`, `URL pública` | `metadados e indexação` | `astrofy check --category seo` |
 | `astrofy-open-graph` | `astrofy-seo`, `astrofy-images` | `metadados`, `imagem pública` | `Open Graph conferido` | `astrofy check --category og` |
 | `astrofy-structured-data` | `astrofy-seo` | `entidades visíveis`, `URLs canônicas` | `JSON-LD validado` | `astrofy check --category structured` |
-| `astrofy-geo` | `astrofy-seo`, `astrofy-structured-data` | `HTML inicial`, `autoria e fontes` | `descoberta por IA revisada` | `astrofy check --category geo` |
+| `astrofy-geo` | `astrofy-seo`, `astrofy-structured-data` | `HTML inicial`, `autoria e fontes`, `public/llms.txt`, `public/llms-full.txt`, `coleções publicadas` | `descoberta por IA revisada`, `llms.txt e llms-full.txt sincronizados` | `astrofy check --category geo` |
 | `astrofy-images` | `astrofy-config` | `origem e dimensões dos ativos` | `imagens responsivas` | `astrofy check --category images` |
 | `astrofy-react` | `astrofy-components`, `astrofy-config` | `interação necessária`, `framework instalado` | `ilhas hidratadas` | `astrofy check --category react` |
 | `astrofy-forms` | `astrofy-security`, `astrofy-config` | `campos`, `endpoint ou Action` | `envio validado` | `astrofy check --category forms` |

@@ -186,6 +186,43 @@ export async function evaluate(item:ChecklistItem, context:CheckContext):Promise
     for(const group of Object.values(design.assets))for(const [key,value] of Object.entries(group))if(key!=='alt'&&value.startsWith('/')&&!(await exists(await safePath(root,path.posix.join(config.paths.public,value.slice(1))))))absent.push(value);
     return hybrid(absent.length?[`Ativos ausentes: ${absent.join(', ')}.`]:[],'Arquivos presentes; confirme autoria e adequação por tema.');
   }
+  if(rule==='geo.llms') {
+    const summaryFile = path.posix.join(config.paths.public, 'llms.txt');
+    files.push(summaryFile);
+    if(!(await exists(await safePath(root, summaryFile)))) return assessed(false, 'public/llms.txt ausente. Crie o resumo a partir das rotas publicadas.');
+    const summary = await read(summaryFile);
+    const problems: string[] = [];
+    if(!summary.trim()) problems.push('llms.txt vazio.');
+    const absolute = summary.match(/https?:\/\/[^\s)]+/g) ?? [];
+    if(!absolute.length) problems.push('llms.txt sem URL absoluta para as páginas do site.');
+    const relativeLinks = [...summary.matchAll(/\]\(\/(?!\/)[^)]*\)/g)];
+    if(relativeLinks.length) problems.push('llms.txt com link relativo; use URL absoluta com domínio de produção.');
+    const fullFile = path.posix.join(config.paths.public, 'llms-full.txt');
+    const fullExists = await exists(await safePath(root, fullFile));
+    if(fullExists && !/llms-full\.txt/i.test(summary)) problems.push('llms-full.txt publicado mas não apontado pelo llms.txt.');
+    return assessed(!problems.length, problems.join(' ') || 'llms.txt presente, com URLs absolutas e apontamento para o conteúdo integral.');
+  }
+  if(rule==='geo.llms-full') {
+    const summaryFile = path.posix.join(config.paths.public, 'llms.txt');
+    const fullFile = path.posix.join(config.paths.public, 'llms-full.txt');
+    files.push(summaryFile, fullFile);
+    const fullExists = await exists(await safePath(root, fullFile));
+    if(!fullExists) {
+      if(await exists(await safePath(root, summaryFile))) {
+        const summary = await read(summaryFile);
+        if(/llms-full\.txt/i.test(summary)) return hybrid(['llms.txt aponta para llms-full.txt ausente.'], 'Ligação para o conteúdo integral sem arquivo publicado.');
+      }
+      return hybrid([], 'llms-full.txt ausente; confirme se o site publica só o resumo e registre a decisão.');
+    }
+    const full = await read(fullFile);
+    const problems: string[] = [];
+    if(full.length < 1000) problems.push('llms-full.txt muito curto para conteúdo integral; confira a geração.');
+    if(!(full.match(/https?:\/\/[^\s)]+/g) ?? []).length) problems.push('llms-full.txt sem URL absoluta das páginas correspondentes.');
+    if(/]\(\/(?!\/)[^)]*\)/.test(full)) problems.push('llms-full.txt com link relativo; use URL absoluta.');
+    if(/draft:\s*true|status:\s*draft|\[DRAFT\]|\bTODO\b|\bFIXME\b/i.test(full)) problems.push('llms-full.txt com marcador de rascunho ou pendência; gere só a partir do conteúdo publicado.');
+    if(/-----BEGIN (?:RSA |EC )?PRIVATE KEY-----|AKIA[0-9A-Z]{16}|(?:api[_-]?key|secret|password)\s*[:=]\s*['"][^'"]{8,}['"]/i.test(full)) problems.push('llms-full.txt com possível credencial; valor omitido do relatório.');
+    return hybrid(problems, 'Conteúdo integral presente; compare com as páginas canônicas e confirme ausência de rascunhos e dados privados.');
+  }
   if(item.method==='automatic')return result('blocked',`A regra ${rule} depende de execução ou dados ainda indisponíveis no escopo.`, `Use ${item.skill} para completar a preparação.`);
   return result('pending','Revisão funcional, visual ou contextual ainda não registrada.',`Use ${item.skill} e registre responsável, justificativa e arquivos conferidos.`);
 }

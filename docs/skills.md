@@ -1233,25 +1233,34 @@ astrofy check --category og
 ## astrofy-geo
 
 Revisa clareza, autoria e acesso ao conteúdo de sites Astro para descoberta por
-IA, distinguindo orientações oficiais de hipóteses.
+IA e gerencia public/llms.txt e public/llms-full.txt em sincronia com as
+páginas canônicas.
 
-- **Entradas necessárias:** Conteúdo, fontes e plataformas de interesse.
+- **Entradas necessárias:** Conteúdo, fontes, plataformas de interesse,
+  public/llms.txt, public/llms-full.txt e coleções publicadas.
 - **Quando usar:** Verifique se a explicação principal de um artigo aparece no
-  HTML sem interação.
-- **Adaptação de projeto existente:** Um site usa llms.txt por escolha própria.
-  Preserve o arquivo, sem torná-lo exigência universal.
+  HTML sem interação e se o resumo e o integral para agentes refletem a mesma
+  fonte.
+- **Adaptação de projeto existente:** Um site usa llms.txt e llms-full.txt por
+  escolha própria. Preserve os arquivos, regenere a partir das páginas
+  canônicas e não os imponha como exigência universal.
 
 ### Procedimento
 
 Confira se a informação principal está acessível no HTML. Relacione afirmações
 às fontes fornecidas e identifique autoria quando pertinente. Consulte a
 orientação da plataforma específica. Registre recomendações com justificativa e
-limites de observação.
+limites de observação. Gerencie o resumo e o integral por script
+determinístico com modo --check (modelo em templates/llms/generate-llms.mjs):
+só conteúdo publicado, URLs absolutas do domínio de produção e apontamento do
+resumo para o integral quando ele existe.
 
 ### Entrega e conferência
 
 A revisão mostra o trecho e a fonte que justificam cada recomendação, sem
-prometer citações ou posições.
+prometer citações ou posições. O resumo passa em geo.llms e o integral passa
+na pré-checagem de geo.llms-full mais revisão humana contra as páginas
+canônicas.
 
 A skill indica a seguinte verificação, complementada pelos testes e pela revisão
 do escopo descrito acima:
@@ -1261,7 +1270,8 @@ astrofy check --category geo
 ```
 
 - **Limite ou erro recorrente:** Não apresente uma hipótese de recomendação como
-  garantia de ranking ou requisito oficial.
+  garantia de ranking ou requisito oficial. Não edite o integral à mão;
+  corrija a fonte e regenere.
 - **Instruções do agente:** [SKILL.md](../skills/astrofy-geo/SKILL.md).
 - **Referências:**
   [fontes técnicas](../skills/astrofy-geo/references/technical.md).

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.0] - 2026-10-20
+
+### Adicionado
+
+- Inclui verificações GEO de llms.txt e llms-full.txt e um modelo de gerador para projetos Astro.
+- Atualiza a documentação e a matriz das skills para conferir URLs, conteúdo publicado e possíveis credenciais.
+
 ## [0.11.0] - 2026-10-13
 
 ### Adicionado

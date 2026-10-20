@@ -5,9 +5,9 @@ import {readFile} from 'node:fs/promises';
 import {readRuleCatalog} from '../dist/checks/catalog.js';
 const source=JSON.parse(await readFile(new URL('../packages/checks/catalog.json',import.meta.url),'utf8'));
 
-test('catálogo distribuído mantém as 90 regras e suas identidades únicas',()=>{
+test('catálogo distribuído mantém as 92 regras e suas identidades únicas',()=>{
  const rules=readRuleCatalog(source);
- assert.equal(rules.length,90);assert.equal(new Set(rules.map(rule=>rule.id)).size,90);
+ assert.equal(rules.length,92);assert.equal(new Set(rules.map(rule=>rule.id)).size,92);
 });
 
 test('catálogo recusa duplicação, método inválido e versões incompatíveis',()=>{
