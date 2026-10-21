@@ -8,11 +8,10 @@ para propor alternativas quando você não tem uma resposta formada ainda.
 
 ## O que a entrevista cobre, e por que cada item importa
 
-- **Finalidade e ação principal** — sem isso, nenhuma outra decisão tem
-  base; é o que a página precisa fazer alguém fazer.
-- **Público e contexto de chegada** — a mesma oferta se apresenta
-  diferente para quem chega de um anúncio e para quem chega de uma busca
-  já informada.
+- **Finalidade e ação principal:** indique se a página deve levar ao
+  cadastro, à compra, ao contato ou a outro destino específico.
+- **Público e origem do acesso:** a oferta pode precisar de explicações
+  diferentes para visitas provenientes de anúncios ou de buscas específicas.
 - **Áreas da página e ordem de leitura** — a arquitetura aprovada no
   capítulo 2 ganha conteúdo real aqui, área por área.
 - **Títulos, textos, rótulos e mensagens de estado** — inclui texto que
@@ -62,16 +61,16 @@ aprovação explícita — nada que você não aprovou vira parte da
 especificação final. Áreas opcionais podem ficar pendentes
 deliberadamente: a aprovação final registra esse estado, então uma
 lacuna conhecida não é preenchida silenciosamente durante a
-implementação só porque alguém esqueceu que ela existia.
+implementação por esquecimento do que ficou pendente.
 
 ## Conduza a entrevista na conversa
 
 No caminho comum, você simplesmente responde às perguntas do agente na
-ordem em que ele as apresenta. Em cada ponto de decisão, aprove, ajuste
+ordem apresentada. Diante de cada proposta, aprove, ajuste
 ou deixe uma área opcional pendente, usando linguagem natural — não há
 sintaxe especial a aprender. O agente registra cada resposta e monta a
-especificação conforme a conversa avança; você não precisa saber em que
-arquivo ou formato isso está sendo salvo.
+especificação conforme a conversa avança. Você pode consultar os arquivos
+gerados depois de responder.
 
 ## Alternativa pelo CLI
 
@@ -88,8 +87,7 @@ astrofy page status --slug atlas
 ```
 
 `page status` devolve até três itens em `nextQuestions` — o mesmo limite
-que a conversa usa, para não sobrecarregar quem está respondendo com uma
-lista longa de uma vez. Registre cada resposta com o identificador de
+que a conversa usa, para você responder a uma lista curta por vez. Registre cada resposta com o identificador de
 campo recebido:
 
 ```bash

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "skills": [
     {
       "name": "astrofy-setup",
@@ -266,6 +266,11 @@
       "name": "astrofy-sitespec-implement",
       "title": "Implementar sitespec",
       "description": "Executa uma tarefa registrada em .sitespec/ com a skill principal indicada e atualiza o SITEPEC.md a cada item concluído, nota ou mudança de estado."
+    },
+    {
+      "name": "astrofy-design",
+      "title": "Astrofy Design",
+      "description": "Cria, estuda, audita e redesenha interfaces Astro com composição, temas, tipografia e movimento integrados ao design system do projeto."
     }
   ]
 }

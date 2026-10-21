@@ -36,6 +36,27 @@ quando precisar desses comandos.
 As skills operam sobre projetos Astro existentes. O pacote não inclui um
 template de site.
 
+## Astrofy Design
+
+A área [Astrofy Design](docs/design.md) acrescenta composição visual, estudo de
+referências, auditoria e redesign. A skill inclui as referências e as paletas
+localmente, com integração aos tokens e componentes do projeto Astro.
+O [guia prático](docs/user/11-astrofy-design.md) e a
+[referência de uso](docs/user/12-astrofy-design-referencia.md) também integram
+o PDF, o EPUB e a documentação do site.
+
+No checkout desta edição, instale a skill no projeto desejado:
+
+```bash
+node dist/cli/index.js skills install --agent codex --skill astrofy-design --root /caminho/do/site --dry-run
+node dist/cli/index.js skills install --agent codex --skill astrofy-design --root /caminho/do/site
+```
+
+Depois peça ao agente `astrofy-design build`, `astrofy-design study`,
+`astrofy-design audit` ou `astrofy-design redesign`. Esses nomes são modos
+da skill e não comandos adicionais do CLI. Os avisos de licença ficam
+junto dos materiais incorporados.
+
 ## Desenvolvimento do pacote
 
 Use Node.js 22.12 ou posterior e instale as dependências registradas no lockfile.
@@ -143,7 +164,7 @@ gravar nada. O contrato completo do arquivo está em [docs/sitespec.md](docs/sit
 - **TUI:** [navegação e revisão manual](docs/tui.md).
 - **Arquitetura:** [pacotes e integridade de escrita](docs/architecture.md).
 - **Compatibilidade:** [faixas e validação](docs/compatibility.md).
-- **Skills:** [guia das 53 skills, instalação, fluxos e exemplos](docs/skills.md).
+- **Skills:** [guia das 54 skills, instalação, fluxos e exemplos](docs/skills.md).
 - **Verificação das skills:** [cenários executados e limites dos testes](docs/skills-validation.md).
 - **Tarefas pontuais:** [contrato do SITEPEC.md](docs/sitespec.md).
 - **Gestão do projeto:** [backlog, timesheets e redistribuição de datas](docs/backlog-timesheets.md).

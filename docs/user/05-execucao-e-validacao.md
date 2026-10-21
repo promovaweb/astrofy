@@ -3,8 +3,7 @@
 O plano (capítulo 4) indica a skill principal de cada tarefa. O agente
 executa, uma tarefa por vez, as skills que se aplicam ao escopo aprovado
 — ele não dispara todas de uma vez nem decide sozinho pular uma etapa
-que a tarefa pede. Uma sequência comum, na ordem em que normalmente faz
-sentido aplicá-las, usa:
+que a tarefa pede. Uma sequência possível de aplicação usa:
 
 1. `astrofy-architecture`, `astrofy-routing` e `astrofy-config` para a
    base — rota, estrutura de pastas e configuração pública.
@@ -42,7 +41,7 @@ astrofy apply --slug atlas
 astrofy apply --slug atlas --task route --status completed
 ```
 
-O primeiro comando, sem `--task`, escolhe por conta própria a tarefa a
+O primeiro comando, sem `--task`, seleciona automaticamente a tarefa a
 iniciar — a que já está `in_progress`, ou a primeira `draft` sem
 dependência pendente (`blockedBy` vazio). O segundo marca `route` como
 concluída: isso grava `status: done` na sitespec e marca cada item da
@@ -100,8 +99,7 @@ desambiguam quando a mesma regra se aplica a mais de uma rota ou
 componente — uma regra de escopo `project`, que vale para o site inteiro,
 não precisa de nenhum dos dois. `--reviewer` e `--reason` são
 obrigatórios e não podem ficar vazios: o registro existe justamente para
-que alguém identificável explique o que foi observado, não para só
-marcar um checkbox.
+que a pessoa indicada em `--reviewer` explique a conferência realizada.
 
 Uma regra `automatic` não aceita esse registro manual — ela só é
 aprovada pelo próprio verificador, dentro de `astrofy check`. Isso evita

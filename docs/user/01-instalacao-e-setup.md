@@ -25,9 +25,9 @@ astrofy skills install --agent codex
 
 Troque `codex` por `claude` se esse for o agente usado no projeto — o
 destino muda (`.agents/skills/` para Codex, `.claude/skills/` para
-Claude), mas o conteúdo instalado é o mesmo catálogo de 51 skills. Para
+Claude), mas o conteúdo instalado é o mesmo catálogo de 54 skills. Para
 conferir o que seria escrito antes de gravar, acrescente `--dry-run`; o
-comando mostra a lista de arquivos sem tocar no disco.
+comando mostra a lista de arquivos sem gravar no disco.
 
 A instalação é local ao projeto, nunca global: o Astrofy não escreve em
 diretórios fora do site aberto. Ela também é conservadora com

@@ -10,3 +10,5 @@ docs/user/07-execucao-retomavel.md
 docs/user/08-sitespec-tarefas-do-site.md
 docs/user/09-retomada-e-manutencao.md
 docs/user/10-solucao-de-problemas.md
+docs/user/11-astrofy-design.md
+docs/user/12-astrofy-design-referencia.md

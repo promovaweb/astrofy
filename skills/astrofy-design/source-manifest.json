@@ -1,0 +1,550 @@
+{
+  "schemaVersion": "1.0.0",
+  "revision": "13ac0ec7e148655948100b6396439e481361d690",
+  "license": "MIT",
+  "files": [
+    {
+      "path": "SKILL.md",
+      "sha256": "59469635bbbd21acddbc664d95e8d97147f454b2d8f4a0a89c7d2c5afbe67577",
+      "destination": "references/design-flow.md"
+    },
+    {
+      "path": "references/anti-patterns.md",
+      "sha256": "a36eb346ad59cafaa26119ed1e7c0bbb8aca6637209ee110eb630dd1a9307070",
+      "destination": "references/anti-patterns.md"
+    },
+    {
+      "path": "references/assets.md",
+      "sha256": "60929b3dc2258b69caf3012d99d174e1ad73da9645263db81a9b271cd6fd7d61",
+      "destination": "references/assets.md"
+    },
+    {
+      "path": "references/color.md",
+      "sha256": "31c470d16ceb17ccce290cbdd00b9e9a88f2094df8eaaefb67c86ec1e1cdb876",
+      "destination": "references/color.md"
+    },
+    {
+      "path": "references/component-cookbook.md",
+      "sha256": "4d9ff4eeb675b9d668516ce5d098031d3552453b3671e50da30fb38cb9ab58bb",
+      "destination": "references/component-cookbook.md"
+    },
+    {
+      "path": "references/components/c1-outlined-chip.md",
+      "sha256": "bfc3bcef6e23062710845dd8986dbf98574c6c46ffade1db255dbe13a3203262",
+      "destination": "references/components/c1-outlined-chip.md"
+    },
+    {
+      "path": "references/components/c2-inline-form-as-cta.md",
+      "sha256": "1a6e3d564f49a1d3345117bf2f8af5aea46938c6974bf7eb86cf890e5068bc95",
+      "destination": "references/components/c2-inline-form-as-cta.md"
+    },
+    {
+      "path": "references/components/c3-typographic-link.md",
+      "sha256": "59362c6d9f683ec15c3e09862f2ea6cd8e2a84574738ece98e479c58607d0d69",
+      "destination": "references/components/c3-typographic-link.md"
+    },
+    {
+      "path": "references/components/c4-sticky-bottom-bar.md",
+      "sha256": "67234a8d8722bf0685d00a64ac737748c82af7e0c25271d0c50f418739bd03c6",
+      "destination": "references/components/c4-sticky-bottom-bar.md"
+    },
+    {
+      "path": "references/components/f1-bento-grid.md",
+      "sha256": "d696a5ab7d6258cff0d2d9527fe07651bfbda6a725a4dfd8de00f678e1fb2bbc",
+      "destination": "references/components/f1-bento-grid.md"
+    },
+    {
+      "path": "references/components/f2-sticky-scroll-stack.md",
+      "sha256": "0079ce8c01e8d008882411ed807aa367276cc67af9b956c4f06da1714007ae83",
+      "destination": "references/components/f2-sticky-scroll-stack.md"
+    },
+    {
+      "path": "references/components/f3-tabular-spec-sheet.md",
+      "sha256": "16331628cf441c7b570055c8edd60693d0aa793d1bc5eb2bfd145da700d9f072",
+      "destination": "references/components/f3-tabular-spec-sheet.md"
+    },
+    {
+      "path": "references/components/f4-step-sequence.md",
+      "sha256": "d3ca2aa99f7e639b8ccda20f5e263f3a33b03830f8c93d666f469b8e629975e2",
+      "destination": "references/components/f4-step-sequence.md"
+    },
+    {
+      "path": "references/components/f5-annotated-screenshot.md",
+      "sha256": "58f9f4811ea60f923b2f44e0f3e9bac95c40929f8b1af4fdeedd1eae424051ec",
+      "destination": "references/components/f5-annotated-screenshot.md"
+    },
+    {
+      "path": "references/components/f6-product-card-grid.md",
+      "sha256": "22ebc07b00d71c950be8d1a0fdad2cc0e7340cfbbf2cd62c43804bfcfaaf106a",
+      "destination": "references/components/f6-product-card-grid.md"
+    },
+    {
+      "path": "references/components/ft1-mast-headed.md",
+      "sha256": "7f5671b583e9991f9a4671c223d6c15efdee5c1161dc616cbe2b398eb8d1b6db",
+      "destination": "references/components/ft1-mast-headed.md"
+    },
+    {
+      "path": "references/components/ft2-inline-rule-single-line.md",
+      "sha256": "de13bf7d9bfaddb42a84fc8584646e914f2273abdb34aa98ea9bd2f5d7ff0493",
+      "destination": "references/components/ft2-inline-rule-single-line.md"
+    },
+    {
+      "path": "references/components/ft3-index-style-category-list.md",
+      "sha256": "9f70608d62872be05af910a6168017c872ee1c17b2dbb8329128569231aa3cce",
+      "destination": "references/components/ft3-index-style-category-list.md"
+    },
+    {
+      "path": "references/components/ft4-dense-typographic.md",
+      "sha256": "b8d087773614698036e63474a8546024d874bb6da2b575e64fcaacc2fba0ad60",
+      "destination": "references/components/ft4-dense-typographic.md"
+    },
+    {
+      "path": "references/components/ft5-statement.md",
+      "sha256": "71be63a51def6a3b59badcd481e49d4d5c5d9f3d63a3b4a5b9c05482110f4000",
+      "destination": "references/components/ft5-statement.md"
+    },
+    {
+      "path": "references/components/ft6-letter-close.md",
+      "sha256": "8119d22fbbfb3efa83d0bdc41acbfc5037f2c80cb7c39659623d5216eb16c03e",
+      "destination": "references/components/ft6-letter-close.md"
+    },
+    {
+      "path": "references/components/ft7-newsletter-first.md",
+      "sha256": "2cd766761a8e18bff7bc473b3303392b806a15e461187ac325138f77a308dd48",
+      "destination": "references/components/ft7-newsletter-first.md"
+    },
+    {
+      "path": "references/components/ft8-marquee-scroll.md",
+      "sha256": "32b8d38df984b0db385e9ce2251bbf6bb8df279e3933c441b97a0b703961e9f0",
+      "destination": "references/components/ft8-marquee-scroll.md"
+    },
+    {
+      "path": "references/components/h1-marquee.md",
+      "sha256": "8258b25e27232994126701a4f72bf05267fc9c5dfdc14bcf186efaf96a7dbb10",
+      "destination": "references/components/h1-marquee.md"
+    },
+    {
+      "path": "references/components/h2-split-diptych.md",
+      "sha256": "f6077864f5c58414d7a10648aa8a3162767f2e356d0701d01953181a83cf3364",
+      "destination": "references/components/h2-split-diptych.md"
+    },
+    {
+      "path": "references/components/h3-quote-led.md",
+      "sha256": "4b1427750c5041ab9201cd18fcdd3dd7a93622644eff518d9ad300339f9a46b7",
+      "destination": "references/components/h3-quote-led.md"
+    },
+    {
+      "path": "references/components/h4-stat-led.md",
+      "sha256": "9ada00461ea12be83dec2fba58e19fffd2c559925e68eb72ec18e0ec434f6cec",
+      "destination": "references/components/h4-stat-led.md"
+    },
+    {
+      "path": "references/components/h5-letter-hero.md",
+      "sha256": "afcd7bb6b4c888d7e8460e7af5e86dc50149ca253419757bed2834bf66083321",
+      "destination": "references/components/h5-letter-hero.md"
+    },
+    {
+      "path": "references/components/h6-photographic-fold.md",
+      "sha256": "59e046afd5648bfe2737966f1203c0212e7311fbf0e1edee448e3f68f45aa0d0",
+      "destination": "references/components/h6-photographic-fold.md"
+    },
+    {
+      "path": "references/components/h7-demo-video-clipped-by-viewport-edge.md",
+      "sha256": "12b6f32a47a0b2e73547a0ac8b641cc19b1caa05dda4ffde424defb53afaa0de",
+      "destination": "references/components/h7-demo-video-clipped-by-viewport-edge.md"
+    },
+    {
+      "path": "references/components/h8-mockup-split-browser-framed.md",
+      "sha256": "954b0a3aebfe6de8a3be70fedda669099125dd2ebc9c07948fbdb457fd8dc166",
+      "destination": "references/components/h8-mockup-split-browser-framed.md"
+    },
+    {
+      "path": "references/components/h9-custom-illustration-centerpiece.md",
+      "sha256": "1d3d32859e6e451a67bfc38a403bd80115a42b6898a4d8788e4cfadb8c83e8d6",
+      "destination": "references/components/h9-custom-illustration-centerpiece.md"
+    },
+    {
+      "path": "references/components/n1-wordmark-2-links.md",
+      "sha256": "8504774127e33f24a09844eb4c678e91b09ed513690fce51f7863d7cf3fdeab1",
+      "destination": "references/components/n1-wordmark-2-links.md"
+    },
+    {
+      "path": "references/components/n10-floating-on-scroll-morph.md",
+      "sha256": "056c2107492ab0eb9dafc7ab4c7ff5454222c1ee127fa45615ccc7b8955da36a",
+      "destination": "references/components/n10-floating-on-scroll-morph.md"
+    },
+    {
+      "path": "references/components/n11-mega-menu.md",
+      "sha256": "b715421012d0997d25d5739c209be6129132fc91add677d75a8ad82d8672e1d4",
+      "destination": "references/components/n11-mega-menu.md"
+    },
+    {
+      "path": "references/components/n12-banner-retract.md",
+      "sha256": "2d52ecb8725b1991d4f6b78301cd6f112464f7b17315bdf0febbff67bca50a56",
+      "destination": "references/components/n12-banner-retract.md"
+    },
+    {
+      "path": "references/components/n13-inline-cmdk-pill.md",
+      "sha256": "6375fa0a1bbc92cba9a435159aa46cb084fc030c63e1abf8f073688959d7be75",
+      "destination": "references/components/n13-inline-cmdk-pill.md"
+    },
+    {
+      "path": "references/components/n1b-saas-three-section.md",
+      "sha256": "c2631c7807e33eea9b02faa9121a0f9e64861467b57b8635ee97f5fa52bb60ae",
+      "destination": "references/components/n1b-saas-three-section.md"
+    },
+    {
+      "path": "references/components/n2-floating-chip.md",
+      "sha256": "70ea848537c5fe29be30f5e4b7478ecc39f86d0089f207549dc98a873b6c8fc1",
+      "destination": "references/components/n2-floating-chip.md"
+    },
+    {
+      "path": "references/components/n3-side-rail.md",
+      "sha256": "20ed8a06a599d73190502a4801a3be2933b8e06874371167196b7d32dae66111",
+      "destination": "references/components/n3-side-rail.md"
+    },
+    {
+      "path": "references/components/n4-hidden-behind-k.md",
+      "sha256": "bccddb3a25a6afd457163b71e09de07ac23bf5d922fdeb9561e25d825bb97dcf",
+      "destination": "references/components/n4-hidden-behind-k.md"
+    },
+    {
+      "path": "references/components/n5-floating-pill.md",
+      "sha256": "6dc8ffb9628fd7ee3669208091e11497864cecea69becc6b513ebdc1f3a737a3",
+      "destination": "references/components/n5-floating-pill.md"
+    },
+    {
+      "path": "references/components/n6-newspaper-masthead.md",
+      "sha256": "243a28d1165328c3479a1b75a3ae05dbfe2a6b8c9f867df8e35873b391f8edd5",
+      "destination": "references/components/n6-newspaper-masthead.md"
+    },
+    {
+      "path": "references/components/n7-brutal-slab.md",
+      "sha256": "6c58d29129f7fd89b9fc755143648397749cdd06043ae0c0b51e6f07e7e6dcb5",
+      "destination": "references/components/n7-brutal-slab.md"
+    },
+    {
+      "path": "references/components/n8-terminal-command.md",
+      "sha256": "c88d787bd2e5cf8bf6fb2c4121602dc0289760b41235d437468322821ee4334b",
+      "destination": "references/components/n8-terminal-command.md"
+    },
+    {
+      "path": "references/components/n9-edge-aligned-minimal.md",
+      "sha256": "cc20c76a5abe7099ed2bde3480c81f75f02a760a4c0d2ac79de1503dca9f9ee3",
+      "destination": "references/components/n9-edge-aligned-minimal.md"
+    },
+    {
+      "path": "references/components/s1-left-margin-numbered.md",
+      "sha256": "074ed68eafb03ca775b0593d0599fe20c7891356f473f04996f42425e6586585",
+      "destination": "references/components/s1-left-margin-numbered.md"
+    },
+    {
+      "path": "references/components/s2-hanging.md",
+      "sha256": "7b6d04cb896051006fe41b041a67ed77d25010edb579c60b03d88f68ae471462",
+      "destination": "references/components/s2-hanging.md"
+    },
+    {
+      "path": "references/components/s3-sticky-pinned.md",
+      "sha256": "4101cd7a28fe21a9b8094848ac6cc13c89f9e6f9bf801f04ac69b986c76727b4",
+      "destination": "references/components/s3-sticky-pinned.md"
+    },
+    {
+      "path": "references/components/s4-inline-no-break.md",
+      "sha256": "4b6d36da05383df1b29afe17b96645b816de07373016deb667efca340bb61ac6",
+      "destination": "references/components/s4-inline-no-break.md"
+    },
+    {
+      "path": "references/components/s5-bottom-anchored.md",
+      "sha256": "55c159e2d8299501f14ac97468404dc8cad35695c2b7eaad2e972d314620eca0",
+      "destination": "references/components/s5-bottom-anchored.md"
+    },
+    {
+      "path": "references/components/t1-pull-quote-with-marginalia.md",
+      "sha256": "c7139796972c5f47d723742cbff02916a1ee0f2496456b86ac05d8839542be38",
+      "destination": "references/components/t1-pull-quote-with-marginalia.md"
+    },
+    {
+      "path": "references/components/t2-logo-wall-hairline.md",
+      "sha256": "942121342a61bb4650722f7ba1b605347c6178d69ebeb740139b0bfb5c810e7f",
+      "destination": "references/components/t2-logo-wall-hairline.md"
+    },
+    {
+      "path": "references/components/t3-single-huge-quote.md",
+      "sha256": "7bca56e2cd630da3669f7cf8befd1bd654a5b249cf38b6d9af5a7c62e33b9239",
+      "destination": "references/components/t3-single-huge-quote.md"
+    },
+    {
+      "path": "references/components/t4-numbered-stat-strip.md",
+      "sha256": "a5fb5615902f9c4026f4ae7b0c96b536bb3cbb2fb4259031342d1cd190dab729",
+      "destination": "references/components/t4-numbered-stat-strip.md"
+    },
+    {
+      "path": "references/contract.md",
+      "sha256": "2923a056b95da63d04100ac56bc8cdff6bc0a717ac3e5da5cef69eb5feb4619c",
+      "destination": "references/contract.md"
+    },
+    {
+      "path": "references/copy.md",
+      "sha256": "703cdbf81fbef6f71d90596a32041d2a33a46fb71ba07ccf5ede6b4b1471d347",
+      "destination": "references/copy.md"
+    },
+    {
+      "path": "references/custom-craft.md",
+      "sha256": "417ff74cd83e1fea50c41948c53e18365269b880806ef4f31d9e0ebda0f99246",
+      "destination": "references/custom-craft.md"
+    },
+    {
+      "path": "references/custom-theme.md",
+      "sha256": "da0fb051689bf9d100e50e67209566623c1fbe72e09b943248c458985c39e780",
+      "destination": "references/custom-theme.md"
+    },
+    {
+      "path": "references/design-md.md",
+      "sha256": "a9368b64dd9b6e53e8c707830ce28fd8601d3195a81647ea46b6995aa3556b3c",
+      "destination": "references/design-md.md"
+    },
+    {
+      "path": "references/export-formats.md",
+      "sha256": "de0a73d9bec7a31abbd0cbbf1ecd51c2e440f1f3fdc08f476a343959ca6c22f3",
+      "destination": "references/export-formats.md"
+    },
+    {
+      "path": "references/floating-nav.md",
+      "sha256": "c8c80f6560700bf6ee6baf28b81ec1539e9ff920d885624707de5fe8803c25d1",
+      "destination": "references/floating-nav.md"
+    },
+    {
+      "path": "references/genres/atmospheric.md",
+      "sha256": "58d36e9a59c7d9e0ca99edeaaadab885f2635386fa69d52ea9eda3c29977e190",
+      "destination": "references/genres/atmospheric.md"
+    },
+    {
+      "path": "references/genres/editorial.md",
+      "sha256": "1e88cd0c94435c6a9edd1c0b93b67db4321fb3481ff0d66ee24869e655847319",
+      "destination": "references/genres/editorial.md"
+    },
+    {
+      "path": "references/genres/modern-minimal.md",
+      "sha256": "6125db00e38f2baca9369ed4d4aa917d977b85dd5eac6f19dac89707c3c3534b",
+      "destination": "references/genres/modern-minimal.md"
+    },
+    {
+      "path": "references/genres/playful.md",
+      "sha256": "e52c6ff3fe21b5024c83ac1f03285e1d627e3469ff140d6bea728642026c4f95",
+      "destination": "references/genres/playful.md"
+    },
+    {
+      "path": "references/hero-enrichment.md",
+      "sha256": "63c14cc2c256dd78a69a1c36f4bcb764940aa7f1ba2e6dd40ca36013f8884a83",
+      "destination": "references/hero-enrichment.md"
+    },
+    {
+      "path": "references/imagery-kit.md",
+      "sha256": "39d71df8dd6186b27f174fd8ab8ffd379553be3917cff50810c72365f6d6cb53",
+      "destination": "references/imagery-kit.md"
+    },
+    {
+      "path": "references/interaction-and-states.md",
+      "sha256": "e816eb2d067ba9f6f288a3831549da95624a05f432ed2a50f54136f27dd2d67f",
+      "destination": "references/interaction-and-states.md"
+    },
+    {
+      "path": "references/layout-and-space.md",
+      "sha256": "987f3a45f5dbe81547117a77987bcedf5376608a6412067e04337047e0c7c839",
+      "destination": "references/layout-and-space.md"
+    },
+    {
+      "path": "references/macrostructures/01-bento-grid.md",
+      "sha256": "aa268415862188414f8db94715e20ae7d29df3dc7c494083683378705f3f8493",
+      "destination": "references/macrostructures/01-bento-grid.md"
+    },
+    {
+      "path": "references/macrostructures/02-long-document.md",
+      "sha256": "8ca81106396f2bd00eb9ef5d5d1f00c3aab0500394e706d6a2b3221a6c0d910f",
+      "destination": "references/macrostructures/02-long-document.md"
+    },
+    {
+      "path": "references/macrostructures/03-marquee-hero.md",
+      "sha256": "2b7c35860086da6232cb3725c059bead9a31a91872d464266ce6e07a5a75f755",
+      "destination": "references/macrostructures/03-marquee-hero.md"
+    },
+    {
+      "path": "references/macrostructures/04-stat-led.md",
+      "sha256": "a6930b4ba6377c8ef5fcb7af6bf4393cd924292cf03871a37636dd4b77de22b7",
+      "destination": "references/macrostructures/04-stat-led.md"
+    },
+    {
+      "path": "references/macrostructures/05-workbench.md",
+      "sha256": "0cbe92772c7b2ffd9b24b9e446b1e1cd9ed22930b39030ef5a6e9cba5512d31f",
+      "destination": "references/macrostructures/05-workbench.md"
+    },
+    {
+      "path": "references/macrostructures/06-conversational-faq.md",
+      "sha256": "373473bed23d055164edc04b16344fcd3861c1ab39ff73f3c75dc1719663d488",
+      "destination": "references/macrostructures/06-conversational-faq.md"
+    },
+    {
+      "path": "references/macrostructures/07-manifesto.md",
+      "sha256": "dc1327bad300179c1b233d02d20137776dc98c9affcfd3942b9f3f796ca67b93",
+      "destination": "references/macrostructures/07-manifesto.md"
+    },
+    {
+      "path": "references/macrostructures/08-photographic.md",
+      "sha256": "e5c77bb6ca6d82616c9c63bb6e68ee17c6af7bbca935f9ff29481294d7d1f74c",
+      "destination": "references/macrostructures/08-photographic.md"
+    },
+    {
+      "path": "references/macrostructures/09-quote-led.md",
+      "sha256": "39069a564d9ebd76daf26f46ec7776828dc45fc6a72ae712b3bf7a4fd012f650",
+      "destination": "references/macrostructures/09-quote-led.md"
+    },
+    {
+      "path": "references/macrostructures/10-specimen.md",
+      "sha256": "7f23cead7f91c2ee2335eb2c87fb0aa1e7826f4573748d549756523085ed6ad4",
+      "destination": "references/macrostructures/10-specimen.md"
+    },
+    {
+      "path": "references/macrostructures/11-catalogue.md",
+      "sha256": "99ff614600f18cfc80dfa3b9a2158dbea3b3674f76f40b70e721b9255796c265",
+      "destination": "references/macrostructures/11-catalogue.md"
+    },
+    {
+      "path": "references/macrostructures/12-letter.md",
+      "sha256": "6f3ad86e87223bd9b6b1267e27532811efbb60f50606e7f72c8525d2cc01d709",
+      "destination": "references/macrostructures/12-letter.md"
+    },
+    {
+      "path": "references/macrostructures/13-index-first.md",
+      "sha256": "25c832844a1b5e6ce17a335ac98e81d98d9e3372f514d83dc26ac299cc077865",
+      "destination": "references/macrostructures/13-index-first.md"
+    },
+    {
+      "path": "references/macrostructures/14-narrative-workflow.md",
+      "sha256": "e604a1106131fe3a65721066a304922e757a78c997c197227840931079c780fd",
+      "destination": "references/macrostructures/14-narrative-workflow.md"
+    },
+    {
+      "path": "references/macrostructures/15-split-studio.md",
+      "sha256": "400effa4de50d5f2fabd88be37447aa845deb3b67810ed4f2b995df458c852e4",
+      "destination": "references/macrostructures/15-split-studio.md"
+    },
+    {
+      "path": "references/macrostructures/16-feature-stack.md",
+      "sha256": "a389fae7fe39550352bdf1ce68cdaa3965a434fa1154f67d3c276e550d1d165a",
+      "destination": "references/macrostructures/16-feature-stack.md"
+    },
+    {
+      "path": "references/macrostructures/17-type-specimen.md",
+      "sha256": "a1487fde891f73bf34a2ca38a631a2cb5c71d3a7b2ccd940114354e291ea8034",
+      "destination": "references/macrostructures/17-type-specimen.md"
+    },
+    {
+      "path": "references/macrostructures/18-portfolio-grid.md",
+      "sha256": "af5d0f34a7ef7b81d6f4c8c845497ae553d44f418526d7e503346c9243b034e3",
+      "destination": "references/macrostructures/18-portfolio-grid.md"
+    },
+    {
+      "path": "references/macrostructures/19-map-diagram.md",
+      "sha256": "5a576f25f4c8d58c14f574e3413560118343df9a9669db80c6c452daf509c3c3",
+      "destination": "references/macrostructures/19-map-diagram.md"
+    },
+    {
+      "path": "references/macrostructures/20-ecosystem-index.md",
+      "sha256": "fe206580a39ffc4b3534f3a7414155aa626fe16b82b608a0b8b415c1510f17ad",
+      "destination": "references/macrostructures/20-ecosystem-index.md"
+    },
+    {
+      "path": "references/macrostructures/21-component-playground.md",
+      "sha256": "ad3cbdbe9181e9472cb7b7fffbbe35021dc9b5b99ea86adc026f34d6b2c2f01f",
+      "destination": "references/macrostructures/21-component-playground.md"
+    },
+    {
+      "path": "references/macrostructures.md",
+      "sha256": "a6f19a17073aca18a6ff7a8fc8c3c5f711865e01c6d97de609771b47fe8394bc",
+      "destination": "references/macrostructures.md"
+    },
+    {
+      "path": "references/microinteractions.md",
+      "sha256": "613ca56c2c16e40aeb594af21fabd651732d9de63c848aee51113602525f6e64",
+      "destination": "references/microinteractions.md"
+    },
+    {
+      "path": "references/motion.md",
+      "sha256": "330d056810315f65819579f8207afe402703a9192bc76a2009558a59b7c84ccf",
+      "destination": "references/motion.md"
+    },
+    {
+      "path": "references/preview-examples.md",
+      "sha256": "df61c24c9a67457ef7369ec5f20575095326df72ffe6534c8fa9730581ebf7d9",
+      "destination": "references/preview-examples.md"
+    },
+    {
+      "path": "references/responsive.md",
+      "sha256": "2bf18d72af704ca5dd3c220359a4c77c718efa19c40f62d9bff61ac4a90209b0",
+      "destination": "references/responsive.md"
+    },
+    {
+      "path": "references/slop-test.md",
+      "sha256": "6eb49fc64ca54929d2c1600e2a6014268f1a7593787c0ed3f6ecb4ac8390ad86",
+      "destination": "references/slop-test.md"
+    },
+    {
+      "path": "references/structure.md",
+      "sha256": "ca5c0296ae428f8c4c5214407d431bbda5c453f98f2e7abdec03d644271af32b",
+      "destination": "references/structure.md"
+    },
+    {
+      "path": "references/study.md",
+      "sha256": "021fe4d001b38ee87414c1bb69321d2e44b67df8ede76ecec225c41a634aab20",
+      "destination": "references/study.md"
+    },
+    {
+      "path": "references/themes/carnival.md",
+      "sha256": "119a9c803eac74958e5df6151da8a2575a1cc2d061a619bdb7f32cf972308ee2",
+      "destination": "references/themes/carnival.md"
+    },
+    {
+      "path": "references/themes/cobalt.md",
+      "sha256": "13be92af729e6b82d1b1e51aa078f7c007e2900c8f0798b2c0fd2c0eeac7019e",
+      "destination": "references/themes/cobalt.md"
+    },
+    {
+      "path": "references/themes/grid.md",
+      "sha256": "e68e8b97f62d613dc94a03afd346b9e12de8ffcc65dc8633c4c223c92875c7da",
+      "destination": "references/themes/grid.md"
+    },
+    {
+      "path": "references/themes/hum.md",
+      "sha256": "bbdd1e89a32d6b15e99493ba9497816a0915bd4e9bf150b95868db597c20e1d5",
+      "destination": "references/themes/hum.md"
+    },
+    {
+      "path": "references/themes/lumen.md",
+      "sha256": "d5459478d3aa1ea6330c221dfe011b717a70dbb036f597403b3a6b3cf82dd53b",
+      "destination": "references/themes/lumen.md"
+    },
+    {
+      "path": "references/typography.md",
+      "sha256": "94d7b2d2b138bd8687e09dc3dd618eaafff500b0497a6d69cb4c29b764e94b9c",
+      "destination": "references/typography.md"
+    },
+    {
+      "path": "references/verbs/audit.md",
+      "sha256": "0a5b484453f1697a8675a7020df9159d0b4ce22f059b873501bfd82c26d6a31a",
+      "destination": "references/verbs/audit.md"
+    },
+    {
+      "path": "references/verbs/redesign.md",
+      "sha256": "c2830f3b7d68e9622f55d376048a5a454c5ef59d309a211e716d1142e86acbdf",
+      "destination": "references/verbs/redesign.md"
+    }
+  ],
+  "adaptations": [
+    "Identidade operacional astrofy-design.",
+    "Histórico em .astrofy/design/log.json.",
+    "Links internos e paletas incorporadas.",
+    "Pontuação e formato Markdown ajustados.",
+    "Instruções locais em Português do Brasil."
+  ],
+  "omittedAssets": "Imagens remotas não distribuídas pela fonte."
+}

@@ -4,7 +4,7 @@ Você descreve o trabalho ao agente na conversa, em linguagem natural. O
 Astrofy não espera um comando nem um formato: ele examina o projeto,
 decide quais das suas skills resolvem o pedido e pergunta só o que falta
 para continuar. Para uma página inteira, isso significa aprovar o
-conteúdo antes de qualquer arquivo técnico ser tocado; para um ajuste
+conteúdo antes da edição de qualquer arquivo técnico. para um ajuste
 pontual, significa registrar uma tarefa e executá-la sem reabrir uma
 entrevista completa.
 
@@ -40,8 +40,8 @@ que a página diz.
 
 `astrofy-setup` fica fora desse percurso de página: ele serve para a
 adoção ampla do framework num projeto existente, ou para revisar a
-cobertura das 51 skills contra o site atual. Se você pedir uma página
-específica, o agente decide por conta própria se precisa rodar o setup
+cobertura das 54 skills contra o site atual. Se você pedir uma página
+específica, o agente avalia se precisa executar o setup
 antes — você não precisa pedir isso separadamente.
 
 ![Etapas de uma página Astro](assets/fluxo-astrofy.svg)
@@ -74,7 +74,7 @@ Veja como isso se encadeia na prática, com um pedido real:
    acompanhar com `astrofy sitespec progress` ou pela aba Specs da TUI em
    qualquer momento, mesmo em outra sessão.
 
-Nenhuma dessas cinco etapas publica nada por conta própria: aprovação de
+Essas cinco etapas não publicam o site automaticamente: aprovação de
 conteúdo autoriza conteúdo, aprovação de plano autoriza o trabalho técnico
 descrito, e publicar o site é uma decisão sua, feita fora do Astrofy.
 
@@ -91,7 +91,7 @@ disco, não só no histórico da conversa.
 | `.astrofy/pages/<slug>/page-spec.json` | Especificação estruturada da página aprovada | É o contrato de conteúdo; o plano técnico lê exatamente este arquivo, nunca a conversa em si |
 | `.astrofy/pages/<slug>/page.md` | O mesmo conteúdo, em texto corrido | Existe só para leitura humana — revisar um JSON extenso é mais lento que ler prosa |
 | `astrofy.checklist.json` | Estado das verificações executadas no site | Conserva histórico de aprovação/falha por regra e por rota, para que `astrofy check` não precise reavaliar o que não mudou |
-| `.sitespec/<id>-<slug>/SITEPEC.md` | Tarefa pontual de desenvolvimento | Cobre qualquer trabalho que não nasceu de uma entrevista de página — correção, ajuste, pendência de SEO |
+| `.sitespec/<id>-<slug>/SITEPEC.md` | Tarefa pontual de desenvolvimento | Cobre trabalhos definidos fora de uma entrevista de página — correção, ajuste, pendência de SEO |
 | `.sitespec/<id>-<slug>-<task>/SITEPEC.md` | Tarefa técnica da página (`route`, `content`, `check`) | É o que `astrofy plan` produz a partir do `page-spec.json`; `page` e `task` no front matter ligam a tarefa de volta à página |
 
 ![Relação entre orquestradoras, artefatos e skills](assets/artefatos-skills.svg)

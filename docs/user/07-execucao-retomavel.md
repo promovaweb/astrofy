@@ -5,7 +5,7 @@ Cada tarefa da página é uma sitespec com `page` e `task` no front matter
 sitespecs). O agente atualiza esse registro enquanto trabalha — não ao
 final de tudo, mas a cada transição real — para que você, ou outra
 sessão de conversa, consiga retomar exatamente de onde o trabalho parou,
-sem depender de lembrar o que já tinha sido feito. Este capítulo mostra
+consultando o histórico do trabalho realizado. Este capítulo mostra
 os comandos do CLI para consultar e atualizar essas tarefas pelo
 terminal, sem precisar do agente.
 
@@ -15,8 +15,8 @@ Uma tarefa técnica real passa por mais situações do que só concluída ou
 pendente. Ela pode estar esperando outra terminar, pode estar em
 andamento numa sessão anterior que foi interrompida, pode ter sido
 tentada e falhado numa validação, ou pode ter sido deliberadamente
-descartada. Cada uma dessas situações exige uma ação diferente de quem
-retoma o trabalho — continuar, investigar a falha, ou simplesmente
+descartada. Cada uma dessas situações exige de você uma ação diferente ao
+retomar o trabalho — continuar, investigar a falha, ou simplesmente
 seguir para a próxima tarefa. Por isso o Astrofy registra um estado
 específico, não um booleano.
 
@@ -41,7 +41,7 @@ do `status` em si — uma tarefa era `pending` enquanto dependia de outra,
 e virava `ready` quando a dependência terminava, só então podendo passar
 para `in_progress`. Isso não existe mais como campo gravado: a mesma
 informação é calculada a cada leitura, não armazenada, o que evita que
-ela fique desatualizada se alguém editar o arquivo manualmente.
+ela fique desatualizada após uma edição manual do arquivo.
 `astrofy sitespec list`/`progress` calculam `blockedBy` a partir de
 `dependsOn` toda vez que leem — uma tarefa `draft` sem `blockedBy` pode
 começar agora; uma tarefa `draft` com `blockedBy` ainda depende de outra
@@ -97,8 +97,8 @@ astrofy apply --slug atlas --task route --status completed
 
 Ao concluir uma tarefa, a dependente perde a entrada correspondente em
 `blockedBy` automaticamente, na próxima leitura — isso não é um campo
-que alguém precisa limpar manualmente, é recalculado. Sem `--task`,
-`astrofy apply --slug atlas` escolhe por conta própria: primeiro procura
+que você precisa limpar manualmente, pois o comando o recalcula. Sem `--task`,
+`astrofy apply --slug atlas` seleciona a tarefa automaticamente: primeiro procura
 uma tarefa já `in_progress` (para continuar o que estava em andamento
 antes de começar algo novo); se não houver, escolhe a primeira `draft`
 sem `blockedBy`.
@@ -120,8 +120,8 @@ agir, não para agir primeiro e descobrir o contexto depois:
 4. Localize tarefas `in_progress` ou `blocked` — são as que precisam de
    atenção imediata, diferente de uma `draft` ainda esperando dependência.
 5. Confirme se os arquivos no disco ainda correspondem ao que o registro
-   da tarefa descreve; alguém pode ter editado algo fora do fluxo do
-   Astrofy nesse intervalo.
+   da tarefa descreve. Uma edição feita fora do fluxo do Astrofy pode
+   ter alterado a implementação nesse intervalo.
 6. Continue a tarefa e repita as validações da checklist — não assuma
    que uma validação passada antes continua válida sem reexecutar.
 7. Atualize o estado com `astrofy apply` e confirme que a dependência

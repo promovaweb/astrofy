@@ -21,6 +21,7 @@
     {"skill":"astrofy-implementation-planner","dependsOn":["astrofy-page-planner"],"inputs":["page.md com direção de voz","especificação aprovada","checklist atual"],"outputs":["sitespecs da página (route, content, check), retomáveis, com revisão editorial"]},
     {"skill":"astrofy-branding","dependsOn":["astrofy-config"],"inputs":["ativos e origem da marca"],"outputs":["identidade registrada"]},
     {"skill":"astrofy-design-system","dependsOn":["astrofy-branding"],"inputs":["tokens da marca"],"outputs":["tokens validados","CSS gerado"]},
+    {"skill":"astrofy-design","dependsOn":["astrofy-branding","astrofy-design-system"],"inputs":["brief visual","conteúdo aprovado","tokens existentes"],"outputs":["composição visual ou diagnóstico conforme o pedido"]},
     {"skill":"astrofy-tailwind","dependsOn":["astrofy-design-system","astrofy-config"],"inputs":["CSS de entrada","versões resolvidas"],"outputs":["integração Tailwind conferida"]},
     {"skill":"astrofy-themes","dependsOn":["astrofy-design-system"],"inputs":["tokens por modo"],"outputs":["temas e primeira pintura"]},
     {"skill":"astrofy-components","dependsOn":["astrofy-architecture","astrofy-design-system"],"inputs":["consumidores reais","contrato visual"],"outputs":["componentes e API"]},

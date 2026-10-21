@@ -61,7 +61,7 @@ três quando a página for grande o suficiente para exigir mais
 decomposição — sempre com o mesmo `page` e um `task` próprio, que não
 colida com `route`, `content` ou `check` (veja
 `skills/astrofy-implementation-planner/references/technical.md` para os
-critérios de quando decompor mais).
+orientações para dividir o trabalho em mais tarefas).
 
 ```bash
 astrofy plan --slug atlas

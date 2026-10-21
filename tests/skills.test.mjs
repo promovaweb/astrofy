@@ -7,7 +7,7 @@ import path from 'node:path';
 import {skillCatalog,installSkills} from '../dist/core/skills.js';
 test('catálogo completo instala referências locais e recusa perda de personalização',async t=>{
  const root=await mkdtemp(path.join(os.tmpdir(),'astrofy-skills-'));t.after(()=>rm(root,{recursive:true,force:true}));
- const catalog=await skillCatalog();assert.equal(catalog.length,53);assert.equal(new Set(catalog.map(skill=>skill.name)).size,53);
+ const catalog=await skillCatalog();assert.equal(catalog.length,54);assert.equal(new Set(catalog.map(skill=>skill.name)).size,54);
  const result=await installSkills(root,'codex',['astrofy-themes'],true);assert.equal(result.written.length,3);
  await assert.rejects(access(path.join(root,'.agents')));
  await installSkills(root,'codex',['astrofy-themes']);

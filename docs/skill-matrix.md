@@ -23,6 +23,7 @@ saídas e o comando que confere o domínio associado a cada skill.
 | `astrofy-implementation-planner` | `astrofy-page-planner` | `page.md com direção de voz`, `especificação aprovada`, `checklist atual` | `sitespecs da página (route, content, check), retomáveis, com revisão editorial` | Revisão do artefato de saída |
 | `astrofy-branding` | `astrofy-config` | `ativos e origem da marca` | `identidade registrada` | `astrofy check --category brand` |
 | `astrofy-design-system` | `astrofy-branding` | `tokens da marca` | `tokens validados`, `CSS gerado` | `astrofy check --category design-system` |
+| `astrofy-design` | `astrofy-branding`, `astrofy-design-system` | `brief visual`, `conteúdo aprovado`, `tokens existentes` | `composição visual ou diagnóstico conforme o pedido` | Revisão do artefato de saída |
 | `astrofy-tailwind` | `astrofy-design-system`, `astrofy-config` | `CSS de entrada`, `versões resolvidas` | `integração Tailwind conferida` | Revisão do artefato de saída |
 | `astrofy-themes` | `astrofy-design-system` | `tokens por modo` | `temas e primeira pintura` | `astrofy check --category theme` |
 | `astrofy-components` | `astrofy-architecture`, `astrofy-design-system` | `consumidores reais`, `contrato visual` | `componentes e API` | `astrofy check --category components` |

@@ -13,13 +13,12 @@ como essas duas coisas convivem no mesmo lugar).
 
 Uma tarefa registrada apenas em texto livre (uma anotação, um comentário
 de código, uma mensagem) não tem skill responsável definida, não tem
-critério verificável de "pronto", e não aparece em nenhuma consulta
+condição verificável de conclusão e não aparece em nenhuma consulta
 automatizada de progresso. O sitespec resolve isso com um contrato
 mínimo, mas fechado: todo arquivo `SITEPEC.md` tem uma skill que executa,
-um estado de um conjunto fixo, e uma checklist cujos itens podem ser
-contados — o suficiente para `astrofy sitespec list`/`progress` somarem
-progresso real do site inteiro, sem depender de cada tarefa estar escrita
-de um jeito diferente.
+um estado de um conjunto fixo e uma checklist com itens identificados
+para `astrofy sitespec list`/`progress` somarem
+o progresso real do site inteiro a partir de tarefas com a mesma estrutura.
 
 ## Criar uma tarefa
 
@@ -29,7 +28,7 @@ se já existe uma tarefa equivalente — ela não cria duplicata para um
 pedido que já está registrado sob outro texto. Em seguida, ela mapeia as
 skills do catálogo relacionadas ao pedido e só pergunta o que sobrar sem
 resposta depois disso: a maioria dos pedidos já é específica o
-suficiente (qual arquivo, qual comportamento, o que conta como corrigido)
+suficiente (qual arquivo, qual comportamento, qual resultado confirma a correção)
 para não gerar pergunta nenhuma. Quando o pedido é genuinamente ambíguo
 em algo que mudaria a tarefa — por exemplo, não está claro se o problema
 é de copy, de SEO ou de layout —, a skill faz no máximo três perguntas
@@ -40,7 +39,7 @@ pedido.
 
 ```text
 Pedido: "o botão primário está com contraste baixo no tema claro"
-→ sem pergunta: skill, arquivo e critério de pronto já estão no pedido
+→ sem pergunta: skill, arquivo e condição de conclusão já estão no pedido
 → cria .sitespec/0003-corrigir-contraste-botao/SITEPEC.md
 ```
 
@@ -63,8 +62,8 @@ específico, quando ela diverge da skill principal da tarefa:
 
 O `{#id}` não muda depois de criado, mesmo que o item seja reordenado
 dentro da checklist — isso existe para que uma automação ou um
-comentário externo possa apontar para um item exato sem depender da
-posição dele na lista, que pode mudar com uma edição manual. Um item
+comentário externo possa apontar para um item pelo identificador, mesmo
+após uma edição manual mudar sua posição na lista. Um item
 sem `{#id}`, ou com um id repetido na mesma checklist, invalida a tarefa
 inteira até a correção, do mesmo jeito que um campo obrigatório ausente
 no front matter invalidaria — o contrato completo, com todos os campos
@@ -81,7 +80,7 @@ progresso (`done`/`total` da checklist), o próximo id de quatro dígitos
 livre para uma tarefa nova, e, para cada tarefa, `blockedBy` (ids de
 dependências ainda não concluídas) e `missingDependencies` (ids
 declarados em `dependsOn` que não correspondem a nenhuma tarefa
-existente — um sinal de referência quebrada, não de bloqueio real).
+existente — um sinal de referência a uma tarefa ausente).
 
 Quando você quer um resumo agregado, em vez de cada tarefa em detalhe,
 use `astrofy sitespec progress`. Sem `--watch`, é uma única consulta;
@@ -100,12 +99,12 @@ as tarefas com estado, prioridade e uma barra de progresso textual, e
 checklist com a skill de cada item, arquivos relacionados e notas. A aba
 é só consulta: nada que você faz nela grava um arquivo, inclusive porque
 isso permite usá-la livremente para explorar o estado do projeto sem
-risco de alterar algo por engano.
+alterar arquivos por engano.
 
 ## Executar a tarefa
 
 `astrofy-sitespec-implement` lê a tarefa, muda `status` para
-`in_progress` antes de tocar em qualquer arquivo, executa cada item da
+`in_progress` antes de editar os arquivos da implementação, executa cada item da
 checklist com a skill marcada nele (ou a skill principal, quando o item
 não tem uma marcação própria) e marca `[x]` pelo `{#id}` correspondente
 ao terminar cada um — não em lote ao final, mas item por item, para que
@@ -119,10 +118,9 @@ Ao final, três resultados são possíveis:
 | Decisão de não terminar | `archived` | `archivedReason`, com a justificativa |
 
 Decisões e desvios durante a execução — por que um item foi feito
-diferente do esperado, por que a tarefa ficou bloqueada numa causa
-específica — ficam registrados em `## Notas`, datados. Isso é o que
-permite a alguém retomando a tarefa mais tarde (ou revisando depois)
-entender o raciocínio, não só o resultado final.
+diferente do esperado, qual causa impediu a continuação da tarefa — ficam registrados em `## Notas`, datados. Isso é o que
+permite que você retome ou revise a tarefa depois com acesso à
+explicação do trabalho realizado.
 
 ## Dependências entre tarefas
 
@@ -137,7 +135,7 @@ astrofy sitespec list --json
 
 A tarefa dependente aparece com `blockedBy: ["0001"]` enquanto a tarefa
 `0001` não estiver `done`. Isso é puramente informativo — a leitura não
-muda `status` para `blocked` sozinha nem impede que alguém edite a
+muda `status` para `blocked` sozinha nem impede a edição da
 tarefa dependente mesmo assim; a pessoa ou a skill que está executando
 decide se uma dependência pendente de fato impede avançar naquele caso
 específico, ou se faz sentido seguir mesmo assim.

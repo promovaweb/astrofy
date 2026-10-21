@@ -23,7 +23,7 @@ em vez de recriar do zero (capítulo 4 detalha exatamente o que é
 preservado e o que é atualizado nesse processo).
 
 Se a mudança surgir depois que a execução já começou — uma tarefa já
-está `in_progress` ou até `done` quando alguém percebe que o conteúdo
+está `in_progress` ou até `done` quando você percebe que o conteúdo
 precisa mudar — não edite o código silenciosamente para acomodar a
 mudança. Registre o impacto primeiro: qual tarefa precisa ser revisitada,
 o que exatamente mudou na especificação, e só então edite. Isso existe
@@ -62,8 +62,7 @@ que vale verificar periodicamente num projeto que já usa o Astrofy:
 - `astrofy sitespec progress` para conferir o que está pendente de
   execução entre as tarefas registradas, de página ou pontuais.
 
-Nenhuma das duas executa nem altera nada por conta própria — são
-consultas, não gatilhos de automação. O valor delas é justamente permitir
+As duas consultas preservam os arquivos do projeto. O valor delas é justamente permitir
 voltar ao projeto depois de um tempo e saber, antes de decidir o que
 fazer, exatamente onde o trabalho estava.
 

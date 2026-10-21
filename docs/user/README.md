@@ -7,8 +7,7 @@ formato de arquivo. O agente examina o site, seleciona as skills
 necessárias conforme o pedido e solicita só as informações que faltam
 para continuar, em vez de seguir um roteiro fixo igual para todo caso.
 
-Este manual existe para as duas situações em que vale a pena consultá-lo
-diretamente: quando você quer entender o que o agente está fazendo e por
+Você pode consultar este manual diretamente em duas situações: quando você quer entender o que o agente está fazendo e por
 quê, antes de aprovar algo; e quando você quer conduzir uma etapa
 manualmente pelo terminal, sem o agente — por exemplo, numa automação ou
 num script de CI.
@@ -43,6 +42,9 @@ ele pediu algo específico, ou operar o CLI manualmente.
 - **Registrar uma tarefa pontual do site:** [sitespec](08-sitespec-tarefas-do-site.md)
   — para qualquer trabalho que não é uma página nova, e para as
   próprias tarefas técnicas derivadas de uma página.
+- **Criar ou revisar a composição visual:** [Astrofy Design na prática](11-astrofy-design.md)
+  explica os modos com exemplos comentados. A [referência de uso](12-astrofy-design-referencia.md)
+  detalha entradas, arquivos, limites e exemplos para consulta.
 - **Resolver uma falha:** [solução de problemas](10-solucao-de-problemas.md).
 
 O [manual do CLI](../cli.md) descreve, comando por comando, todas as

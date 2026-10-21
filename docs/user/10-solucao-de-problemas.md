@@ -51,15 +51,14 @@ de recriá-las do zero — `status`, itens de checklist já marcados e o
 a skill responsável e as dependências, a partir do `page-spec.json`
 atual (capítulo 4 detalha exatamente o que muda e o que não muda nessa
 reconciliação). Não exclua manualmente os arquivos em `.sitespec/` antes
-de reexecutar: isso descartaria progresso que o comando preservaria por
-conta própria. Se você precisar consultar o histórico de tarefas
+de reexecutar: isso descartaria progresso que o comando preservaria automaticamente. Se você precisar consultar o histórico de tarefas
 concluídas numa versão anterior do plano, use o histórico do Git sobre
 esses arquivos — eles são texto versionável, não um estado opaco.
 
 ## Uma tarefa não sai de `blocked`
 
 Confira o `blockedReason` registrado no front matter da sitespec — ele
-descreve a causa específica do bloqueio, não um estado genérico. Se a
+descreve a causa específica da interrupção, não um estado genérico. Se a
 causa já foi resolvida, registre `astrofy apply --slug <slug> --task
 <task> --status completed` (ou `in_progress`, se o trabalho ainda não
 tiver terminado) para seguir adiante; o comando aceita a transição de
@@ -74,8 +73,8 @@ predecessora.
 ## O Chromium não está disponível
 
 Consulte a instalação controlada pelo Astrofy, que mantém o binário fora
-do processo de `npm install` do próprio pacote para não forçar esse
-download em quem nunca vai rodar checks de navegador:
+do processo de `npm install` do próprio pacote para que você possa escolher se precisa do
+download para executar os checks de navegador:
 
 ```bash
 astrofy browser status
@@ -114,8 +113,8 @@ npm run ebook:verify
 O primeiro comando recompila PDF, EPUB e o manifesto `build.json` a
 partir dos capítulos atuais de `docs/user/`. O segundo compara a edição
 já gerada com todos os capítulos e arquivos do pipeline, byte a byte —
-ele existe para detectar o caso em que alguém editou um capítulo e
-esqueceu de regenerar o ebook antes de publicar uma versão nova.
+ele identifica capítulos editados após a última geração do ebook,
+antes da publicação de uma nova versão.
 
 ## `astrofy setup` está lento
 

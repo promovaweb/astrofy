@@ -45,3 +45,20 @@ test('versões do pacote, CLI, catálogo e ebook são iguais',async()=>{
   for(const value of values)assert.equal(value,pkg.version);
   assert.ok(types.includes(`VERSION = '${pkg.version}'`));
 });
+
+test('guia de design cobre os modos da skill com entradas e cinco exemplos por modo',async()=>{
+  const entry=await read('skills/astrofy-design/SKILL.md');
+  const modes=[...entry.matchAll(/\| `astrofy-design (\w+)` \|/g)].map(match=>match[1]);
+  assert.equal(modes.length,4);
+  const reference=await read('docs/user/12-astrofy-design-referencia.md');
+  const practical=await read('docs/user/11-astrofy-design.md');
+  for(const mode of modes){
+    const section=reference.match(new RegExp(`^## ${mode}: [\\s\\S]*?(?=^## |$(?![\\s\\S]))`,'im'))?.[0];
+    assert.ok(section,`Modo sem documentação: ${mode}`);
+    assert.match(section,/Entrada/);
+    assert.equal([...section.matchAll(/^\d+\. \*\*/gm)].length,5,`${mode}: exemplos incompletos`);
+    assert.ok(practical.includes('`'+mode+'`'));
+  }
+  assert.ok(reference.includes('.astrofy/design/log.json'));
+  assert.ok(reference.includes('astrofy tokens build --dry-run'));
+});

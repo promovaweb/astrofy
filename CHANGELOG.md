@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.13.0] - 2026-10-21
+
+### Adicionado
+
+- Skill `astrofy-design`, com os modos `build`, `study`, `audit` e `redesign` para composição, tipografia, cores, temas e movimento integrados aos tokens e componentes do projeto Astro. Referências, paletas e avisos de licença ficam incluídos na skill.
+- Guia prático e referência de uso do Astrofy Design em `docs/user/11-astrofy-design.md` e `docs/user/12-astrofy-design-referencia.md`, também no PDF e no EPUB.
+- Testes da skill em `tests/design-skill.test.mjs`.
+
+### Alterado
+
+- Catálogo de skills, workflow do `astrofy-setup`, matriz de skills, documentação do usuário e validação do pacote incluem o Astrofy Design.
+- Ebook regerado como `Astrofy-Guia-do-Usuario-v0.13.0`.
+
 ## [0.12.0] - 2026-10-20
 
 ### Adicionado

@@ -1935,3 +1935,16 @@ astrofy sitespec list --json
   [fontes técnicas](../skills/astrofy-sitespec-implement/references/technical.md).
 - **Exemplos:**
   [casos de execução](../skills/astrofy-sitespec-implement/examples/cases.md).
+
+## astrofy-design
+
+A [área de design](design.md) reúne criação, estudo, auditoria e redesign.
+A skill recebe o brief e os arquivos do projeto, ou uma referência visual,
+e entrega implementação ou diagnóstico conforme o modo solicitado.
+
+- **Instruções:** [Astrofy Design](../skills/astrofy-design/SKILL.md).
+- **Integração:** [contratos técnicos](../skills/astrofy-design/references/technical.md).
+- **Exemplos:** [casos de uso](../skills/astrofy-design/examples/cases.md).
+
+A validação combina os comandos do projeto com conferência no navegador.
+Auditoria e estudo não alteram arquivos por padrão.
