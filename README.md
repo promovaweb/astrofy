@@ -17,6 +17,7 @@
   <a href="https://github.com/promovaweb/astrofy/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/promovaweb/astrofy"></a>
   <a href="https://www.npmjs.com/package/@promovaweb/astrofy"><img alt="npm" src="https://img.shields.io/npm/v/@promovaweb/astrofy"></a>
   <a href="https://github.com/promovaweb/astrofy/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/promovaweb/astrofy/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/promovaweb/astrofy/blob/main/LICENSE"><img alt="Licença" src="https://img.shields.io/github/license/promovaweb/astrofy"></a>
 </p>
 
 <p align="center">
@@ -232,3 +233,10 @@ projetos reais.
 
 Quer usar o Astrofy em projetos de verdade, com acompanhamento? Conheça os
 [planos da Promovaweb](https://promovaweb.com/planos?utm_source=github&utm_medium=readme&utm_campaign=astrofy).
+
+## Licença
+
+Distribuído sob a
+[GNU AGPL 3.0](https://github.com/promovaweb/astrofy/blob/main/LICENSE).
+A licença não concede o uso do nome e do logo do Astrofy nem da marca
+Promovaweb (AGPL 3.0, seção 7, item e).

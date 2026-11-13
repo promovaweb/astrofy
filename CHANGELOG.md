@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.14.0] - 2026-11-13
+
+### Alterado
+
+- Licença trocada para a GNU AGPL 3.0 (SPDX `AGPL-3.0-only`), com o arquivo `LICENSE` na raiz e o campo `license` do `package.json` atualizado. A partir desta versão, o projeto é distribuído sob a GNU AGPL 3.0; versões anteriores continuam sob a licença com que foram publicadas.
+- README ganha o badge e a seção de licença, com a ressalva de que a licença não concede o uso do nome e do logo do Astrofy nem da marca Promovaweb.
+- `CONTRIBUTING.md` informa que as contribuições entram sob a mesma licença do projeto.
+- Ebook regerado como `Astrofy-Guia-do-Usuario-v0.14.0`.
+
 ## [0.13.1] - 2026-11-13
 
 ### Alterado

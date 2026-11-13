@@ -240,6 +240,7 @@ checksums. A publicação é feita pelos mantenedores.
 
 ## Licença
 
-O `package.json` declara `UNLICENSED` e o repositório não inclui arquivo
-`LICENSE`. O código não é distribuído sob licença aberta. Antes de reutilizar
-o código em outro projeto, fale com os mantenedores.
+As contribuições entram sob a
+[GNU AGPL 3.0](https://github.com/promovaweb/astrofy/blob/main/LICENSE), a
+mesma licença do projeto. Ao abrir um pull request, você concorda em
+licenciar sua contribuição sob esses termos.
