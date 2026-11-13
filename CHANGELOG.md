@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.14.2] - 2026-11-13
+
+### Alterado
+
+- Nova identidade visual: ícone, logotipo e kit de marca em `brand/`, com o símbolo "Página em órbita", paleta petróleo, turquesa e violeta, tokens, CSS, tema Tailwind, fontes, relatório de contraste, manifesto dos ativos e guia visual.
+- README abre com o logotipo do Astrofy nas variantes clara e escura e a linha "Um projeto da Promovaweb".
+- A capa do ebook usa o novo ícone em `.ebook/assets/logo.svg`.
+- Ebook regerado como `Astrofy-Guia-do-Usuario-v0.14.2`.
+
 ## [0.14.1] - 2026-11-13
 
 ### Alterado
