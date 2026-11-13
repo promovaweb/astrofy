@@ -1,118 +1,117 @@
-# Astrofy
+<p align="center">
+  <a href="https://promovaweb.com">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://promovaweb.com/promovaweb-logo-dark-586.png">
+      <img alt="Promovaweb" src="https://promovaweb.com/promovaweb-logo-light-586.png" width="240">
+    </picture>
+  </a>
+</p>
 
-O Astrofy reúne skills para trabalhar em sites Astro por conversa com Codex ou
-Claude. Instale o pacote, disponibilize as skills no projeto e peça o trabalho
-em linguagem natural. O agente escolhe as especialistas, faz as perguntas
-necessárias e apresenta o plano antes de implementar.
+<h1 align="center">Astrofy</h1>
 
-## Comece por uma conversa
+<p align="center">
+  Skills para planejar, implementar e revisar sites Astro em conversa com Codex ou Claude.
+</p>
 
-Instale o pacote e as skills para o agente que usa no projeto:
+<p align="center">
+  <a href="https://github.com/promovaweb/astrofy/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/promovaweb/astrofy"></a>
+  <a href="https://www.npmjs.com/package/@promovaweb/astrofy"><img alt="npm" src="https://img.shields.io/npm/v/@promovaweb/astrofy"></a>
+  <a href="https://github.com/promovaweb/astrofy/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/promovaweb/astrofy/actions/workflows/ci.yml/badge.svg"></a>
+</p>
+
+<p align="center">
+  <a href="https://promovaweb.com/discord"><img alt="Discord: obter ajuda e conversar com a Comunidade" src="https://img.shields.io/badge/Discord-Obter%20ajuda%20e%20conversar%20com%20a%20Comunidade-5865F2?style=for-the-badge&logo=discord&logoColor=white"></a>
+</p>
+
+<p align="center">
+  <a href="https://promovaweb.com/docs/astrofy/">Documentação</a> ·
+  <a href="https://promovaweb.com/discord">Discord</a> ·
+  <a href="https://promovaweb.com/planos?utm_source=github&utm_medium=readme&utm_campaign=astrofy">Planos da Promovaweb</a> ·
+  <a href="https://github.com/promovaweb/astrofy/blob/main/CHANGELOG.md">Changelog</a>
+</p>
+
+## O que é
+
+O Astrofy reúne skills, um CLI e um painel no terminal para trabalhar em sites
+Astro existentes. Você descreve o trabalho ao agente. Ele escolhe a skill
+especialista, faz as perguntas de conteúdo e apresenta o plano antes de alterar
+o código.
+
+O pacote não cria um site do zero e não inclui template. Ele opera sobre um
+projeto Astro que já existe, mesmo que ainda esteja no início.
+
+| Modo | Como se usa | Para quê |
+| --- | --- | --- |
+| Skills no agente | `astrofy skills install` | planejar páginas, executar tarefas, revisar SEO, acessibilidade, conteúdo e design |
+| CLI | `astrofy <comando>` | conduzir as mesmas etapas pelo terminal, em script ou em CI |
+| Painel no terminal | `astrofy` ou `astrofy tui` | consultar o estado, revisar itens e acompanhar tarefas |
+
+## Instalação
+
+Requisitos:
+
+- Node.js 22.12.0 ou posterior.
+- Um projeto Astro com `astro` declarado no `package.json`, em `dependencies`
+  ou `devDependencies`.
+- Permissão de escrita no diretório do projeto.
+
+Instale o pacote e as skills para o agente usado no projeto:
 
 ```bash
-npm install --global @promovaweb/astrofy@0.8.0
+npm install --global @promovaweb/astrofy
 cd /caminho/do/site
 astrofy skills install --agent codex
 ```
 
-Para Claude, troque `codex` por `claude`. Se quiser conferir os arquivos antes
-da instalação, acrescente `--dry-run` ao último comando.
+Para Claude, troque `codex` por `claude`. Para conferir os arquivos antes de
+gravar, acrescente `--dry-run`. A instalação é sempre local ao projeto.
 
-Depois, peça o trabalho ao agente. Por exemplo:
+Para atualizar:
+
+```bash
+npm install --global @promovaweb/astrofy@latest
+astrofy skills install --agent codex
+```
+
+## Primeiros passos
+
+Depois de instalar as skills, abra a conversa no projeto e peça o trabalho com
+suas próprias palavras:
 
 > Quero criar uma página para meu produto. Use o Astrofy para entender este
 > projeto, conversar comigo sobre o conteúdo e apresentar um plano antes de
 > implementar.
 
-Para uma adoção ampla ou uma revisão do projeto, peça `astrofy-setup`. Para uma
-página, descreva o resultado esperado. O agente confere o que precisa preparar
-e conduz a entrevista com `astrofy-page-planner`. Você não precisa preencher a
-entrevista por meio de comandos do CLI.
+O agente encaminha o pedido conforme o escopo:
 
-O CLI continua disponível para instalar skills, acompanhar estado, executar
-checks ou retomar uma página manualmente. Consulte a [referência do CLI](docs/cli.md)
-quando precisar desses comandos.
+- **Projeto inteiro:** `astrofy-setup` mapeia a implementação, prepara os
+  contratos ausentes e coordena as demais skills.
+- **Página nova:** `astrofy-page-planner` conduz a entrevista e registra a
+  especificação em `.astrofy/pages/<slug>/`.
+- **Ajuste pontual:** `astrofy-sitespec-create` registra a tarefa em
+  `.sitespec/` e `astrofy-sitespec-implement` executa a checklist.
 
-As skills operam sobre projetos Astro existentes. O pacote não inclui um
-template de site.
-
-## Astrofy Design
-
-A área [Astrofy Design](docs/design.md) acrescenta composição visual, estudo de
-referências, auditoria e redesign. A skill inclui as referências e as paletas
-localmente, com integração aos tokens e componentes do projeto Astro.
-O [guia prático](docs/user/11-astrofy-design.md) e a
-[referência de uso](docs/user/12-astrofy-design-referencia.md) também integram
-o PDF, o EPUB e a documentação do site.
-
-No checkout desta edição, instale a skill no projeto desejado:
+Pelo terminal, a mesma adoção pode ser conferida antes de gravar:
 
 ```bash
-node dist/cli/index.js skills install --agent codex --skill astrofy-design --root /caminho/do/site --dry-run
-node dist/cli/index.js skills install --agent codex --skill astrofy-design --root /caminho/do/site
+astrofy inspect
+astrofy setup --dry-run
+astrofy setup
+astrofy check --json
 ```
 
-Depois peça ao agente `astrofy-design build`, `astrofy-design study`,
-`astrofy-design audit` ou `astrofy-design redesign`. Esses nomes são modos
-da skill e não comandos adicionais do CLI. Os avisos de licença ficam
-junto dos materiais incorporados.
+O `check` grava relatório e checklist em `.astrofy/`. Antes de aprovar uma
+implementação, confira `git status` e `git diff`: eles mostram o que mudou no
+disco.
 
-## Desenvolvimento do pacote
+Sem argumentos, `astrofy` abre o painel interativo. Em script ou CI, use
+`--json` ou `--ci` para receber a consulta em texto.
 
-Use Node.js 22.12 ou posterior e instale as dependências registradas no lockfile.
-No diretório deste repositório, execute:
+## Uso
 
-```bash
-npm ci
-npm run build
-node dist/cli/index.js --help
-```
+### Planejar uma página
 
-O pacote está disponível publicamente no npm. A versão 0.8.0 inclui
-planejamento conversacional e técnico para páginas de vendas, produto, serviço,
-Home, Sobre, Contato e Preços, além de tarefas pontuais em `.sitespec/`. O
-painel opcional abre com `astrofy tui --root /caminho/do/site` depois que o
-projeto foi inicializado com `astrofy init`.
-
-O pacote conserva `UNLICENSED`, sem concessão de licença aberta. Para uma
-instalação a partir do checkout autorizado, `npm pack` gera o arquivo `.tgz`.
-O tarball mantém somente a edição atual do ebook. Edições anteriores continuam
-disponíveis nas respectivas GitHub Releases.
-
-## Adotar em um site existente
-
-A entrada `setup` escreve apenas contratos ausentes e cria o estado retomável
-da coordenação. O dry-run permite conferir os caminhos sem criar a pasta
-`.astrofy`.
-
-```bash
-node dist/cli/index.js inspect --root /caminho/site
-node dist/cli/index.js setup --root /caminho/site --dry-run
-node dist/cli/index.js setup --root /caminho/site
-node dist/cli/index.js check --root /caminho/site --json
-```
-
-O check grava relatórios e a checklist. Ele não instala dependências nem
-executa scripts do site com a configuração padrão. Uma revisão visual ou
-editorial continua pendente até receber uma avaliação identificada.
-
-## Planejar uma página
-
-Peça a página em linguagem natural, como "quero criar uma página para meu
-produto". `astrofy-page-planner` inspeciona o site, escolhe a entrevistadora
-adequada e coleta finalidade, público, áreas, textos, mídia e ações. A
-especificação aprovada fica em `.astrofy/pages/<slug>/`. O agente conduz essa
-etapa na conversa. Os comandos abaixo servem para registrar cada resposta pelo
-terminal.
-
-Depois, `astrofy-implementation-planner` relaciona a especificação com rotas,
-componentes, checklist e scripts atuais, e registra uma sitespec por tarefa
-(rota, conteúdo, validação) em `.sitespec/<id>-<slug>-<tarefa>/SITEPEC.md`,
-com `page` e `task` apontando de volta para a página. Reexecutar o plano
-reconcilia essas tarefas sem perder progresso. Nenhuma das duas
-orquestradoras altera ou publica o site sem uma solicitação posterior.
-
-O CLI conserva a mesma sequência em arquivos retomáveis:
+Pelo terminal, cada resposta fica registrada em `interview.json`:
 
 ```bash
 astrofy page create --slug produto --type product
@@ -122,76 +121,114 @@ astrofy plan --slug produto
 astrofy apply --slug produto
 ```
 
-Cada resposta atualiza `interview.json`. Quando não há lacunas obrigatórias,
-o CLI gera o contrato com conteúdo, SEO, integrações, acessibilidade e testes.
-`apply` registra a passagem das tarefas (sitespecs ligadas à página) por
-`in_progress`, `completed`, `failed` e `skipped`; a skill indicada em cada
-uma executa a alteração no site. `astrofy sitespec progress` e a aba Specs
-da TUI mostram essas tarefas junto das tarefas pontuais, no mesmo resumo.
+O `plan` relaciona a especificação com rotas, componentes e validações. O
+`apply` registra a passagem das tarefas por `in_progress`, `completed`,
+`failed` e `skipped`.
 
-## Registrar uma tarefa pontual do site
-
-Nem toda mudança é uma página nova. Um ajuste de componente, uma correção,
-uma pendência de SEO — descreva o pedido ao agente e `astrofy-sitespec-create`
-cria a tarefa em `.sitespec/<id>-<slug>/SITEPEC.md`. A skill mapeia as skills
-relacionadas ao pedido antes de perguntar; a maioria dos pedidos não gera
-pergunta nenhuma, e no máximo três quando o pedido é ambíguo. Depois,
-`astrofy-sitespec-implement` executa os itens da checklist e atualiza o
-arquivo até `done`, `blocked` ou `archived`.
+### Registrar uma tarefa pontual
 
 ```bash
 astrofy sitespec list --json
+astrofy sitespec progress
 ```
 
-O comando é só leitura: mostra o progresso, o próximo id livre e as
-dependências (`blockedBy`) entre tarefas. Pelo terminal interativo,
-`astrofy tui` abre a aba **Specs** (`Ctrl+S`) para navegar e acompanhar sem
-gravar nada. O contrato completo do arquivo está em [docs/sitespec.md](docs/sitespec.md).
+A lista é somente leitura e mostra o progresso, o próximo id livre e as
+dependências entre tarefas. No painel, a aba **Specs** (`Ctrl+S`) acompanha as
+tarefas sem gravar nada. O contrato do arquivo está em
+[docs/sitespec.md](https://github.com/promovaweb/astrofy/blob/main/docs/sitespec.md).
+
+### Verificar o site
+
+```bash
+astrofy check
+astrofy check --browser
+astrofy browser status
+```
+
+O `check` executa as regras aplicáveis ao escopo. Com `--browser`, ele inclui
+temas, persistência, overflow, erros JavaScript e responsividade contra o
+preview configurado. O navegador não acompanha o pacote; instale sob demanda
+com `astrofy browser install` e remova com `astrofy browser remove`.
+
+### Trabalhar no design
+
+A skill `astrofy-design` acrescenta composição visual, estudo de referências,
+auditoria e redesign, com as referências e as paletas incluídas localmente.
+
+```bash
+astrofy skills install --agent codex --skill astrofy-design
+```
+
+Depois peça ao agente `astrofy-design build`, `astrofy-design study`,
+`astrofy-design audit` ou `astrofy-design redesign`. Esses nomes são modos da
+skill e não comandos do CLI.
+
+## Uso com agentes
+
+As skills são instaladas no projeto, no diretório do agente escolhido:
+`.agents/skills/` para Codex e `.claude/skills/` para Claude. A instalação não
+escreve fora do site aberto.
+
+- `--agent` é obrigatório e aceita `codex` ou `claude`.
+- `--skill` aceita um nome ou uma lista separada por vírgula. Sem a opção, o
+  catálogo completo é instalado.
+- `--dry-run` mostra os arquivos previstos sem gravar.
+- `--root` aponta um site específico quando o diretório atual não é a raiz.
+
+```bash
+astrofy skills install --agent claude --skill astrofy-seo,astrofy-geo --root apps/site
+astrofy skills list --json
+```
+
+Se um arquivo de uma skill instalada foi editado no projeto, uma nova
+instalação recusa sobrescrevê-lo e pede a conciliação manual. O Astrofy não
+expõe servidor MCP: a integração com o agente acontece pelas skills
+instaladas no projeto.
 
 ## Documentação
 
-- [Guia do usuário](docs/user/README.md)
-- [Ebook em PDF e EPUB](ebook/README.md)
-- [Referência das skills](docs/skills.md)
-- [Matriz operacional das skills](docs/skill-matrix.md)
-- [CLI](docs/cli.md)
-- [Configuração](docs/configuration.md)
-- [Contrato do SITEPEC.md](docs/sitespec.md)
+- [Documentação publicada](https://promovaweb.com/docs/astrofy/)
+- [Guia do usuário](https://github.com/promovaweb/astrofy/blob/main/docs/user/README.md)
+- [Referência do CLI](https://github.com/promovaweb/astrofy/blob/main/docs/cli.md)
+- [Referência das skills](https://github.com/promovaweb/astrofy/blob/main/docs/skills.md)
+- [Configuração](https://github.com/promovaweb/astrofy/blob/main/docs/configuration.md)
+- [Contrato do SITEPEC.md](https://github.com/promovaweb/astrofy/blob/main/docs/sitespec.md)
+- [Arquitetura](https://github.com/promovaweb/astrofy/blob/main/docs/architecture.md)
+- [Ebook em PDF e EPUB](https://github.com/promovaweb/astrofy/blob/main/ebook/README.md)
 
-- **Uso do CLI:** [comandos e opções](docs/cli.md).
-- **Contratos:** [configuração e estado](docs/configuration.md).
-- **Tokens:** [geração e importação Brandfy](docs/design-system.md).
-- **TUI:** [navegação e revisão manual](docs/tui.md).
-- **Arquitetura:** [pacotes e integridade de escrita](docs/architecture.md).
-- **Compatibilidade:** [faixas e validação](docs/compatibility.md).
-- **Skills:** [guia das 54 skills, instalação, fluxos e exemplos](docs/skills.md).
-- **Verificação das skills:** [cenários executados e limites dos testes](docs/skills-validation.md).
-- **Tarefas pontuais:** [contrato do SITEPEC.md](docs/sitespec.md).
-- **Gestão do projeto:** [backlog, timesheets e redistribuição de datas](docs/backlog-timesheets.md).
+## Feito com
 
-## Desenvolvimento
+| Projeto | Para quê |
+| --- | --- |
+| [Astro](https://github.com/withastro/astro) | framework dos sites atendidos, nas versões 5, 6 e 7 |
+| [Node.js](https://github.com/nodejs/node) | runtime do CLI |
+| [TypeScript](https://github.com/microsoft/TypeScript) | linguagem do código compilado para `dist/` |
+| [Ajv](https://github.com/ajv-validator/ajv) | validação dos schemas JSON |
+| [Playwright](https://github.com/microsoft/playwright) | verificações no Chromium |
+| [neo-blessed](https://github.com/embark-framework/neo-blessed) | painel interativo no terminal |
+| [Brandfy](https://github.com/promovaweb/brandfy) | importação de tokens de marca |
 
-`npm test` compila o TypeScript e executa a suíte sem navegador.
-`npm run test:browser` executa apenas os testes que abrem Chromium e
-`npm run test:all` reúne os dois grupos. `npm run check` faz somente a checagem
-de tipos. O código fica em `packages/` e o JavaScript de distribuição é gerado
-em `dist/`.
+## Comunidade e suporte
 
-O pacote não transporta o binário do Chromium. Instale-o sob demanda com
-`astrofy browser install`, confira com `astrofy browser status` e remova com
-`astrofy browser remove`. `astrofy check` executa as verificações estáticas;
-`astrofy check --browser` inclui temas, persistência, overflow, erros
-JavaScript e responsividade contra o preview configurado.
+- **Discord:** [obter ajuda e conversar com a Comunidade](https://promovaweb.com/discord).
+- **Bugs e pedidos:** abra uma [issue](https://github.com/promovaweb/astrofy/issues)
+  com a versão, o sistema operacional e o passo a passo para reproduzir.
+- **Novidades:** acompanhe o
+  [CHANGELOG](https://github.com/promovaweb/astrofy/blob/main/CHANGELOG.md) e
+  as [releases](https://github.com/promovaweb/astrofy/releases).
 
-Os builds adicionais com Astro 5, 6 e 7 ficam nas
-[fixtures de compatibilidade](fixtures/compatibility/README.md), com seus
-próprios lockfiles e verificação de navegador. Esse fluxo é separado de
-`npm test`, pois instala versões adicionais do site.
+## Contribuir
 
-Depois de instalar as dependências das fixtures, os scripts
-`test:compatibility`, `test:skill-procedures` e `test:skill-domains` conferem
-respectivamente o site mínimo, os procedimentos comuns e os domínios de Astro
-7 usados pelas skills.
-O job `compatibility` do CI instala os três lockfiles, gera os builds e executa
-esses runners no Linux com Node 26 e Chromium. O job `browser` mantém um cache
-próprio; a matriz de Node e sistemas operacionais não baixa navegador.
+Leia o [CONTRIBUTING.md](https://github.com/promovaweb/astrofy/blob/main/CONTRIBUTING.md)
+para preparar o ambiente, entender a organização do código, rodar as
+validações e enviar um pull request.
+
+## Promovaweb
+
+O Astrofy é mantido pela [Promovaweb](https://promovaweb.com), comunidade de
+co-working digital onde profissionais aprendem a construir, automatizar e
+gerir negócios de tecnologia e IA com aulas ao vivo, Co-works e revisão de
+projetos reais.
+
+Quer usar o Astrofy em projetos de verdade, com acompanhamento? Conheça os
+[planos da Promovaweb](https://promovaweb.com/planos?utm_source=github&utm_medium=readme&utm_campaign=astrofy).

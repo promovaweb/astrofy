@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.13.1] - 2026-11-13
+
+### Alterado
+
+- README reorganizado para quem usa o Astrofy, com cabeçalho da Promovaweb, banner do Discord, links para a documentação publicada, os planos da Promovaweb e a tabela dos repositórios usados.
+- Novo `CONTRIBUTING.md` para quem contribui, com ambiente, organização do código, fluxo de trabalho, validações, documentação e releases.
+- Configuração do markdownlint libera o HTML do cabeçalho do README.
+- Ebook regerado como `Astrofy-Guia-do-Usuario-v0.13.1`.
+
 ## [0.13.0] - 2026-10-21
 
 ### Adicionado
