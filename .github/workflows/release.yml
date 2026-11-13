@@ -1,3 +1,5 @@
+# Cria a GitHub Release com o tarball, o ebook e os checksums.
+# A publicação no npm é feita só pela máquina local (ver CONTRIBUTING.md).
 name: Publicar Astrofy
 
 on:
@@ -7,7 +9,6 @@ on:
 
 permissions:
   contents: write
-  id-token: write
   actions: read
 
 jobs:
@@ -30,11 +31,10 @@ jobs:
           done
           echo "A validação do commit não terminou dentro de dez minutos."
           exit 1
-      - name: Configurar Node e npm
+      - name: Configurar Node
         uses: actions/setup-node@v4
         with:
           node-version: '24'
-          registry-url: https://registry.npmjs.org
           cache: npm
       - name: Instalar verificadores do ebook
         run: sudo apt-get update && sudo apt-get install -y libxml2-utils poppler-utils unzip
@@ -58,12 +58,6 @@ jobs:
           cp "ebook/Astrofy-Guia-do-Usuario-v${version}.epub" release-assets/
           node scripts/generate-checksums.mjs release-assets
           node scripts/extract-release-notes.mjs release-notes.md
-      - name: Publicar pacote no npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          version="$(node -p "require('./package.json').version")"
-          npm publish "./release-assets/promovaweb-astrofy-${version}.tgz" --access public
       - name: Criar release e anexar artefatos
         env:
           GH_TOKEN: ${{ github.token }}

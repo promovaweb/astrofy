@@ -11,7 +11,9 @@ const manifest=JSON.parse(await read('ebook/build.json'));
 if(manifest.version!==version)throw new Error('ebook/build.json diverge da versão da release.');
 for(const path of ['.ebook/build-ebook.mjs','.ebook/pdf.css','.ebook/epub.css'])if(!pkg.files.includes('.ebook'))throw new Error(`${path} não está coberto por package.json#files.`);
 const workflow=await read('.github/workflows/release.yml');
-for(const value of ['npm publish','gh release','package:verify','ebook:verify','extract-release-notes.mjs'])if(!workflow.includes(value))throw new Error(`workflow de release não contém: ${value}`);
+for(const value of ['gh release','package:verify','ebook:verify','extract-release-notes.mjs'])if(!workflow.includes(value))throw new Error(`workflow de release não contém: ${value}`);
+// A publicação no npm é feita só pela máquina local; o workflow não pode publicar.
+for(const value of ['npm publish','NPM_TOKEN','NODE_AUTH_TOKEN'])if(workflow.includes(value))throw new Error(`workflow de release não pode conter: ${value}`);
 const tag=process.argv[2];
 if(tag&&tag!==`v${version}`)throw new Error(`tag ${tag} diverge de v${version}.`);
 console.log(`Release v${version} coerente.`);

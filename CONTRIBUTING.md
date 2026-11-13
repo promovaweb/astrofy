@@ -235,8 +235,26 @@ npm run release:check -- v<versão>
 O release é feito por tag `v<versão>`. O workflow
 `.github/workflows/release.yml` espera a validação do commit e roda
 `docs:verify`, `ebook:verify` e `release:check`. Depois empacota e valida o
-tarball, publica no npm e cria a GitHub Release com o PDF, o EPUB e os
-checksums. A publicação é feita pelos mantenedores.
+tarball e cria a GitHub Release com o tarball, o PDF, o EPUB e o
+`SHA256SUMS`. O workflow não publica no npm. O `release:check` falha se ele
+voltar a conter `npm publish` ou um token do npm.
+
+A publicação no npm é feita só pela máquina local, por um mantenedor logado
+como `contatopromovaweb`. Depois que a GitHub Release existir:
+
+```bash
+mkdir -p /tmp/astrofy-release && cd /tmp/astrofy-release
+gh release download v<versão> --repo promovaweb/astrofy \
+  --pattern 'promovaweb-astrofy-*.tgz' --pattern SHA256SUMS
+sha256sum --check --ignore-missing SHA256SUMS
+npm publish promovaweb-astrofy-<versão>.tgz --access public
+npm view @promovaweb/astrofy version license
+```
+
+Para gerar o tarball no lugar de baixá-lo, rode `npm pack` no commit da tag e
+compare o hash com o `SHA256SUMS` da release. O `npm view` pode levar alguns
+minutos para mostrar a versão nova. A release só está completa quando o npm
+mostra a mesma versão da tag.
 
 ## Licença
 

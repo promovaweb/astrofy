@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.14.1] - 2026-11-13
+
+### Alterado
+
+- A publicação no npm passa a ser feita só pela máquina local; o workflow de release não publica mais no npm.
+- O workflow `.github/workflows/release.yml` continua validando, empacotando e criando a GitHub Release com o tarball, o PDF, o EPUB e o `SHA256SUMS`, sem token do npm nem permissão `id-token`.
+- `release:check` passa a falhar quando o workflow de release contém `npm publish` ou um token do npm.
+- `CONTRIBUTING.md` descreve a publicação local, com download do tarball da release, conferência do hash, `npm publish` e `npm view`.
+- Ebook regerado como `Astrofy-Guia-do-Usuario-v0.14.1`.
+
 ## [0.14.0] - 2026-11-13
 
 ### Alterado
