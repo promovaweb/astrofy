@@ -1,9 +1,9 @@
 # Tarefas do site com sitespec
 
-Nem toda mudança no site é uma página nova. Um ajuste de componente, uma
-correção de contraste, uma pendência de SEO, um link quebrado — nada
-disso precisa de uma entrevista de página inteira para ser registrado e
-acompanhado. Use `astrofy-page-planner` (capítulo 2) quando o resultado
+Nem toda mudança no site é uma página nova. Um ajuste de componente ou uma
+correção de contraste, assim como uma pendência de SEO ou um link quebrado,
+dispensa a entrevista de página inteira para ser registrado e acompanhado.
+Use `astrofy-page-planner` (capítulo 2) quando o resultado
 é uma página completa, com conteúdo a ser aprovado; use sitespec para
 qualquer outro trabalho de desenvolvimento do site, incluindo as
 próprias tarefas técnicas derivadas de uma página (capítulo 4 explica
@@ -22,20 +22,20 @@ o progresso real do site inteiro a partir de tarefas com a mesma estrutura.
 
 ## Criar uma tarefa
 
-Descreva o pedido ao agente, em linguagem natural, do mesmo jeito que
+Descreva a tarefa ao agente, em linguagem natural, do mesmo jeito que
 você descreveria uma página. `astrofy-sitespec-create` confere primeiro
-se já existe uma tarefa equivalente — ela não cria duplicata para um
-pedido que já está registrado sob outro texto. Em seguida, ela mapeia as
-skills do catálogo relacionadas ao pedido e só pergunta o que sobrar sem
-resposta depois disso: a maioria dos pedidos já é específica o
-suficiente (qual arquivo, qual comportamento, qual resultado confirma a correção)
-para não gerar pergunta nenhuma. Quando o pedido é genuinamente ambíguo
-em algo que mudaria a tarefa — por exemplo, não está claro se o problema
-é de copy, de SEO ou de layout —, a skill faz no máximo três perguntas
+se já existe uma tarefa equivalente: ela não cria duplicata para um
+trabalho que já está registrado sob outro texto. Em seguida, ela relaciona
+as skills do catálogo ligadas à tarefa e só pergunta o que sobrar sem
+resposta depois disso. Uma descrição que já indica o arquivo, o
+comportamento e o resultado que confirma a correção não gera pergunta
+nenhuma. Quando a descrição é genuinamente ambígua
+em algo que mudaria a tarefa (por exemplo, não está claro se o problema
+é de copy, de SEO ou de layout), a skill faz no máximo três perguntas
 objetivas, cada uma com uma opção recomendada, antes de escrever
 qualquer arquivo. Isso é deliberado: o objetivo é não ser burocrático,
-então o padrão é zero perguntas, não um roteiro fixo repetido para todo
-pedido.
+então o padrão é zero perguntas, não um roteiro fixo repetido para toda
+tarefa.
 
 ```text
 Pedido: "o botão primário está com contraste baixo no tema claro"
@@ -45,14 +45,14 @@ Pedido: "o botão primário está com contraste baixo no tema claro"
 
 A tarefa criada fica em `status: draft`, com `primarySkill` (a skill que
 vai efetivamente executar a correção) e `reviewSkills` (as skills cujo
-conhecimento moldou os itens da checklist — por exemplo,
+conhecimento moldou os itens da checklist: por exemplo,
 `astrofy-accessibility` para um item de contraste, mesmo que a correção
 em si seja feita por `astrofy-design-system`).
 
 ## Checklist e identidade do item
 
 Cada item da checklist tem um identificador curto e fixo, `{#id}` de
-quatro caracteres, e pode marcar a skill responsável por aquele item
+quatro caracteres. Ele pode marcar a skill responsável por aquele item
 específico, quando ela diverge da skill principal da tarefa:
 
 ```markdown
@@ -61,13 +61,13 @@ específico, quando ela diverge da skill principal da tarefa:
 ```
 
 O `{#id}` não muda depois de criado, mesmo que o item seja reordenado
-dentro da checklist — isso existe para que uma automação ou um
+dentro da checklist: isso existe para que uma automação ou um
 comentário externo possa apontar para um item pelo identificador, mesmo
 após uma edição manual mudar sua posição na lista. Um item
 sem `{#id}`, ou com um id repetido na mesma checklist, invalida a tarefa
 inteira até a correção, do mesmo jeito que um campo obrigatório ausente
-no front matter invalidaria — o contrato completo, com todos os campos
-e suas regras, está em `docs/sitespec.md`.
+no front matter invalidaria. O contrato completo, com todos os campos e
+suas condições, está em `docs/sitespec.md`.
 
 ## Acompanhar o progresso
 
@@ -75,12 +75,12 @@ e suas regras, está em `docs/sitespec.md`.
 astrofy sitespec list --json
 ```
 
-Devolve todas as tarefas existentes — pontuais e de página — com
+Devolve todas as tarefas existentes, pontuais e de página, com
 progresso (`done`/`total` da checklist), o próximo id de quatro dígitos
 livre para uma tarefa nova, e, para cada tarefa, `blockedBy` (ids de
 dependências ainda não concluídas) e `missingDependencies` (ids
 declarados em `dependsOn` que não correspondem a nenhuma tarefa
-existente — um sinal de referência a uma tarefa ausente).
+existente: um sinal de referência a uma tarefa ausente).
 
 Quando você quer um resumo agregado, em vez de cada tarefa em detalhe,
 use `astrofy sitespec progress`. Sem `--watch`, é uma única consulta;
@@ -93,9 +93,9 @@ astrofy sitespec progress --watch --interval 10
 ```
 
 Pelo terminal interativo, `astrofy tui` (sem argumentos, já que esse é o
-comando padrão — capítulo 1) abre a aba **Specs** (`Ctrl+S`): ela lista
-as tarefas com estado, prioridade e uma barra de progresso textual, e
-`Enter` abre o detalhe completo de uma tarefa selecionada — descrição,
+comando padrão: capítulo 1) abre a aba **Specs** (`Ctrl+S`): ela lista
+as tarefas com estado, prioridade e uma barra de progresso textual.
+`Enter` abre o detalhe completo de uma tarefa selecionada, descrição,
 checklist com a skill de cada item, arquivos relacionados e notas. A aba
 é só consulta: nada que você faz nela grava um arquivo, inclusive porque
 isso permite usá-la livremente para explorar o estado do projeto sem
@@ -107,25 +107,25 @@ alterar arquivos por engano.
 `in_progress` antes de editar os arquivos da implementação, executa cada item da
 checklist com a skill marcada nele (ou a skill principal, quando o item
 não tem uma marcação própria) e marca `[x]` pelo `{#id}` correspondente
-ao terminar cada um — não em lote ao final, mas item por item, para que
+ao terminar cada um, não em lote ao final, mas item por item, para que
 uma interrupção no meio do trabalho deixe o progresso real registrado.
 Ao final, três resultados são possíveis:
 
 | Resultado | `status` | O que fica registrado |
 | --- | --- | --- |
-| Toda a checklist concluída | `done` | Nada além da checklist marcada — a conclusão é objetiva |
+| Toda a checklist concluída | `done` | Nada além da checklist marcada: a conclusão é objetiva |
 | Impedimento externo à tarefa | `blocked` | `blockedReason`, com a causa específica |
-| Decisão de não terminar | `archived` | `archivedReason`, com a justificativa |
+| Escolha de não terminar | `archived` | `archivedReason`, com a justificativa |
 
-Decisões e desvios durante a execução — por que um item foi feito
-diferente do esperado, qual causa impediu a continuação da tarefa — ficam registrados em `## Notas`, datados. Isso é o que
+Escolhas e desvios durante a execução (por que um item foi feito
+diferente do esperado, qual causa impediu a continuação da tarefa) ficam registrados em `## Notas`, datados. Isso é o que
 permite que você retome ou revise a tarefa depois com acesso à
 explicação do trabalho realizado.
 
 ## Dependências entre tarefas
 
 Uma tarefa pode declarar `dependsOn` com o id de outra que precisa
-terminar primeiro — por exemplo, uma tarefa de conteúdo que depende de
+terminar primeiro: por exemplo, uma tarefa de conteúdo que depende de
 uma tarefa de rota já concluída. `astrofy sitespec list --json` resolve
 isso automaticamente, a cada leitura:
 
@@ -134,9 +134,9 @@ astrofy sitespec list --json
 ```
 
 A tarefa dependente aparece com `blockedBy: ["0001"]` enquanto a tarefa
-`0001` não estiver `done`. Isso é puramente informativo — a leitura não
+`0001` não estiver `done`. Isso é puramente informativo: a leitura não
 muda `status` para `blocked` sozinha nem impede a edição da
-tarefa dependente mesmo assim; a pessoa ou a skill que está executando
+tarefa dependente mesmo assim. Você ou a skill que está executando
 decide se uma dependência pendente de fato impede avançar naquele caso
 específico, ou se faz sentido seguir mesmo assim.
 

@@ -1,7 +1,7 @@
 # Referência de uso do Astrofy Design
 
 Os quatro modos do Astrofy Design recebem instruções na conversa com o agente.
-Esta referência descreve o que informar em cada pedido, qual resultado esperar
+Esta referência descreve o que informar em cada instrução, qual resultado esperar
 e quais arquivos podem mudar. Para acompanhar exemplos comentados de uso,
 consulte o [guia prático](11-astrofy-design.md).
 
@@ -32,7 +32,7 @@ antes de uma atualização que substituiria seu conteúdo.
 ## Build: criar uma interface
 
 O modo `build` atende a páginas e componentes novos dentro do projeto Astro.
-Ele também é o padrão quando o pedido de criação não contém um verbo explícito.
+Ele também é o padrão quando a instrução de criação não contém um verbo explícito.
 Informe o conteúdo aprovado, a finalidade e o escopo da interface. O caminho
 de destino pode ser proposto pelo agente depois da leitura das rotas existentes.
 
@@ -75,11 +75,11 @@ na captura, sem confirmar fontes exatas ou comportamentos interativos.
 | Referência | URL ou imagem necessária | Fornece o objeto do estudo |
 | Foco da análise | Texto opcional | Delimita tipografia, composição ou outra parte |
 | Conteúdo próprio | Texto opcional | Permite discutir uma aplicação posterior |
-| Exportação | Pedido explícito, ausente por padrão | Solicita um `design.md` portátil |
+| Exportação | Solicitação explícita, ausente por padrão | Gera um `design.md` portátil |
 
-O estudo não altera o site nem cria histórico. Um relatório em arquivo exige
-pedido específico. Uma URL inacessível não produz um diagnóstico visual
-completo. A skill recusa a reprodução de templates pagos e a cópia de páginas
+O estudo não altera o site nem cria histórico. O relatório em arquivo só
+aparece quando você o solicita. Uma URL inacessível não produz um diagnóstico
+visual completo. A skill recusa a reprodução de templates pagos e a cópia de páginas
 por pixels. A exportação baseada em URL precisa confirmar que a referência é
 própria ou pública para orientar a marca do projeto.
 
@@ -125,7 +125,7 @@ página. Quando a análise não incluir navegador, essa limitação deve aparece
    cores e as fontes com o design.md existente.”
 4. **Formulário:** “Use astrofy-design audit no formulário de contato e
    confira os estados de erro, envio e sucesso sem editar os arquivos.”
-5. **Relatório:** “Use astrofy-design audit na página de preços e salve o
+5. **Relatório:** “Use astrofy-design audit na página de preços e grave o
    diagnóstico em docs/revisao-visual.md, preservando a implementação.”
 
 ## Redesign: mudar a composição existente
@@ -142,7 +142,7 @@ todas as mudanças.
 | Elementos a preservar | Texto ou contrato existente | Explicita as restrições da mudança |
 | `--mood` | Texto opcional na conversa | Sugere um tom visual, sem substituir a marca |
 
-A notação `--mood` pertence ao pedido dirigido ao agente, não ao parser do CLI.
+A notação `--mood` pertence à instrução dirigida ao agente, não ao parser do CLI.
 Na ausência dessa preferência, o agente usa a direção já confirmada ou pergunta
 somente o que falta para propor a composição. Uma escolha anterior compatível
 não precisa ser confirmada novamente.
@@ -182,17 +182,18 @@ diferentes. A tabela separa os arquivos de instrução daqueles que pertencem
 | JSON de design e CSS gerado | Tokens e resultado do gerador | Mudança de tokens dentro do escopo |
 | Rotas e componentes indicados | Interface do site | Build ou redesign autorizado |
 
-Cada entrada do histórico registra `date`, `macrostructure`, `theme`,
-`enrichment` e `brief`. Temas personalizados acrescentam `theme_axes` e podem
-informar `vibe`. Uma execução sobre várias páginas pode usar `scope: app`.
-Se o JSON estiver inválido, o agente deve preservá-lo e informar o problema.
+Cada entrada do histórico registra a data (`date`), a composição
+(`macrostructure` e `theme`), o `enrichment` e o `brief`. Temas personalizados
+acrescentam `theme_axes` e podem informar `vibe`, enquanto uma execução sobre
+várias páginas pode usar `scope: app`. Se o JSON estiver inválido, o agente
+deve preservá-lo e informar o problema.
 Esse histórico é escrito pelo agente conforme a skill, não por um comando
 automático de design do CLI.
 
 ## Tokens e verificações técnicas
 
 Em um projeto inicializado, valide a fonte dos tokens antes de gerar CSS.
-A simulação permite conferir a operação antes da escrita:
+A simulação mostra o que será gravado antes da escrita:
 
 ```bash
 astrofy tokens validate
@@ -208,6 +209,7 @@ ser adaptada antes de ser usada como entrada. O arquivo CSS gerado não deve
 receber correções manuais que desapareceriam na geração seguinte.
 
 O build do site e a inspeção no navegador completam essa conferência. A skill
-prevê larguras de 320, 375, 414 e 768 pixels, além de desktop. Confira teclado,
-foco, contraste, zoom, tema e redução de movimento conforme os componentes
-alterados. Uma validação não executada precisa permanecer como pendência.
+prevê larguras de 320, 375, 414 e 768 pixels, além de desktop. Conforme os
+componentes alterados, confira teclado, foco e contraste, assim como zoom, tema
+e redução de movimento. Uma validação não executada precisa permanecer como
+pendência.

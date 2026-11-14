@@ -2,8 +2,8 @@
 
 Cada tarefa da página é uma sitespec com `page` e `task` no front matter
 (contrato completo em `docs/sitespec.md`, capítulo 8 para o uso geral de
-sitespecs). O agente atualiza esse registro enquanto trabalha — não ao
-final de tudo, mas a cada transição real — para que você, ou outra
+sitespecs). O agente atualiza esse registro enquanto trabalha (não ao
+final de tudo, mas a cada transição real) para que você, ou outra
 sessão de conversa, consiga retomar exatamente de onde o trabalho parou,
 consultando o histórico do trabalho realizado. Este capítulo mostra
 os comandos do CLI para consultar e atualizar essas tarefas pelo
@@ -15,14 +15,14 @@ Uma tarefa técnica real passa por mais situações do que só concluída ou
 pendente. Ela pode estar esperando outra terminar, pode estar em
 andamento numa sessão anterior que foi interrompida, pode ter sido
 tentada e falhado numa validação, ou pode ter sido deliberadamente
-descartada. Cada uma dessas situações exige de você uma ação diferente ao
-retomar o trabalho — continuar, investigar a falha, ou simplesmente
-seguir para a próxima tarefa. Por isso o Astrofy registra um estado
+descartada. Cada situação exige de você uma ação diferente ao retomar o
+trabalho: continuar, investigar a falha ou seguir para a próxima tarefa. Por
+isso o Astrofy registra um estado
 específico, não um booleano.
 
 ## Estados da tarefa
 
-`astrofy apply --status` usa o vocabulário abaixo — o mesmo desde antes
+`astrofy apply --status` usa o vocabulário abaixo: o mesmo desde antes
 da unificação com sitespec, para que nenhum script existente precise
 mudar. Internamente, cada valor grava um `status` de sitespec diferente;
 essa tradução é feita pelo próprio comando, você não escreve o `status`
@@ -37,13 +37,13 @@ interno diretamente.
 | `skipped` | `archived` | Saiu do escopo com justificativa | Manter a justificativa registrada |
 
 Versões anteriores do Astrofy usavam um par `pending`/`ready` separado
-do `status` em si — uma tarefa era `pending` enquanto dependia de outra,
+do `status` em si: uma tarefa era `pending` enquanto dependia de outra
 e virava `ready` quando a dependência terminava, só então podendo passar
 para `in_progress`. Isso não existe mais como campo gravado: a mesma
 informação é calculada a cada leitura, não armazenada, o que evita que
 ela fique desatualizada após uma edição manual do arquivo.
 `astrofy sitespec list`/`progress` calculam `blockedBy` a partir de
-`dependsOn` toda vez que leem — uma tarefa `draft` sem `blockedBy` pode
+`dependsOn` toda vez que leem: uma tarefa `draft` sem `blockedBy` pode
 começar agora; uma tarefa `draft` com `blockedBy` ainda depende de outra
 terminar primeiro.
 
@@ -60,7 +60,7 @@ relatedFiles:
 ```
 
 Ao iniciar o trabalho, a skill relê a rota esperada, confirma os
-arquivos envolvidos e muda o status para `in_progress` — isso é
+arquivos envolvidos e muda o status para `in_progress`: isso é
 registrado antes de qualquer edição de código, não depois, para que uma
 interrupção no meio do trabalho deixe rastro de que algo estava em
 andamento:
@@ -71,22 +71,22 @@ astrofy apply --slug atlas --task route --status in_progress
 
 Depois de editar o arquivo, a skill executa as validações listadas na
 checklist da tarefa e faz a revisão manual que ela indicar. Só então
-registra a conclusão — e esse comando faz duas coisas de uma vez: marca
+registra a conclusão. Esse comando faz duas coisas de uma vez: marca
 `status: done` **e** marca cada item da checklist dessa tarefa como
 `[x]`. Isso existe porque o contrato de sitespec exige checklist completa
 para um item estar `done` (capítulo 8); `apply --status completed` não
-deixaria essa regra satisfeita por acidente.
+deixaria essa exigência satisfeita por acidente.
 
 ```bash
 astrofy apply --slug atlas --task route --status completed
 ```
 
-Se uma validação falhar, registre `failed` em vez de `completed` — não
+Se uma validação falhar, registre `failed` em vez de `completed`, não
 force a conclusão para "destravar" a dependente. A tarefa vai para
 `status: blocked`, com um motivo registrado automaticamente
-(`blockedReason`), e a tarefa dependente continua com `blockedBy` não
+(`blockedReason`). A tarefa dependente continua com `blockedBy` não
 vazio, porque a predecessora ainda não está `done`. Uma nova tentativa
-depois da correção volta à tarefa com falha antes de avançar — o
+depois da correção volta à tarefa com falha antes de avançar: o
 Astrofy não deixa uma dependente começar enquanto a predecessora
 registrada como falha não for corrigida ou explicitamente contornada:
 
@@ -96,7 +96,7 @@ astrofy apply --slug atlas --task route --status completed
 ```
 
 Ao concluir uma tarefa, a dependente perde a entrada correspondente em
-`blockedBy` automaticamente, na próxima leitura — isso não é um campo
+`blockedBy` automaticamente, na próxima leitura: isso não é um campo
 que você precisa limpar manualmente, pois o comando o recalcula. Sem `--task`,
 `astrofy apply --slug atlas` seleciona a tarefa automaticamente: primeiro procura
 uma tarefa já `in_progress` (para continuar o que estava em andamento
@@ -106,10 +106,10 @@ sem `blockedBy`.
 ## Retomada em outra sessão
 
 Quando você volta a uma conversa ou abre o terminal depois de um tempo,
-siga esta sequência — ela existe para reconstruir o contexto antes de
-agir, não para agir primeiro e descobrir o contexto depois:
+siga esta sequência: ela existe para reconstruir o estado do trabalho antes de
+agir, não para agir primeiro e descobrir o estado depois:
 
-1. Confira `git status` e os arquivos alterados — o disco é a fonte de
+1. Confira `git status` e os arquivos alterados: o disco é a fonte de
    verdade, não a memória da conversa anterior.
 2. Execute `astrofy page status --slug atlas` e leia `page-spec.json`
    para confirmar que o conteúdo aprovado não mudou enquanto você estava
@@ -117,12 +117,12 @@ agir, não para agir primeiro e descobrir o contexto depois:
 3. Execute `astrofy sitespec list --json` (ou `sitespec progress`) e
    filtre as tarefas com `page: atlas` para localizar a próxima com
    trabalho pendente.
-4. Localize tarefas `in_progress` ou `blocked` — são as que precisam de
+4. Localize tarefas `in_progress` ou `blocked`: são as que precisam de
    atenção imediata, diferente de uma `draft` ainda esperando dependência.
 5. Confirme se os arquivos no disco ainda correspondem ao que o registro
    da tarefa descreve. Uma edição feita fora do fluxo do Astrofy pode
    ter alterado a implementação nesse intervalo.
-6. Continue a tarefa e repita as validações da checklist — não assuma
+6. Continue a tarefa e repita as validações da checklist, não assuma
    que uma validação passada antes continua válida sem reexecutar.
 7. Atualize o estado com `astrofy apply` e confirme que a dependência
    saiu de `blockedBy` da próxima tarefa, antes de considerar a página

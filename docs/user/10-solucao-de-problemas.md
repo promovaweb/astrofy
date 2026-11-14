@@ -4,7 +4,7 @@
 
 Execute `astrofy inspect --root <diretório>` apontando para a pasta que
 contém o `package.json` do site. Confira se `astro` aparece em
-`dependencies` ou `devDependencies` desse arquivo — essa é a única
+`dependencies` ou `devDependencies` desse arquivo: essa é a única
 condição que o Astrofy usa para decidir que um diretório é um projeto
 Astro válido. Se o comando for executado dentro de um subdiretório do
 projeto (como `src/pages/`), a descoberta sobe pelos diretórios pais até
@@ -16,29 +16,29 @@ direto para a raiz.
 Abra o caminho informado na mensagem, corrija a sintaxe e repita
 `astrofy init --dry-run` para confirmar a correção antes de gravar. O
 comando preserva arquivos existentes deliberadamente e interrompe a
-gravação quando não consegue interpretá-los — ele nunca sobrescreve uma
+gravação quando não consegue interpretá-los. Ele não sobrescreve uma
 configuração corrompida com um padrão novo, porque isso poderia apagar
 uma personalização que só está temporariamente malformada.
 
 ## O tipo de página ficou ambíguo
 
-Informe a finalidade principal e a ação esperada primeiro — essas duas
+Informe a finalidade principal e a ação esperada primeiro: essas duas
 respostas são o que a orquestradora (capítulo 2) usa para escolher a
 especialista certa entre as sete disponíveis. Necessidades secundárias
 (uma tabela de preços dentro de uma página de produto, por exemplo) não
 precisam de ambiguidade: registre-as como requisito complementar depois
-que o tipo principal estiver definido, em vez de tentar encaixar o
-pedido em dois tipos ao mesmo tempo.
+que o tipo principal estiver definido, em vez de tentar encaixar a
+página em dois tipos ao mesmo tempo.
 
 ## A implementação divergiu do conteúdo aprovado
 
-Pare a tarefa antes de continuar — não siga implementando sobre uma
+Pare a tarefa antes de continuar, não siga implementando sobre uma
 divergência já percebida. Compare a página atual com `page.md` e
 `page-spec.json` da página (capítulo 2) linha por linha, não só por
-impressão geral, e corrija a implementação para voltar a corresponder ao
+impressão geral. Depois corrija a implementação para voltar a corresponder ao
 que foi aprovado. Se a divergência na verdade revela que o conteúdo
 aprovado estava errado ou incompleto, a correção certa é voltar à etapa
-de conteúdo (capítulo 3) e aprovar a mudança lá — nunca ajustar o texto
+de conteúdo (capítulo 3) e aprovar a mudança lá, sem ajustar o texto
 só na implementação, porque isso deixa `page-spec.json` e o código
 dizendo coisas diferentes.
 
@@ -46,25 +46,26 @@ dizendo coisas diferentes.
 
 Execute `astrofy plan --slug <slug>` depois de reler o projeto e a
 especificação atual. O comando reconcilia as tarefas existentes em vez
-de recriá-las do zero — `status`, itens de checklist já marcados e o
+de recriá-las do zero: `status`, itens de checklist já marcados e o
 `id` de cada tarefa são preservados; o que é atualizado é o texto,
 a skill responsável e as dependências, a partir do `page-spec.json`
 atual (capítulo 4 detalha exatamente o que muda e o que não muda nessa
 reconciliação). Não exclua manualmente os arquivos em `.sitespec/` antes
-de reexecutar: isso descartaria progresso que o comando preservaria automaticamente. Se você precisar consultar o histórico de tarefas
-concluídas numa versão anterior do plano, use o histórico do Git sobre
-esses arquivos — eles são texto versionável, não um estado opaco.
+de reexecutar, porque isso descartaria o progresso que o comando preserva.
+Para consultar o histórico de tarefas concluídas numa versão anterior do
+plano, use o histórico do Git sobre
+esses arquivos: eles são texto versionável, não um estado opaco.
 
 ## Uma tarefa não sai de `blocked`
 
-Confira o `blockedReason` registrado no front matter da sitespec — ele
+Confira o `blockedReason` registrado no front matter da sitespec: ele
 descreve a causa específica da interrupção, não um estado genérico. Se a
 causa já foi resolvida, registre `astrofy apply --slug <slug> --task
 <task> --status completed` (ou `in_progress`, se o trabalho ainda não
 tiver terminado) para seguir adiante; o comando aceita a transição de
 `blocked` para `in_progress` especificamente para permitir essa nova
 tentativa. Se a causa for uma dependência de outra tarefa ainda não
-concluída, confira `blockedBy` em vez de `blockedReason` — são conceitos
+concluída, confira `blockedBy` em vez de `blockedReason`: são conceitos
 diferentes: `blockedReason` é um impedimento que a própria tarefa
 registrou; `blockedBy` é calculado automaticamente a partir de
 `dependsOn` e não precisa de nenhuma ação manual além de concluir a
@@ -83,7 +84,7 @@ astrofy browser install
 
 Depois execute `astrofy check --browser`. No CI, mantenha o cache
 indicado no workflow distribuído para evitar baixar o Chromium a cada
-execução — o download sozinho pode custar mais tempo que o restante da
+execução: o download sozinho pode custar mais tempo que o restante da
 suíte de verificação.
 
 ## A migração pendente deve falhar no CI
@@ -96,9 +97,9 @@ astrofy migrate --check
 ```
 
 O comando retorna código 1 quando o contrato do projeto ainda está numa
-versão anterior e precisa de migração, e código 0 quando a configuração
+versão anterior e precisa de migração. O código 0 aparece quando a configuração
 já usa a versão atual. `astrofy migrate --apply` é a única forma de de
-fato aplicar a migração — `--check` nunca escreve um arquivo.
+fato aplicar a migração, porque `--check` não grava arquivo nenhum.
 
 ## O ebook não confere
 
@@ -112,7 +113,7 @@ npm run ebook:verify
 
 O primeiro comando recompila PDF, EPUB e o manifesto `build.json` a
 partir dos capítulos atuais de `docs/user/`. O segundo compara a edição
-já gerada com todos os capítulos e arquivos do pipeline, byte a byte —
+já gerada com todos os capítulos e arquivos do pipeline, byte a byte:
 ele identifica capítulos editados após a última geração do ebook,
 antes da publicação de uma nova versão.
 
@@ -120,7 +121,7 @@ antes da publicação de uma nova versão.
 
 Se a execução parece demorar mais do que o esperado num projeto grande,
 confira se `.astrofy/cache/file-hashes.json` existe e está sendo
-atualizado — esse cache evita reler e recalcular o hash de todo o
+atualizado: esse cache evita reler e recalcular o hash de todo o
 projeto a cada execução, reaproveitando o hash de um arquivo cujo
 `mtime` e tamanho não mudaram desde a última leitura. Um cache ausente
 (primeira execução, ou depois de limpar `.astrofy/cache/`) explica uma

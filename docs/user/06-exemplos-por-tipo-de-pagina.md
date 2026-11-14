@@ -1,16 +1,16 @@
 # Exemplos por tipo de página
 
 Os exemplos abaixo mostram, para cada um dos sete tipos de página do
-capítulo 2, o pedido inicial, as respostas que de fato mudam a
+capítulo 2, a solicitação inicial, as respostas que de fato mudam a
 arquitetura, a arquitetura aprovada e o foco do plano técnico que sai
-disso. Nomes e textos são ilustrativos, mas a estrutura de cada seção —
-o que a entrevistadora pergunta, o que ela produz — é real. Use estes
+disso. Nomes e textos são ilustrativos, mas a estrutura de cada seção
+(o que a entrevistadora pergunta, o que ela produz) é real. Use estes
 exemplos para prever, antes de começar sua própria conversa, que tipo de
 pergunta esperar e o que vai sair no fim de cada etapa.
 
 ## Landing page de vendas
 
-**Pedido:** “Quero vender a formação Operação DevOps.”
+**Solicitação:** “Quero vender a formação Operação DevOps.”
 
 **Respostas centrais:** profissionais de desenvolvimento; inscrição como ação
 principal; turma com data e vagas; depoimentos autorizados; pagamento externo.
@@ -23,7 +23,7 @@ do checkout, eventos da ação principal, metadados e testes do percurso.
 
 ## Página de produto
 
-**Pedido:** “Quero criar uma página para o Atlas, nosso produto de
+**Solicitação:** “Quero criar uma página para o Atlas, nosso produto de
 atendimento.”
 
 **Respostas centrais:** equipes de suporte; demonstração como ação principal;
@@ -37,7 +37,7 @@ demonstração, imagens responsivas, `SoftwareApplication` em JSON-LD e testes.
 
 ## Página de serviço
 
-**Pedido:** “Preciso apresentar nossa consultoria de modernização.”
+**Solicitação:** “Preciso apresentar nossa consultoria de modernização.”
 
 **Respostas centrais:** empresas com aplicações legadas; diagnóstico como ação;
 escopo por etapas; entregas e responsabilidades explícitas; contato comercial.
@@ -50,7 +50,7 @@ qualificação, confirmação de envio, metadados `Service` e teste dos estados.
 
 ## Página inicial
 
-**Pedido:** “Quero reorganizar a Home para explicar a empresa.”
+**Solicitação:** “Quero reorganizar a Home para explicar a empresa.”
 
 **Respostas centrais:** três públicos; produto como destino principal; serviços
 e conteúdos como rotas secundárias; mensagem institucional já aprovada.
@@ -63,7 +63,7 @@ ordem responsiva, links internos, metadados da organização e regressão visual
 
 ## Página Sobre
 
-**Pedido:** “Quero uma página Sobre que conte nossa trajetória.”
+**Solicitação:** “Quero uma página Sobre que conte nossa trajetória.”
 
 **Respostas centrais:** fatos documentados; marcos com datas; pessoas com
 autorização; princípios descritos por ações; contato para imprensa.
@@ -76,7 +76,7 @@ pública e canais institucionais.
 
 ## Página de contato
 
-**Pedido:** “Quero separar suporte de oportunidades comerciais.”
+**Solicitação:** “Quero separar suporte de oportunidades comerciais.”
 
 **Respostas centrais:** dois destinos; campos mínimos por assunto;
 consentimento; prazo de retorno informado; email como canal alternativo.
@@ -89,12 +89,12 @@ integrações por ambiente, foco após envio, testes de falha e documentação.
 
 ## Página de preços
 
-**Pedido:** “Quero comparar três planos do produto.”
+**Solicitação:** “Quero comparar três planos do produto.”
 
 **Respostas centrais:** cobrança mensal e anual; limites por plano; impostos e
 moeda explícitos; teste gratuito; contato para volume maior.
 
-**Arquitetura:** contexto da cobrança, seletor de período, cartões dos planos,
+**Arquitetura:** explicação da cobrança, seletor de período, cartões dos planos,
 tabela comparativa, condições comerciais, perguntas e ação por plano.
 
 **Plano técnico:** fonte única para preços, seletor acessível, URLs do checkout,
@@ -103,18 +103,18 @@ dados estruturados compatíveis com o conteúdo e testes das combinações.
 ## Resultado comum
 
 Independente do tipo, os sete exemplos terminam no mesmo conjunto de
-arquivos, porque o formato de saída não varia por tipo de página — só o
+arquivos, porque o formato de saída não varia por tipo de página: só o
 conteúdo da entrevista varia:
 
 - `.astrofy/pages/<slug>/page-spec.json` e `page.md`, com o conteúdo
   aprovado (capítulos 2 e 3);
-- três sitespecs em `.sitespec/` — `route`, `content` e `check` —, cada
+- três sitespecs em `.sitespec/` (`route`, `content` e `check`), cada
   uma apontando de volta para `<slug>` pelos campos `page` e `task`
   (capítulo 4);
 - o progresso dessas três tarefas visível em `astrofy sitespec progress`
   e na aba Specs da TUI, junto de qualquer outra tarefa do site.
 
-A implementação somente usa fatos e textos aprovados na entrevista — uma
+A implementação somente usa fatos e textos aprovados na entrevista: uma
 skill técnica não inventa um número de prova, um nome de integração ou
 uma frase de oferta que não apareceu na conversa. Se um exemplo acima
 parece faltar detalhe (um preço, uma integração específica), é porque a

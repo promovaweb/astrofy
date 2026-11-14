@@ -1,9 +1,9 @@
 # Entrevista e conteúdo
 
 A especialista escolhida no capítulo 2 pergunta somente o necessário para
-o tipo de página em questão — ela não aplica um questionário fixo. Ela
+o tipo de página em questão: ela não aplica um questionário fixo. Ela
 aceita três formas de resposta igualmente válidas: texto pronto para
-publicar, notas incompletas que ela organiza, ou autorização explícita
+publicar, notas incompletas que ela transforma em texto ou autorização explícita
 para propor alternativas quando você não tem uma resposta formada ainda.
 
 ## O que a entrevista cobre, e por que cada item importa
@@ -12,24 +12,24 @@ para propor alternativas quando você não tem uma resposta formada ainda.
   cadastro, à compra, ao contato ou a outro destino específico.
 - **Público e origem do acesso:** a oferta pode precisar de explicações
   diferentes para visitas provenientes de anúncios ou de buscas específicas.
-- **Áreas da página e ordem de leitura** — a arquitetura aprovada no
+- **Áreas da página e ordem de leitura**: a arquitetura aprovada no
   capítulo 2 ganha conteúdo real aqui, área por área.
-- **Títulos, textos, rótulos e mensagens de estado** — inclui texto que
+- **Títulos, textos, rótulos e mensagens de estado**: inclui texto que
   é fácil esquecer, como a mensagem de erro de um formulário ou o rótulo
   de um botão desabilitado.
-- **Imagens, vídeos, ilustrações e suas fontes** — a especialista
+- **Imagens, vídeos, ilustrações e suas fontes**: a especialista
   registra a origem para a skill de implementação saber se precisa
   buscar, gerar ou receber o arquivo.
-- **Links, formulários e integrações** — destinos reais, não
+- **Links, formulários e integrações**: destinos reais, não
   placeholders; um link `#` ou um endpoint fictício se propaga para o
   plano técnico como se fosse real.
 - **Amostra de texto aprovada, tom desejado e expressões a preservar ou
-  evitar** — é o que faz a copy escrita por uma skill técnica soar como
+  evitar**: é o que faz a copy escrita por uma skill técnica soar como
   a marca, em vez de genérica.
-- **Fatos que precisam de fonte** — números, afirmações institucionais e
+- **Fatos que precisam de fonte**: números, afirmações institucionais e
   qualquer coisa verificável entra marcada, para que a revisão saiba o
   que confirmar antes de publicar.
-- **Conteúdo ainda pendente** — uma lacuna reconhecida e registrada é
+- **Conteúdo ainda pendente**: uma lacuna reconhecida e registrada é
   diferente de uma lacuna que ninguém percebeu.
 
 ## Como responder
@@ -37,14 +37,14 @@ para propor alternativas quando você não tem uma resposta formada ainda.
 Você pode responder uma etapa por vez, na ordem que a especialista
 apresenta, ou tudo de uma vez se já tiver as respostas prontas. Para cada
 proposta dela, três reações são válidas: **aprovar**, **ajustar** ou
-**manter pendente**. Não existe uma quarta opção de "ignorar" — uma área
+**manter pendente**. Não existe uma quarta opção de "ignorar": uma área
 sem resposta vira pendência registrada, não um vazio silencioso.
 
 Quando você fornece um texto final, diga explicitamente que ele deve ser
 preservado. Copy fornecida e aprovada não é reescrita só para caber no
-layout — se o texto não couber, a solução é ajustar o layout, a skill de
-implementação não tem autorização para encurtar ou reescrever conteúdo
-que você já aprovou. Quando você quiser ajuda editorial em vez de
+layout. Se o texto não couber, a solução é ajustar o layout, porque a skill
+de implementação não tem autorização para encurtar ou reescrever conteúdo
+que você já aprovou. Quando você quiser apoio editorial em vez de
 escrever o texto você mesmo, informe os fatos disponíveis e o tom
 desejado; o agente propõe a copy como rascunho, não como final.
 
@@ -53,11 +53,11 @@ lugar (um post, um email, uma página existente) ou simplesmente descrever
 como quer que a página soe ("direto, sem jargão", "mais técnico que o
 resto do site"). O Astrofy registra essa orientação de voz para que as
 skills que escrevem ou revisam copy no plano técnico (capítulo 4) e na
-execução (capítulo 5) a usem — isso evita que o tom combinado na
+execução (capítulo 5) a usem: isso evita que o tom combinado na
 entrevista se perca entre uma etapa e outra.
 
 Propostas escritas pelo agente permanecem como rascunho até sua
-aprovação explícita — nada que você não aprovou vira parte da
+aprovação explícita: nada que você não aprovou vira parte da
 especificação final. Áreas opcionais podem ficar pendentes
 deliberadamente: a aprovação final registra esse estado, então uma
 lacuna conhecida não é preenchida silenciosamente durante a
@@ -66,16 +66,16 @@ implementação por esquecimento do que ficou pendente.
 ## Conduza a entrevista na conversa
 
 No caminho comum, você simplesmente responde às perguntas do agente na
-ordem apresentada. Diante de cada proposta, aprove, ajuste
-ou deixe uma área opcional pendente, usando linguagem natural — não há
-sintaxe especial a aprender. O agente registra cada resposta e monta a
+ordem apresentada. Diante de cada proposta, aprove, ajuste ou deixe uma área
+opcional pendente em linguagem natural, sem sintaxe especial. O agente
+registra cada resposta e monta a
 especificação conforme a conversa avança. Você pode consultar os arquivos
 gerados depois de responder.
 
 ## Alternativa pelo CLI
 
 Use estes comandos se você quiser conduzir a mesma entrevista pelo
-terminal, sem o agente — por exemplo, para integrar a uma automação ou
+terminal, sem o agente: por exemplo, para integrar a uma automação ou
 para registrar respostas de um formulário externo. Eles não são
 necessários no uso conversacional comum.
 
@@ -86,7 +86,7 @@ astrofy page create --slug atlas --type product
 astrofy page status --slug atlas
 ```
 
-`page status` devolve até três itens em `nextQuestions` — o mesmo limite
+`page status` devolve até três itens em `nextQuestions`: o mesmo limite
 que a conversa usa, para você responder a uma lista curta por vez. Registre cada resposta com o identificador de
 campo recebido:
 
@@ -95,7 +95,7 @@ astrofy page answer --slug atlas --field title --value "Atlas"
 astrofy page answer --slug atlas --field route --value /atlas/
 ```
 
-O arquivo `interview.json` conserva respostas e lacunas entre execuções —
+O arquivo `interview.json` conserva respostas e lacunas entre execuções:
 rodar `page answer` em sessões diferentes continua a mesma entrevista, não
 recomeça do zero. Quando todas as entradas obrigatórias existem, o
 próprio comando gera `page-spec.json` com conteúdo, SEO, integrações,
@@ -104,7 +104,7 @@ acessibilidade e a lista de testes esperados, sem uma etapa separada.
 O schema atual do CLI não tem um campo próprio para amostras de voz.
 Quando conduzir a entrevista pelo terminal, registre a direção de voz
 confirmada na seção "Voz e redação" de `page.md`, manualmente, durante a
-revisão da especificação — no uso conversacional, o agente já faz esse
+revisão da especificação: no uso conversacional, o agente já faz esse
 registro por você.
 
 ## Exemplo curto
@@ -116,8 +116,8 @@ Usuário: Solicitar demonstração.
 Astrofy: Vou propor três arquiteturas para uma página de produto orientada à demo.
 ```
 
-A partir daqui a conversa continua área por área — capacidades a
-destacar, integrações reais, provas disponíveis — até a especificação
+A partir daqui a conversa continua área por área (capacidades a
+destacar, integrações reais, provas disponíveis) até a especificação
 completa estar pronta para sua revisão final.
 
 ## Classificação

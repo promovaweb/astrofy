@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.3] - 2026-11-14
+
+### Corrigido
+
+- Revisada a redação do guia do usuário em `docs/user/`, com explicações mais precisas e correções de linguagem.
+- Atualizados os formatos portáteis da documentação a partir das fontes revisadas.
+
 ## [0.14.2] - 2026-11-13
 
 ### Alterado
