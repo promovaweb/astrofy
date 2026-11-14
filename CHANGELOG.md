@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.14.4] - 2026-11-14
+
+### Corrigido
+
+- Retiradas as edições anteriores do ebook da distribuição para que o
+  pacote npm inclua somente a edição atual e respeite o limite de tamanho.
+- Preservada a revisão do guia do usuário publicada no commit da v0.14.3.
+
 ## [0.14.3] - 2026-11-14
 
 ### Corrigido
