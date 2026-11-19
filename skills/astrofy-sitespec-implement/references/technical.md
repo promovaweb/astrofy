@@ -20,7 +20,7 @@ mesmo instante; os dois campos não ficam dessincronizados.
 ## Diagnóstico
 
 Se `astrofy sitespec list --json` mover a tarefa editada para `errors`, a
-edição quebrou o contrato — normalmente um `{#id}` apagado ou duplicado por
+edição quebrou o contrato: normalmente um `{#id}` apagado ou duplicado por
 copiar e colar uma linha sem trocar o id. Desfaça a última edição e reaplique
 com cuidado, em vez de tentar corrigir o schema para aceitar o erro.
 
@@ -43,7 +43,7 @@ Consulta: 12/10/2026.
 
 - **[JSON Schema](https://ajv.js.org/json-schema.html):** dialeto JSON
   Schema e validação Ajv; consulte ao diagnosticar uma edição recusada.
-- **[GitHub Flavored Markdown — Task list items](https://github.github.com/gfm/#task-list-items-extension-):**
+- **[Task list items no GitHub Flavored Markdown](https://github.github.com/gfm/#task-list-items-extension-):**
   sintaxe `- [ ]`/`- [x]` da checklist.
 
 ## Transição de status e checklist
@@ -57,21 +57,21 @@ que um item sem `{#id}` válido não é contado.
 astrofy sitespec list --json
 ```
 
-## Bloqueio e arquivamento
+## Impedimento e arquivamento
 
-`blocked` é para impedimento externo à tarefa — não para uma dependência de
+`blocked` é para impedimento externo à tarefa: não para uma dependência de
 outra sitespec ainda não concluída, que já aparece em `blockedBy` sem
 precisar de ação manual. Use `blocked` quando a própria execução não pode
-continuar por falta de acesso, decisão de terceiro ou recurso indisponível,
+continuar por falta de acesso, autorização de terceiro ou recurso indisponível,
 e descreva a causa específica em `blockedReason`, não um resumo genérico
-como "bloqueado por dependência".
+como "dependente de outra tarefa".
 
-`archived` fecha a tarefa sem completar a checklist — uso raro, para
-duplicata ou decisão explícita de não fazer. `archivedReason` precisa
-nomear a decisão, não repetir o texto de `summary`.
+`archived` fecha a tarefa sem completar a checklist: uso raro, para
+duplicata ou escolha explícita de não fazer. `archivedReason` precisa
+nomear a escolha, não repetir o texto de `summary`.
 
 ## Registro em Notas
 
-Uma nota datada (`AAAA-MM-DD: texto`) marca decisão, desvio ou bloqueio.
-Não registre uma nota para cada item concluído sem incidente — isso vira
+Uma nota datada (`AAAA-MM-DD: texto`) marca escolha, desvio ou impedimento.
+Não registre uma nota para cada item concluído sem incidente: isso vira
 ruído que esconde as notas que de fato importam para quem revisar depois.

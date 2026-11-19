@@ -13,7 +13,7 @@ os dois marcados, mude `status` para `done`.
 Antes de tocar no arquivo, rode `astrofy sitespec list --json` e confira
 `blockedBy`. Uma tarefa com `blockedBy: ["0001"]` só deveria avançar depois
 de confirmar com quem pediu que a dependência pendente não impede o
-trabalho — a leitura não bloqueia a edição automaticamente.
+trabalho: a leitura por si só não impede a edição.
 
 ## Erro recorrente
 
@@ -41,12 +41,12 @@ Execute a falha deliberada (duplique um `{#id}`) em uma cópia descartável e
 confirme o erro relatado. Corrija com um id novo e confirme a volta para
 `items`.
 
-## Bloqueio por impedimento externo
+## Impedimento externo
 
 Durante a execução de um item, descobre-se que falta uma credencial de API
 que só outra pessoa tem. Mude `status` para `blocked`, escreva
 `blockedReason: "Falta credencial da API X, solicitada a Fulano em
-2026-10-12."`, atualize `updatedAt` e pare — não marque os itens restantes
+2026-10-12."`, atualize `updatedAt` e pare: não marque os itens restantes
 nem deixe a tarefa em `in_progress` sem indicar o impedimento real.
 
 ```bash

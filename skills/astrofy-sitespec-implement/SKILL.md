@@ -23,20 +23,20 @@ sentido avançar mesmo assim antes de continuar.
 
 1. Se `status` ainda for `draft`, mude para `in_progress` e atualize
    `updatedAt` para o momento atual antes de começar a executar itens.
-2. Execute cada item da checklist, na ordem em que aparecem, usando a skill
+2. Execute cada item da checklist, na ordem apresentada, usando a skill
    marcada no item (ou `primarySkill`, quando o item não tem tag própria).
 3. Depois de concluir um item, edite a linha dele de `- [ ]` para `- [x]`
    pelo `{#id}`, sem alterar o texto nem o id. Atualize `updatedAt`.
-4. Registre em `## Notas` uma linha datada por decisão relevante, bloqueio
+4. Registre em `## Notas` uma linha datada por escolha relevante, impedimento
    encontrado ou desvio do que a `## Descrição` previa. Não é preciso uma
    nota por item concluído sem incidente.
 5. Se um item revelar que a tarefa não pode continuar por dependência
-   externa (credencial, decisão de outra pessoa, recurso indisponível),
+   externa (credencial, autorização de outra pessoa, recurso indisponível),
    mude `status` para `blocked`, escreva `blockedReason` com a causa
-   específica e pare — não force os itens restantes.
+   específica e pare: não force os itens restantes.
 6. Quando todo item da checklist estiver `[x]`, mude `status` para `done` e
    atualize `updatedAt`. Uma tarefa com item pendente nunca fica `done`.
-7. Se a tarefa deixar de fazer sentido (duplicada, decisão de não fazer),
+7. Se a tarefa deixar de fazer sentido (duplicada, escolha de não fazer),
    mude `status` para `archived` com `archivedReason`, mesmo com itens
    pendentes.
 
@@ -56,7 +56,7 @@ explique por quê na nota e trate como trabalho pendente de novo.
 ## Verificação
 
 `astrofy sitespec list --json` depois da edição precisa mostrar a tarefa
-ainda em `items` (nunca em `errors` — uma edição não pode deixar o arquivo
+ainda em `items` (nunca em `errors`: uma edição não pode deixar o arquivo
 inválido), com `progress` refletindo os itens marcados e `status` coerente
 com o progresso.
 

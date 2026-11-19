@@ -15,7 +15,7 @@ pacote Astrofy. O contrato define o front matter obrigatório (`schemaVersion`,
 `astrofy sitespec list --json` lê `.sitespec/` e devolve `items`, `errors` e
 `nextId`. Cada item de `items` já traz `blockedBy` (dependências de
 `dependsOn` ainda não `done`) e `missingDependencies` (ids referenciados que
-não existem) — não recalcule isso manualmente.
+não existem). Não recalcule isso manualmente.
 
 ## Alteração compatível
 
@@ -49,14 +49,14 @@ Consulta: 12/10/2026.
 
 - **[JSON Schema](https://ajv.js.org/json-schema.html):** dialeto JSON
   Schema e validação Ajv; consulte ao diagnosticar um front matter recusado.
-- **[GitHub Flavored Markdown — Task list items](https://github.github.com/gfm/#task-list-items-extension-):**
+- **[Task list items no GitHub Flavored Markdown](https://github.github.com/gfm/#task-list-items-extension-):**
   sintaxe `- [ ]`/`- [x]` usada pela checklist.
 
 ## Mapear skills relacionadas antes de perguntar
 
 `astrofy skills list --json` devolve nome, título e descrição das skills do
 catálogo. Compare palavras do pedido com esse texto para achar candidatas a
-`primarySkill` e `reviewSkills` antes de decidir que falta pergunta — o
+`primarySkill` e `reviewSkills` antes de decidir que falta pergunta: o
 `SKILL.md` de uma skill relacionada costuma já responder o que pareceria
 uma dúvida. Exemplos de dúvida já resolvida pela skill, sem perguntar:
 
@@ -73,21 +73,21 @@ uma dúvida. Exemplos de dúvida já resolvida pela skill, sem perguntar:
 ## Calibrar as perguntas
 
 Zero perguntas é o resultado esperado quando o pedido já nomeia skill,
-arquivo e critério de pronto, ou quando uma skill relacionada já resolve a
+arquivo e condição de pronto, ou quando uma skill relacionada já resolve a
 lacuna. Pergunte só quando a resposta mudaria `primarySkill`,
-`relatedFiles` ou um item real da checklist — nunca para confirmar algo que
+`relatedFiles` ou um item real da checklist: nunca para confirmar algo que
 já está no pedido ou documentado em `SKILL.md` de uma `reviewSkill`.
 
 Quando perguntar, até três perguntas, cada uma objetiva e com uma opção
 recomendada (por exemplo: "Isso afeta só a página de preços ou o componente
 de preço é usado em outro lugar? Recomendo conferir `relatedFiles` nas
-tarefas existentes primeiro — ambas as páginas, se o componente for
-compartilhado"). Espere a resposta antes de escrever `SITEPEC.md`; não
+tarefas existentes primeiro; se o componente for compartilhado, ambas as
+páginas entram"). Espere a resposta antes de escrever `SITEPEC.md`; não
 prossiga com suposição quando a pergunta foi feita.
 
 ## Escolha de reviewSkills e checklist
 
-`reviewSkills` não é um catálogo fixo por tipo de tarefa — é a lista das
+`reviewSkills` não é um catálogo fixo por tipo de tarefa: é a lista das
 skills cujo conhecimento se aplica a esta tarefa específica. Leia o
 `SKILL.md` de cada uma (instalado no projeto ou, na ausência, a versão
 distribuída em `skills/<nome>/SKILL.md` dentro do pacote Astrofy) antes de
@@ -106,7 +106,7 @@ existem antes de referenciá-las no front matter.
 ## Identidade do item de checklist
 
 O `{#id}` de quatro caracteres `[a-z0-9]` é gerado uma única vez, na criação
-do item, e nunca muda depois — nem quando o item é reordenado. Gere valores
+do item, e nunca muda depois, nem quando o item é reordenado. Gere valores
 que não colidam com nenhum outro item da mesma checklist; não reaproveite um
 id de uma tarefa diferente, já que a identidade é local ao arquivo.
 
@@ -115,11 +115,11 @@ id de uma tarefa diferente, já que a identidade é local ao arquivo.
 `dependsOn` só aceita `id`s que já existem em `.sitespec/`. Antes de declarar
 uma dependência, confirme em `items` (do `astrofy sitespec list --json`) que
 o `id` referido existe; um id inexistente aparece em `missingDependencies` da
-tarefa nova, sinalizando referência quebrada em vez de bloqueio real.
+tarefa nova, sinalizando referência quebrada em vez de impedimento real.
 
 ## Tarefa pontual ou tarefa de página
 
-Uma tarefa pontual não leva `page` nem `task` — esses dois campos marcam uma
+Uma tarefa pontual não leva `page` nem `task`: esses dois campos marcam uma
 tarefa gerada ou complementada a partir de um pagespec. `astrofy plan` já
 grava as três tarefas mecânicas de uma página (`route`, `content`, `check`);
 use `page`/`task` nesta skill só quando `astrofy-implementation-planner`
@@ -131,5 +131,5 @@ uma tarefa com o mesmo `page` antes de criar outra.
 
 Informe à pessoa ou ao processo que pediu a tarefa: o `id` e o `slug`
 atribuídos, a `primarySkill` escolhida, e se a checklist ficou vazia por
-falta de critério aplicável (nesse caso, registre em `## Notas` por que
+falta de condição aplicável (nesse caso, registre em `## Notas` por que
 ficou vazia, em vez de inventar itens).

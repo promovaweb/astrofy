@@ -17,7 +17,7 @@ o retorno traz `items` (tarefas existentes, com `blockedBy` e
 `missingDependencies` já resolvidos), `errors` (tarefas com problema) e
 `nextId`, o próximo id de quatro dígitos livre.
 
-Leia o pedido que deu origem à tarefa — issue, mensagem, trecho de código.
+Leia o pedido que deu origem à tarefa: issue, mensagem ou trecho de código.
 Rode `astrofy skills list --json` e compare nome e descrição de cada skill
 com o pedido para encontrar as candidatas a `primarySkill` e `reviewSkills`.
 
@@ -31,17 +31,17 @@ com o pedido para encontrar as candidatas a `primarySkill` e `reviewSkills`.
    boa parte das dúvidas: o `SKILL.md` de `astrofy-forms`, por exemplo, já
    diz que todo formulário precisa de destino de envio definido, então a
    checklist usa isso sem perguntar.
-3. Liste o que ainda falta para escrever uma checklist correta — tipicamente
+3. Liste o que ainda falta para escrever uma checklist correta: tipicamente
    qual skill executa, qual arquivo é afetado e o que conta como "pronto".
    Pergunte somente o que as skills relacionadas não respondem e que mudaria
    a tarefa dependendo da resposta. Não pergunte o que já está implícito no
    pedido ou já é convenção documentada de uma skill.
-   - **Pedido já específico** (skill, arquivo e critério de pronto claros):
+   - **Pedido já específico** (skill, arquivo e condição de pronto definidos):
      siga direto para o passo 4, sem perguntar nada.
    - **Pedido ambíguo em algum ponto que muda a tarefa**: faça no máximo
      três perguntas objetivas, cada uma com uma opção recomendada e espaço
      para resposta livre. Espere a resposta antes de continuar. Não
-     transforme isso numa entrevista fixa — a contagem varia com a dúvida
+     transforme isso numa entrevista fixa: a contagem varia com a dúvida
      real, incluindo zero.
 4. Escolha `slug` em kebab-case, estável, que não mude depois.
 5. Escolha `primarySkill` entre os nomes do catálogo. Escolha `reviewSkills`:
@@ -51,8 +51,8 @@ com o pedido para encontrar as candidatas a `primarySkill` e `reviewSkills`.
    tem revisão especializada aplicável.
 6. Para cada skill em `reviewSkills`, leia o `SKILL.md` e o
    `references/technical.md` dela instalados no projeto (ou distribuídos com
-   o pacote, quando a skill ainda não foi instalada) e extraia os critérios
-   que valem para esta tarefa específica — não copie a lista inteira de uma
+   o pacote, quando a skill ainda não foi instalada) e extraia as condições
+   que valem para esta tarefa específica: não copie a lista inteira de uma
    skill genérica para uma tarefa pontual.
 7. Escreva cada item da checklist com um `{#id}` próprio: quatro caracteres
    `[a-z0-9]` que não se repitam dentro do arquivo. Marque a skill

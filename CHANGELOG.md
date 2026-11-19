@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.14.5] - 2026-11-19
+
+### Corrigido
+
+- Prosa das skills `astrofy-implementation-planner`,
+  `astrofy-sitespec-create` e `astrofy-sitespec-implement` (instruções,
+  referências e exemplos) sem travessão e sem as palavras vetadas pelo
+  validador de proibições do Hub. O comportamento das skills não muda.
+
 ## [0.14.4] - 2026-11-14
 
 ### Corrigido

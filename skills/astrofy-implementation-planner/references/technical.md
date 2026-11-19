@@ -15,7 +15,7 @@ task: product-route-config
 ```
 
 `page` é o slug da página em `.astrofy/pages/<page>/`. `task` é o
-identificador estável da tarefa dentro da página — use slug descritivo, como
+identificador estável da tarefa dentro da página. Use slug descritivo, como
 `product-route-config` ou `contact-form-errors`, não posição numérica. As
 três tarefas mecânicas que `astrofy plan` já grava usam `task: route`,
 `task: content` e `task: check`; uma tarefa adicional criada por você usa
@@ -47,7 +47,7 @@ Action e dos estados visíveis.
 `dependsOn` lista os `id`s (não os `task`s) das tarefas predecessoras da
 mesma página. `astrofy sitespec list`/`progress` calculam `blockedBy` a
 partir disso; `astrofy apply` recusa iniciar (`in_progress`) uma tarefa com
-`blockedBy` não vazio. `status: done` exige a checklist inteira marcada —
+`blockedBy` não vazio. `status: done` exige a checklist inteira marcada.
 `astrofy apply --status completed` já marca todos os itens ao concluir uma
 das três tarefas mecânicas; uma tarefa adicional criada por você precisa
 ter cada item marcado de fato antes de chegar em `done`.

@@ -67,7 +67,7 @@ skill de conferência sempre que a tarefa criar ou modificar copy visível.
 
 As tarefas vivem em `.sitespec/<id>-<slug>-<task>/SITEPEC.md`, uma por
 tarefa, com `page: <slug>` e `task` no front matter. Não há mais
-`.astrofy/plans/` nem `implementation-plan.json` — o Markdown da sitespec é
+`.astrofy/plans/` nem `implementation-plan.json`: o Markdown da sitespec é
 a única fonte, lida tanto por `astrofy sitespec list`/`progress` quanto pela
 aba Specs da TUI, junto das tarefas pontuais de outras páginas e do resto do
 site.
@@ -75,7 +75,7 @@ site.
 Ao retomar, rode `astrofy plan --slug <slug>` de novo: ele reconcilia as três
 tarefas mecânicas sem perder `status` nem itens de checklist já marcados, e
 atualiza texto e dependências a partir do `page-spec.json` atual. Revise as
-tarefas adicionais que você mesmo criou à mão da mesma forma — se a origem
+tarefas adicionais que você mesmo criou à mão da mesma forma: se a origem
 mudou, reabra as que dependiam do que mudou; preserve as concluídas sem
 relação com a mudança. Consulte os [casos de decomposição](examples/cases.md).
 
