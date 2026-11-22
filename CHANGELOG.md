@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.14.6] - 2026-11-22
+
+- Documenta a atualização das tarefas do ClickUp para pronto após o commit e publicado após o push.
+
 ## [0.14.5] - 2026-11-19
 
 ### Corrigido
