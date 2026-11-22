@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.14.7] - 2026-11-22
+
+- Inclui apenas a edição vigente do guia no pacote npm.
+
 ## [0.14.6] - 2026-11-22
 
 - Documenta a atualização das tarefas do ClickUp para pronto após o commit e publicado após o push.
