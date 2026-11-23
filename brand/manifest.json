@@ -8,7 +8,7 @@
       "dimensions": "16x16",
       "role": "favicon",
       "function": "favicon de 16 px",
-      "sha256": "dfd5ff0fb57e10d9bd42e81494bce5182956062dbf3952cc5352f70de477fce6"
+      "sha256": "607dd2b9514b7d4a197f06fc837e9e3f1c78b53f9e71f8e5a31812345168af7c"
     },
     {
       "path": "logo/icon-180w.png",
@@ -16,7 +16,7 @@
       "dimensions": "180x180",
       "role": "favicon",
       "function": "favicon de 180 px",
-      "sha256": "e76451ae7f5dbe7a1a5536e952ad1a2b9446de4f2906fda33d45902c1aeffe04"
+      "sha256": "76d86adef4ee6348c99e6d32ac807dda60d654f11a7e86571648374efea92d15"
     },
     {
       "path": "logo/icon-192w.png",
@@ -24,7 +24,7 @@
       "dimensions": "192x192",
       "role": "favicon",
       "function": "favicon de 192 px",
-      "sha256": "f770fc40e2e2a239341f29a49c498f34c2eb2d4caea0afecd31de42587f12811"
+      "sha256": "999c10151277fd588ba741f64b5961d9715e64168adc677b09fee4930626634d"
     },
     {
       "path": "logo/icon-32w.png",
@@ -32,7 +32,7 @@
       "dimensions": "32x32",
       "role": "favicon",
       "function": "favicon de 32 px",
-      "sha256": "900e6298fa1677dda65f5fd9de946144098506c9d31e73f2b61ac5d27a062ed1"
+      "sha256": "3b92bf5c144b0eaa3ce4ab4efe5c7ae82cb590995920c56127ba6bc068197b00"
     },
     {
       "path": "logo/icon-48w.png",
@@ -40,7 +40,7 @@
       "dimensions": "48x48",
       "role": "favicon",
       "function": "favicon de 48 px",
-      "sha256": "34b2172a6b9b8c8e75fb0ed5d6a9f60d47c6dadc29438246df700bd5b933aed0"
+      "sha256": "39c325c09089f458416d80a200669549cd320afc28b3bc419a1129519277944d"
     },
     {
       "path": "logo/icon-512w.png",
@@ -48,7 +48,7 @@
       "dimensions": "512x512",
       "role": "favicon",
       "function": "favicon de 512 px",
-      "sha256": "6e33bd290d59dd79254fd56c3d7188a100b7ac22f9b3a6c78f864dd86b5a993d"
+      "sha256": "875814dbd8d3335dfa933e8d1bbf284ad3d235c59aa48625c9fae7b708953f7d"
     },
     {
       "path": "logo/icon-dark.png",
@@ -56,7 +56,7 @@
       "dimensions": "512x512",
       "role": "icon-dark",
       "function": "símbolo transparente para fundo escuro",
-      "sha256": "84fe8547c6c6e3ab71925f3e3bf122234291c2561b3ff3bfe390ee0f85991324"
+      "sha256": "e7dae6c8830350af38c78078cd998c210e75e0078410b2c272c0644c370325a2"
     },
     {
       "path": "logo/icon-dark.svg",
@@ -64,7 +64,7 @@
       "dimensions": "512x512",
       "role": "icon-dark",
       "function": "símbolo transparente para fundo escuro",
-      "sha256": "2210a6a42fff9292535031b7327f1a535d83a1696b10695f96546401a3c74282"
+      "sha256": "46e224193bf21939eaab3fb727fc8ebcd44dcb142aa2dde15f6acab51e5166f6"
     },
     {
       "path": "logo/icon-light.png",
@@ -72,7 +72,7 @@
       "dimensions": "512x512",
       "role": "icon-light",
       "function": "símbolo transparente para fundo claro",
-      "sha256": "8d64bb25b8ec370d2daa2e0802febeaf3ae6e41a98f436944b774f33088bea58"
+      "sha256": "9d4770f22d3373ea5d0a1d644799c7ea2597187b7419c8a6aeee6465278ab57f"
     },
     {
       "path": "logo/icon-light.svg",
@@ -80,7 +80,7 @@
       "dimensions": "512x512",
       "role": "icon-light",
       "function": "símbolo transparente para fundo claro",
-      "sha256": "c21a03e72fa9e1b0105aa310e4474a10fece2beaa63d193e24163d08e3c8197e"
+      "sha256": "3ceef473cb61f4994dcfb39b8fe7d20cb6ab8216314cac01a77c1e8a487dc8ce"
     },
     {
       "path": "logo/icon.png",
@@ -88,7 +88,7 @@
       "dimensions": "512x512",
       "role": "icon",
       "function": "fallback raster do ícone principal",
-      "sha256": "6e33bd290d59dd79254fd56c3d7188a100b7ac22f9b3a6c78f864dd86b5a993d"
+      "sha256": "875814dbd8d3335dfa933e8d1bbf284ad3d235c59aa48625c9fae7b708953f7d"
     },
     {
       "path": "logo/icon.svg",
@@ -96,7 +96,7 @@
       "dimensions": "512x512",
       "role": "icon",
       "function": "ícone principal com placa petróleo",
-      "sha256": "16a6c448129ea675c1da314a1c7a4d03ecdf75985cb7fb191b07b3691507b210"
+      "sha256": "a39373ce6164daf8e541440e92f6270a075472b0b2b674d2e0706ccd4b465230"
     },
     {
       "path": "logo/logo-dark.png",
@@ -104,7 +104,7 @@
       "dimensions": "1300x491",
       "role": "logo-dark",
       "function": "assinatura horizontal para fundo escuro",
-      "sha256": "9234519a367809bbad828635c77a75a75310d8b5cb735e36b6ea11f5a1366ff9"
+      "sha256": "4737ef9451260bd0b1dc91391403f7662856a767ec38916e770a6cad68c54c59"
     },
     {
       "path": "logo/logo-dark.svg",
@@ -112,7 +112,7 @@
       "dimensions": "848x320",
       "role": "logo-dark",
       "function": "assinatura horizontal para fundo escuro",
-      "sha256": "560e210fe3f7ed26f6c046b44ff28e8cc9da00ade296250372e3d3bcb339d204"
+      "sha256": "a447d9249a008af3c28009f793b8c19cd7af8492420a1de7839503695d95b73a"
     },
     {
       "path": "logo/logo-light.png",
@@ -120,7 +120,7 @@
       "dimensions": "1300x491",
       "role": "logo-light",
       "function": "assinatura horizontal para fundo claro",
-      "sha256": "c7fdc5474896a530d06bb827c3be479c3b3e794640d81a0b4a7b26b2d30422a9"
+      "sha256": "30d44d47fc2f00c426b4d1168f60901ae032a5b769259424f03b085eef6c829b"
     },
     {
       "path": "logo/logo-light.svg",
@@ -128,7 +128,7 @@
       "dimensions": "848x320",
       "role": "logo-light",
       "function": "assinatura horizontal para fundo claro",
-      "sha256": "3de7043a9b469a2427aeb21a26715ecdb7b43fdc5030c8b6091c4c1b452436b6"
+      "sha256": "728b9c090a314c92106c2212b16bafdbd2289d2b50a21284543b553466005234"
     }
   ]
 }

@@ -7,11 +7,7 @@ associada ao astro que orienta o trabalho.
 
 ## Conceito visual
 
-O símbolo **Página em órbita** mostra uma página do site com linhas de
-conteúdo, envolvida por uma órbita e acompanhada de um astro violeta. A
-composição comunica sites Astro planejados e construídos com método, em torno
-de páginas reais. O símbolo não usa o foguete nem o "A" do logo oficial do
-Astro.
+Janela de navegador com estrela violeta e três traços do frontmatter de um componente Astro. A cor de identificação é `#8B5CF6`.
 
 ## Arquivos oficiais
 

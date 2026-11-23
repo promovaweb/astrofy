@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.14.8] - 2026-11-22
+
+- Atualiza a identidade visual do projeto e sua apresentação no README.
+
 ## [0.14.7] - 2026-11-22
 
 - Inclui apenas a edição vigente do guia no pacote npm.

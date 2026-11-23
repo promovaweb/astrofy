@@ -1,4 +1,9 @@
 {
+  "projectColor": {
+    "name": "Violeta astral",
+    "hex": "#8B5CF6",
+    "meaning": "O violeta identifica a estrela na aba do navegador. No fundo escuro, a estrela usa a variação luminosa #AD92FF."
+  },
   "name": "Astrofy",
   "families": {
     "primary": {
